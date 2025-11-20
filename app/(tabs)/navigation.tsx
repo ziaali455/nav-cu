@@ -23,18 +23,11 @@ export default function NavigationScreen() {
       </View>
 
       <View style={styles.mapWrapper}>
-        <ScrollView 
-          style={styles.mapContainer}
-          contentContainerStyle={styles.mapContent}
-          showsVerticalScrollIndicator={true}
-          bounces={true}
-        >
-          <Image
-            source={require('@/assets/images/campus-map.png')}
-            style={styles.mapImage}
-            resizeMode="cover"
-          />
-        </ScrollView>
+        <Image
+          source={require('@/assets/images/campus-map.png')}
+          style={styles.mapImage}
+          resizeMode="contain"
+        />
       </View>
 
       <View style={styles.legendCard}>
@@ -94,18 +87,13 @@ const styles = StyleSheet.create({
   },
   mapWrapper: {
     flex: 1,
-    position: 'relative',
-  },
-  mapContainer: {
-    flex: 1,
-  },
-  mapContent: {
-    flexGrow: 1,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   mapImage: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT * 0.75,
-    minHeight: 500,
+    width: '100%',
+    height: '100%',
   },
   legendCard: {
     backgroundColor: '#fff',
