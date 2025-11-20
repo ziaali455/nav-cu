@@ -27,50 +27,30 @@ export default function NavigationScreen() {
           style={styles.mapContainer}
           contentContainerStyle={styles.mapContent}
           showsVerticalScrollIndicator={true}
+          bounces={true}
         >
           <Image
             source={require('@/assets/images/campus-map.png')}
             style={styles.mapImage}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </ScrollView>
+      </View>
 
-        <View style={styles.accessibilityOverlay}>
-          <View style={styles.legendCard}>
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
-                <IconSymbol name="figure.roll" size={20} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Ramps</ThemedText>
+      <View style={styles.legendCard}>
+        <View style={styles.legendRow}>
+          <View style={styles.legendItem}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
+              <IconSymbol name="figure.roll" size={18} color="#fff" />
             </View>
-            
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#E84393' }]}>
-                <IconSymbol name="location.fill" size={20} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Entry</ThemedText>
+            <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
+          </View>
+          
+          <View style={styles.legendItem}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
+              <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
             </View>
-
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#00B894' }]}>
-                <IconSymbol name="figure.roll" size={20} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Access</ThemedText>
-            </View>
-
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
-                <IconSymbol name="arrow.up.arrow.down" size={20} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Elevator</ThemedText>
-            </View>
-
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#6C5CE7' }]}>
-                <IconSymbol name="building.2.fill" size={20} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Building</ThemedText>
-            </View>
+            <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
           </View>
         </View>
       </View>
@@ -97,6 +77,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     margin: 16,
+    marginBottom: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -119,42 +100,43 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mapContent: {
-    paddingHorizontal: 8,
-    paddingBottom: 20,
+    flexGrow: 1,
   },
   mapImage: {
-    width: SCREEN_WIDTH - 16,
-    height: (SCREEN_WIDTH - 16) * 1.85,
-    alignSelf: 'center',
-  },
-  accessibilityOverlay: {
-    position: 'absolute',
-    bottom: 20,
-    right: 16,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT * 0.75,
+    minHeight: 500,
   },
   legendCard: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 5,
-    minWidth: 140,
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  legendRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
+    flex: 1,
+    justifyContent: 'center',
   },
   iconWrapper: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 8,
   },
   legendText: {
     fontSize: 13,
@@ -165,15 +147,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingVertical: 16,
+    paddingVertical: 14,
     paddingHorizontal: 20,
     borderTopWidth: 1,
     borderTopColor: '#E5E5E5',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
   },
   nextStepIcon: {
     marginRight: 12,
