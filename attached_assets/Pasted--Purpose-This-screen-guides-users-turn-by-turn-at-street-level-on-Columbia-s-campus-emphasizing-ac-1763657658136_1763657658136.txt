@@ -1,0 +1,13 @@
+
+
+Purpose
+This screen guides users turn-by-turn at street level on Columbia’s campus, emphasizing accessible travel. It presents a large, high-contrast directional arrow on a simplified street-view scene for quick comprehension. A prominent Report obstacle button lets users flag temporary barriers (e.g., construction, blocked ramps) so routes can be updated in near-real time. The instruction banner provides the next maneuver, remaining distance/time, and an audio toggle for hands-free use. A mini-map offers quick spatial context without leaving the view.
+Ranking
+-Street-Level Canvas + Direction Arrow (Primary Task) Essential for orientation and low cognitive load. The full-bleed scene with a bold arrow communicates “what to do now.” Without it: Users lose immediate directional clarity and may miss turns. 
+-Instruction Banner (Next step, distance/ETA, audio, End) Converts the route into actionable steps and supports screen-free navigation. The End control provides a clear escape hatch. Without it: Users lack step timing and cannot easily stop guidance. 
+-Report Obstacle Button (Crowdsourced Accessibility) Empowers users to improve route safety by flagging hazards on the fly. Without it: Live accessibility breaks are not captured; guidance can be unsafe or out-of-date. 
+-Mini-Map Inset (Context & Recovery) Offers quick zoomed-out context to reduce disorientation and helps recover if the user strays. Without it: Users may feel lost when landmarks are ambiguous in street view. 
+-Bottom Navigation Bar (Global Controls: Settings, Navigate, Reports) Provides consistent access to app-wide features without leaving guidance. Without it: Users face dead-ends or must backtrack to change preferences or view reports. 
+-Street Label (“College Walk”) Confirms current path to reduce uncertainty and support wayfinding. Without it: Users may doubt they are on the correct segment. 
+Notes on Interaction:
+Tapping Report obstacle opens a short form (type, photo optional, location auto-filled); submit pins the issue for moderation. The speaker icon toggles voice prompts; default is on for accessibility. The End button stops guidance and returns to the route overview.
