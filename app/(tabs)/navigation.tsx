@@ -1,10 +1,10 @@
-import { StyleSheet, TextInput, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useState } from 'react';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function NavigationScreen() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,7 +24,7 @@ export default function NavigationScreen() {
 
       <View style={styles.mapWrapper}>
         <Image
-          source={require('@/assets/images/campus-map.png')}
+          source={require('@/assets/images/columbia-ods-map-2.png')}
           style={styles.mapImage}
           resizeMode="contain"
         />
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 8,
   },
   mapImage: {
     width: '100%',
