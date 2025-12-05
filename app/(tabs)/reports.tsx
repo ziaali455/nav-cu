@@ -144,7 +144,24 @@ export default function ReportsScreen() {
   const [imageLayout, setImageLayout] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [zoomLevel, setZoomLevel] = useState(1);
   const colorScheme = useColorScheme();
+
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 3;
+  const ZOOM_STEP = 0.25;
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - ZOOM_STEP, MIN_ZOOM));
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(1);
+  };
 
   // Get user ID on mount
   useEffect(() => {
@@ -449,29 +466,78 @@ export default function ReportsScreen() {
           console.log('Container positioned at:', x, y, 'Dimensions:', width, height);
         }}
       >
-        <Pressable onPress={handleMapPress} style={styles.mapPressableArea}>
-          <Image
-            source={require('@/assets/images/columbia-ods-map-2.png')}
-            style={styles.mapImage}
-            resizeMode="contain"
-            onLayout={(event) => {
-              const { x, y, width, height } = event.nativeEvent.layout;
-              setImageLayout({ x, y, width, height });
-              console.log('Image layout:', x, y, width, height);
-            }}
-          />
-        </Pressable>
+        <ScrollView
+          style={styles.zoomScrollView}
+          contentContainerStyle={[
+            styles.zoomContentContainer,
+            { transform: [{ scale: zoomLevel }] }
+          ]}
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={zoomLevel > 1}
+          maximumZoomScale={1}
+          minimumZoomScale={1}
+        >
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={zoomLevel > 1}
+            contentContainerStyle={styles.horizontalScrollContent}
+          >
+            <View style={styles.mapContentWrapper}>
+              <Pressable onPress={handleMapPress} style={styles.mapPressableArea}>
+                <Image
+                  source={require('@/assets/images/columbia-ods-map-2.png')}
+                  style={styles.mapImage}
+                  resizeMode="contain"
+                  onLayout={(event) => {
+                    const { x, y, width, height } = event.nativeEvent.layout;
+                    setImageLayout({ x, y, width, height });
+                    console.log('Image layout:', x, y, width, height);
+                  }}
+                />
+              </Pressable>
+              
+              {/* Render report markers - absolutely positioned on top */}
+              {reports.map((report) => (
+                <DraggableMarker
+                  key={report.id}
+                  report={report}
+                  onDragEnd={handleDragEnd}
+                  onPress={handleMarkerPress}
+                  currentUserId={currentUserId}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        </ScrollView>
         
-        {/* Render report markers - absolutely positioned on top */}
-        {reports.map((report) => (
-          <DraggableMarker
-            key={report.id}
-            report={report}
-            onDragEnd={handleDragEnd}
-            onPress={handleMarkerPress}
-            currentUserId={currentUserId}
-          />
-        ))}
+        {/* Zoom Controls */}
+        <View style={styles.zoomControls}>
+          <TouchableOpacity 
+            style={[styles.zoomButton, zoomLevel >= MAX_ZOOM && styles.zoomButtonDisabled]} 
+            onPress={handleZoomIn}
+            disabled={zoomLevel >= MAX_ZOOM}
+          >
+            <ThemedText style={[styles.zoomIcon, zoomLevel >= MAX_ZOOM && styles.zoomIconDisabled]}>+</ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.zoomLevelButton} 
+            onPress={handleResetZoom}
+          >
+            <ThemedText style={styles.zoomLevelText}>{Math.round(zoomLevel * 100)}%</ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.zoomButton, zoomLevel <= MIN_ZOOM && styles.zoomButtonDisabled]} 
+            onPress={handleZoomOut}
+            disabled={zoomLevel <= MIN_ZOOM}
+          >
+            <ThemedText style={[styles.zoomIcon, zoomLevel <= MIN_ZOOM && styles.zoomIconDisabled]}>−</ThemedText>
+          </TouchableOpacity>
+        </View>
         
         {/* Debug Info */}
         <View style={styles.debugInfo} pointerEvents="none">
@@ -482,7 +548,7 @@ export default function ReportsScreen() {
             Reports: {reports.length}
           </ThemedText>
           <ThemedText style={{ color: 'white', fontSize: 12 }}>
-            Image: {imageLayout ? `${Math.round(imageLayout.width)}x${Math.round(imageLayout.height)} at (${Math.round(imageLayout.x)},${Math.round(imageLayout.y)})` : 'Not loaded'}
+            Zoom: {Math.round(zoomLevel * 100)}%
           </ThemedText>
         </View>
       </View>
@@ -703,6 +769,62 @@ const styles = StyleSheet.create({
     padding: 8,
     zIndex: 9999,
     borderRadius: 4,
+  },
+  zoomScrollView: {
+    flex: 1,
+  },
+  zoomContentContainer: {
+    flexGrow: 1,
+  },
+  horizontalScrollContent: {
+    flexGrow: 1,
+  },
+  mapContentWrapper: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  zoomControls: {
+    position: 'absolute',
+    right: 15,
+    top: '50%',
+    transform: [{ translateY: -75 }],
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    borderRadius: 25,
+    padding: 8,
+    gap: 5,
+    zIndex: 1000,
+  },
+  zoomButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#4A90E2',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  zoomButtonDisabled: {
+    backgroundColor: '#3A3A3C',
+  },
+  zoomLevelButton: {
+    width: 44,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  zoomLevelText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  zoomIcon: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: 32,
+  },
+  zoomIconDisabled: {
+    color: '#8E8E93',
   },
   footer: {
     flexDirection: 'row',
