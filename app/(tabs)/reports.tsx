@@ -451,7 +451,7 @@ export default function ReportsScreen() {
       >
         <Pressable onPress={handleMapPress} style={styles.mapPressableArea}>
           <Image
-            source={require('@/assets/columbia-ods-map-2.png')}
+            source={require('@/assets/images/columbia-ods-map-2.png')}
             style={styles.mapImage}
             resizeMode="contain"
             onLayout={(event) => {
