@@ -1,0 +1,2089 @@
+{
+  "nodes": [
+    {
+      "id": "5f38c732-566f-4105-8e97-5bfb28595fd5",
+      "x": 490.5,
+      "y": 166,
+      "name": "Pupin Hall - Elevator",
+      "no_stairs": true,
+      "outside_campus": false,
+      "indoor": true,
+      "elevator": true
+    },
+    {
+      "id": "0700a54b-ed15-4384-aac3-adb0561a15d2",
+      "x": 490.5,
+      "y": 201,
+      "name": "Pupin Hall - Entrance",
+      "no_stairs": true
+    },
+    {
+      "id": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "x": 490.5,
+      "y": 238,
+      "name": "Pupin Plaza South",
+      "no_stairs": true
+    },
+    {
+      "id": "631b0519-a99d-4ca6-90d8-17df0d6474bc",
+      "x": 437.5,
+      "y": 202,
+      "name": "NW Corner Building - Entrance",
+      "no_stairs": true
+    },
+    {
+      "id": "f8e193a2-0c24-454f-b867-6cebd7409156",
+      "x": 438.5,
+      "y": 237,
+      "name": "Pupin Plaza - Southwest",
+      "no_stairs": true
+    },
+    {
+      "id": "9405fed5-c9cc-422e-b1d1-a4a51aa8c104",
+      "x": 520.5,
+      "y": 267,
+      "name": "Uris West Walkway - North",
+      "no_stairs": true
+    },
+    {
+      "id": "12bc7b4d-1797-4285-a999-5bb94f29ee82",
+      "x": 537.5,
+      "y": 201,
+      "name": "Pupin Plaza - Northeast",
+      "no_stairs": true
+    },
+    {
+      "id": "1879fbd0-2145-498f-b768-f4365e146b67",
+      "x": 562.5,
+      "y": 224,
+      "name": "Schapiro CESPR Ramp - West",
+      "no_stairs": true
+    },
+    {
+      "id": "77b55581-e8ee-4109-8065-7641f8d533bf",
+      "x": 593.5,
+      "y": 221,
+      "name": "Schapiro CESPR Entrance",
+      "no_stairs": true
+    },
+    {
+      "id": "cc6c345c-b96b-48ca-9b0c-073c59693f05",
+      "x": 622.5,
+      "y": 224,
+      "name": "Schapiro CESPR Ramp - East",
+      "no_stairs": true,
+      "indoor": false
+    },
+    {
+      "id": "ad2779c0-2a01-4680-8e72-98be3fe6b478",
+      "x": 665.5,
+      "y": 215,
+      "name": "Mudd - CSB - Entrance",
+      "no_stairs": true
+    },
+    {
+      "id": "93ca333e-8d9b-4788-81b3-16b02e88e588",
+      "x": 663.5,
+      "y": 246,
+      "name": "Mudd Plaza",
+      "no_stairs": true
+    },
+    {
+      "id": "6b626142-5506-4016-81d4-fe3a5b95225b",
+      "x": 664.5,
+      "y": 300,
+      "name": "Uris East Walkway - North",
+      "no_stairs": true
+    },
+    {
+      "id": "f69d779f-8e86-43ac-a687-fbb491522fc5",
+      "x": 664.5,
+      "y": 367,
+      "name": "Uris East Walkway - South",
+      "no_stairs": true
+    },
+    {
+      "id": "114bc23a-bc80-44c0-b6c2-4af3858ca18f",
+      "x": 701.5,
+      "y": 292.5,
+      "name": "Fairchild - Entrance",
+      "no_stairs": true
+    },
+    {
+      "id": "0d265ada-cc71-456c-a7e7-c82ed60d4322",
+      "x": 485.5,
+      "y": 250,
+      "name": "Dodge Fitness Center - Elevator",
+      "no_stairs": true
+    },
+    {
+      "id": "43434973-7d60-47af-a47c-96b3a4af4fdd",
+      "x": 429.5,
+      "y": 167,
+      "name": "Pupin - NWC - Building Connection",
+      "no_stairs": true,
+      "outside_campus": false,
+      "indoor": true
+    },
+    {
+      "id": "88d04ed7-291e-459f-bc47-95aaea61723b",
+      "x": 518.5,
+      "y": 363,
+      "name": "Uris West Walkway - South",
+      "no_stairs": true
+    },
+    {
+      "id": "934e226f-040d-483f-88f1-496d6019e590",
+      "x": 550.5,
+      "y": 363,
+      "name": "Uris Ramp - West",
+      "no_stairs": true
+    },
+    {
+      "id": "1fbd4b0a-824c-4f6c-8d33-3b5b933822d9",
+      "x": 639.5,
+      "y": 363,
+      "name": "Uris Ramp - East",
+      "no_stairs": true
+    },
+    {
+      "id": "a54dcd22-1b5c-450c-99af-4ed660882e7b",
+      "x": 597.5,
+      "y": 329,
+      "name": "Uris",
+      "no_stairs": true,
+      "elevator": true,
+      "indoor": true
+    },
+    {
+      "id": "4d6edaeb-7511-4234-aadf-1ad36086d80d",
+      "x": 410.5,
+      "y": 361,
+      "name": "Havemeyer - Ramp Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "different_floor": false,
+      "outside_campus": false
+    },
+    {
+      "id": "cfde8be6-1f2d-4e25-9d08-b21d3a2cc4e5",
+      "x": 451.5,
+      "y": 368,
+      "name": "Havemeyer Walkway",
+      "no_stairs": true,
+      "indoor": false,
+      "different_floor": false,
+      "outside_campus": false
+    },
+    {
+      "id": "49fc0c8e-fbbf-4a74-b474-338da3e2a8bd",
+      "x": 412.5,
+      "y": 139,
+      "name": "NWC - Campus Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "different_floor": false,
+      "outside_campus": true
+    },
+    {
+      "id": "6ecc52ca-019d-4aef-b235-85ab32017c33",
+      "x": 800.5,
+      "y": 246,
+      "name": "Schermerhorn Extension - Campus Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "different_floor": false,
+      "outside_campus": true
+    },
+    {
+      "id": "6fc1c721-fee2-4cdb-bb6b-9329a96838ed",
+      "x": 410.5,
+      "y": 168,
+      "name": "NWC - North Lobby",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "84f843e4-260b-46d9-833a-38b9f2824f9f",
+      "x": 416.5,
+      "y": 185,
+      "name": "NWC - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "40b5073d-76b5-4069-b68c-599be82ced5a",
+      "x": 418.5,
+      "y": 203,
+      "name": "NWC - 4th Floor",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "6c845be7-7cf9-4ec0-9c87-cbb50bdf78ff",
+      "x": 419.5,
+      "y": 225,
+      "name": "NWC - Study Space",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "52868054-8c85-40f6-9bae-d2ba95e4bf98",
+      "x": 411.5,
+      "y": 254,
+      "name": "NWC - Chandler - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "323c5181-59a4-4901-ad7c-61126404d4df",
+      "x": 413.5,
+      "y": 297,
+      "name": "Chandler - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "73e3d451-8fe3-42df-9393-4d3729c1abe2",
+      "x": 423.5,
+      "y": 318,
+      "name": "Chandler - Havemeyer - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "5d3643eb-a3d1-482d-b5af-65d2ffb6c2f2",
+      "x": 424.5,
+      "y": 341,
+      "name": "Havemeyer - West",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "60c31c81-5d07-435d-ad55-e2a2ef5bafb1",
+      "x": 494.5,
+      "y": 336,
+      "name": "Havemeyer - East",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "60913465-793c-408e-a95d-e89f38014cc7",
+      "x": 496.5,
+      "y": 299,
+      "name": "Havemeyer Extension - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "1d243206-60c5-4007-af7c-1c1bad40dc0b",
+      "x": 702.5,
+      "y": 259,
+      "name": "Fairchild - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "f0fbf7f2-1764-476f-9e5c-84a0c957b556",
+      "x": 394.5,
+      "y": 138,
+      "name": "120th Street & Broadway - Southeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "9a0aa377-b619-48ec-90e1-bcf5fddad2fe",
+      "x": 797.5,
+      "y": 140,
+      "name": "120th Street & Amsterdam - Southwest Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "e348e138-f5d6-4d8f-8523-8ba4ba1150f5",
+      "x": 800.5,
+      "y": 637,
+      "name": "116th Street & Amsterdam - Northwest",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "x": 795.5,
+      "y": 655,
+      "name": "College Walk - East - Campus Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "f84160d1-c7b3-4423-a399-c5f747a981b8",
+      "x": 799.5,
+      "y": 674,
+      "name": "116th & Amsterdam - Southwest",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "92d1b7bb-0c23-4b29-b004-a227560d4ec7",
+      "x": 838.5,
+      "y": 673,
+      "name": "116th Street & Amsterdam - Southeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "252deece-d966-442e-80f9-92ed39f72be9",
+      "x": 840.5,
+      "y": 636,
+      "name": "116th Street & Amsterdam - Northeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "400ada44-4091-4009-a452-36cb6c3cc6ac",
+      "x": 391.5,
+      "y": 654,
+      "name": "College Walk - West - Campus Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": true
+    },
+    {
+      "id": "83d7d29d-b5c9-4c08-a87a-991fb8ad5350",
+      "x": 446.5,
+      "y": 413,
+      "name": "Mathematics Building - Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "b69d5e75-e708-4470-aaff-4980749a5d8d",
+      "x": 415.5,
+      "y": 412,
+      "name": "Mathematics Building - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "463f6a66-a578-42fd-9f06-630a62d1c2b0",
+      "x": 530.5,
+      "y": 414,
+      "name": "Low Library - Northwest Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "614a6e14-a4dd-46a1-8833-118299122fb0",
+      "x": 661.5,
+      "y": 414,
+      "name": "Low Library - Northeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "6c61df1e-9240-4120-a582-a9e5700271b8",
+      "x": 528.5,
+      "y": 554,
+      "name": "Low Library - Southwest Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "31be4f34-2c3d-4de0-917f-403c3c741621",
+      "x": 661.5,
+      "y": 556,
+      "name": "Low Library - Southeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "7aa48e79-4e1b-487f-8252-33198b7ac863",
+      "x": 664.5,
+      "y": 481,
+      "name": "Low Library East Walkway - Center",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "25cd6728-11f5-472b-853a-31f74d776028",
+      "x": 701.5,
+      "y": 480,
+      "name": "St. Paul's - Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "7d503de4-5d5c-4c5a-a029-986423c8427d",
+      "x": 662.5,
+      "y": 505.5,
+      "name": "Low Library East Walkway - Buell Turn",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "7950087f-10c3-449a-bbb1-eb394dd7d67c",
+      "x": 693.5,
+      "y": 509.5,
+      "name": "Buell - Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "2d09213d-d8f5-464a-8415-5d055b324039",
+      "x": 690.5,
+      "y": 535,
+      "name": "Buell",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "a894a80b-50f8-4b96-b12b-c8b465cc720e",
+      "x": 664.5,
+      "y": 441,
+      "name": "Low Library East Walkway - Ramp Entrance Turn",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "9f234dbf-bcca-4228-b6eb-b099ea912ced",
+      "x": 634.5,
+      "y": 413,
+      "name": "Low Library North Walkway - Ramp Entrance Turn",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "52b5e303-61b0-4d45-8e7d-c2a88c4ae484",
+      "x": 524.5,
+      "y": 504,
+      "name": "Low Library West Walkway - Earl Turn",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "5eb4f45e-61de-41f2-bebd-44f8287fdab5",
+      "x": 479.5,
+      "y": 505,
+      "name": "Earl - Accessible Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "10a34a3c-8dd6-49f7-a923-53c6c2d54348",
+      "x": 452.5,
+      "y": 505,
+      "name": "Earl Lewisohn Walkway - North",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "3f2b6017-4ffd-43c2-ad02-bdd8762d0f6e",
+      "x": 454.5,
+      "y": 555,
+      "name": "Earl Lewisohn Walkway - South",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "ba93381d-f9e0-4d7f-b819-c48b617d0d08",
+      "x": 424.5,
+      "y": 489,
+      "name": "Earl Walkway - South",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "4091bfa3-da4c-4da1-99a0-baf935d50242",
+      "x": 423.5,
+      "y": 465,
+      "name": "Earl Walkway - North",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "99ced907-a128-4c5f-9f70-576171a9970f",
+      "x": 450.5,
+      "y": 453,
+      "name": "Mathematics Earl Walkway - South",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "d772d818-0eb3-4f96-8f54-3d99a7e1f567",
+      "x": 635.5,
+      "y": 442,
+      "name": "Low Library - Ramp Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "cc9427c4-a050-4e10-9817-b4c1f9cc987b",
+      "x": 605.5,
+      "y": 453,
+      "name": "Low Library - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "64bcaebf-2a18-4c3d-9781-1c2c0019d94b",
+      "x": 445.5,
+      "y": 481,
+      "name": "Earl",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "09052c8a-4442-4022-bce0-2c5dbbe63394",
+      "x": 471.5,
+      "y": 480,
+      "name": "Earl - Lift",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "bf5bcb2a-0e28-4fd1-9a95-4614741f91cc",
+      "x": 435.5,
+      "y": 549,
+      "name": "Lewisohn - Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "2db16bb9-b43a-450b-a045-f331fc8d9a5a",
+      "x": 416.5,
+      "y": 529,
+      "name": "Lewisohn - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "368521ab-290b-4e8f-8992-c294761df02b",
+      "x": 507.5,
+      "y": 555,
+      "name": "Low Plaza - Northwest Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "28a63433-cf83-4d9f-9e68-028b26361900",
+      "x": 681.5,
+      "y": 557,
+      "name": "Low Plaza - Northeast Corner",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "7dfe3d76-54e4-47a3-ae03-6b553f9962d5",
+      "x": 680.5,
+      "y": 414,
+      "name": "Avery - Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "502dd798-a71a-4251-aeda-fc0b231989e4",
+      "x": 699.5,
+      "y": 389,
+      "name": "Avery - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "50b177f4-e26f-446b-b58c-9de0633f5552",
+      "x": 542.5,
+      "y": 169,
+      "name": "Pupin - Schapiro - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "4a008fa6-6ece-426b-9be1-c7c0646ad40a",
+      "x": 648.5,
+      "y": 171,
+      "name": "Schapiro - Mudd - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "8a66e8aa-b057-402b-bcd5-ceef1bf83729",
+      "x": 699.5,
+      "y": 171,
+      "name": "Mudd - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "54fd6773-5c19-4a9b-9848-5bf5b2c3b390",
+      "x": 668.5,
+      "y": 194,
+      "name": "Mudd - Lobby - West",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "217e6e3e-1459-4787-8ff8-785fe24b022c",
+      "x": 700.5,
+      "y": 189,
+      "name": "Mudd - Lobby - East",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "2ef295f8-72ba-4e2c-8ac1-391483bbf6e1",
+      "x": 722.5,
+      "y": 194,
+      "name": "Mudd - CSB - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "ff8fb601-4b5c-4a66-a4f5-b0296ab11719",
+      "x": 727.5,
+      "y": 231,
+      "name": "CSB - Southwest Corner",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "5720d7d4-ba0f-4a48-89b3-6c9a20f070d9",
+      "x": 772.5,
+      "y": 229,
+      "name": "CSB - Lounge",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "78a285e8-4bb5-41f7-acef-8d1389802909",
+      "x": 593.5,
+      "y": 172,
+      "name": "Schapiro CESPR - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "31da44f5-1e2a-48c3-89e9-b9a163571ec0",
+      "x": 753.5,
+      "y": 366,
+      "name": "Schermerhorn - South Ramp Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "111792b7-57c8-4511-8807-d6298b1f9183",
+      "x": 741.5,
+      "y": 335,
+      "name": "Schermerhorn - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "43f9dd68-e5c0-4e4a-8957-b184d2aa1059",
+      "x": 766.5,
+      "y": 271,
+      "name": "Schermerhorn Extension - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "5109ed19-9bee-43ad-8236-ebdf795a3b53",
+      "x": 766.5,
+      "y": 331,
+      "name": "Schermerhorn - Schermerhorn Extension - Building Connection",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "f2e2ab0c-3bb3-4285-a068-c89d41824c78",
+      "x": 755.5,
+      "y": 430,
+      "name": "Fayeweather - Ramp Entrance",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "d09ebb2e-789f-4ed2-9a6a-669c98bb68b8",
+      "x": 776.5,
+      "y": 418,
+      "name": "Fayeweather - Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "5ca332b9-9a7e-438c-a2a5-00555d18480d",
+      "x": 508.5,
+      "y": 589,
+      "name": "Low Plaza - Top West Stairs",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "6136a4a7-6fd7-43e7-95f2-211b67f86b3e",
+      "x": 682.5,
+      "y": 590,
+      "name": "Low Plaza - Top East Stairs",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "e75c409b-5d41-4c7a-8f40-f99df18cf735",
+      "x": 735.5,
+      "y": 588,
+      "name": "Kent - North Ramp Entrance - Upper Campus",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "20bc3d71-1723-4da9-81f3-71c4eaa5d914",
+      "x": 704.5,
+      "y": 630.5,
+      "name": "Kent - South Accessible Entrance - Lower Campus",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "4206aa24-cff9-42ab-987a-f8fce0682bca",
+      "x": 778.5,
+      "y": 631,
+      "name": "North College Walk - East",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "d6d759e5-2be8-4b96-8bda-e765822a18f3",
+      "x": 777.5,
+      "y": 654,
+      "name": "Center College Walk - East",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "f8ebad14-545d-41da-aab9-b55a523d340a",
+      "x": 776.5,
+      "y": 676,
+      "name": "South College Walk - East",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "7222eb82-4d5b-49c9-afdb-fb7bb1186f6d",
+      "x": 405.5,
+      "y": 653,
+      "name": "Center College Walk - West",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "6afce5ea-dc3f-476c-b09d-71bffe85f04b",
+      "x": 406.5,
+      "y": 674,
+      "name": "South College Walk - West",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "e515716d-cdb4-4820-8240-ec8d6413018f",
+      "x": 407.5,
+      "y": 635,
+      "name": "North College Walk - West",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "4fb52ec3-b347-4080-986a-aff11ea6da27",
+      "x": 487.5,
+      "y": 632.5,
+      "name": "Dodge - South Accessible Entrance - Lower Campus",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "43b2a086-9be2-44e1-94c3-847786143d52",
+      "x": 508.5,
+      "y": 614,
+      "name": "Lower to Upper Campus Elevator",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "2943961b-7b45-45df-9595-42ebdadc1a4a",
+      "x": 519.5,
+      "y": 631,
+      "name": "North College Walk - Midwest",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "151ccbe3-8010-4e67-98db-ac4dbcf5a278",
+      "x": 519.5,
+      "y": 653,
+      "name": "Center College Walk - Midwest",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "26641423-518c-4583-90d6-c7001d267905",
+      "x": 519.5,
+      "y": 675,
+      "name": "South College Walk - Midwest",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "c260aaf1-2793-4622-9447-edc80aaa80ba",
+      "x": 595.5,
+      "y": 654,
+      "name": "Center College Walk - Center",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "a7052bd0-3fb6-4709-9c9f-22ab1e45a860",
+      "x": 596.5,
+      "y": 674,
+      "name": "South College Walk - Center",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "fa54c9b3-a3db-43cf-ae98-faa41cfe0155",
+      "x": 594.5,
+      "y": 630,
+      "name": "North College Walk - Center",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "e6778c1f-e83e-4c2c-95e6-032ee29ce210",
+      "x": 670.5,
+      "y": 632,
+      "name": "North College Walk - Mideast",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "32472859-c0fd-4ade-a8be-1f93ac91a98b",
+      "x": 670.5,
+      "y": 653,
+      "name": "Center College Walk - Mideast",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "6fa51eeb-97b3-41f1-a377-e653b8cfa552",
+      "x": 669.5,
+      "y": 675,
+      "name": "South College Walk - Mideast",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "afb2c1a0-c8c0-4f3c-8065-0f7f493d2e6c",
+      "x": 728.5,
+      "y": 614,
+      "name": "Kent Elevator",
+      "no_stairs": true,
+      "indoor": true,
+      "elevator": true,
+      "outside_campus": false
+    },
+    {
+      "id": "a49f115e-0764-4f45-96b9-0f1ecaf857d2",
+      "x": 441.5,
+      "y": 590,
+      "name": "Dodge - North Ramp Entrance - Upper Campus",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    },
+    {
+      "id": "666dfc03-5fa2-4bb9-8994-123203f10e53",
+      "x": 456.5,
+      "y": 616,
+      "name": "Dodge - Elevator",
+      "no_stairs": true,
+      "indoor": false,
+      "elevator": false,
+      "outside_campus": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "5e98c01e-941f-42ac-8286-89a57e966bb0",
+      "sourceId": "5f38c732-566f-4105-8e97-5bfb28595fd5",
+      "targetId": "0700a54b-ed15-4384-aac3-adb0561a15d2",
+      "distance": 35,
+      "no_stairs": true
+    },
+    {
+      "id": "1a85fedd-5195-4fce-9364-88ad12cd00a9",
+      "sourceId": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "targetId": "0700a54b-ed15-4384-aac3-adb0561a15d2",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "ec72993f-f3d4-4b7e-8697-0a56d71d07df",
+      "sourceId": "631b0519-a99d-4ca6-90d8-17df0d6474bc",
+      "targetId": "0700a54b-ed15-4384-aac3-adb0561a15d2",
+      "distance": 54,
+      "no_stairs": false
+    },
+    {
+      "id": "be18f93a-2cf5-47ad-868c-1f58fd6736ec",
+      "sourceId": "631b0519-a99d-4ca6-90d8-17df0d6474bc",
+      "targetId": "f8e193a2-0c24-454f-b867-6cebd7409156",
+      "distance": 35,
+      "no_stairs": false
+    },
+    {
+      "id": "5c60d068-a924-48a4-84c7-9f9cf3f063af",
+      "sourceId": "f8e193a2-0c24-454f-b867-6cebd7409156",
+      "targetId": "0d265ada-cc71-456c-a7e7-c82ed60d4322",
+      "distance": 47,
+      "no_stairs": false
+    },
+    {
+      "id": "f7fccd24-51bd-45e0-99fc-b35a7b333f1f",
+      "sourceId": "0d265ada-cc71-456c-a7e7-c82ed60d4322",
+      "targetId": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "distance": 15,
+      "no_stairs": false
+    },
+    {
+      "id": "576574b0-145a-4c55-b922-39dd711d71c5",
+      "sourceId": "f8e193a2-0c24-454f-b867-6cebd7409156",
+      "targetId": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "distance": 54,
+      "no_stairs": false
+    },
+    {
+      "id": "641d449d-39b5-458c-9868-91f29df0809b",
+      "sourceId": "43434973-7d60-47af-a47c-96b3a4af4fdd",
+      "targetId": "5f38c732-566f-4105-8e97-5bfb28595fd5",
+      "distance": 61,
+      "no_stairs": true
+    },
+    {
+      "id": "aa12b746-eae3-4be3-a1d5-bf9ed493379d",
+      "sourceId": "12bc7b4d-1797-4285-a999-5bb94f29ee82",
+      "targetId": "0700a54b-ed15-4384-aac3-adb0561a15d2",
+      "distance": 47,
+      "no_stairs": true
+    },
+    {
+      "id": "73f66683-2670-46eb-bda0-87840a9d1fa6",
+      "sourceId": "1879fbd0-2145-498f-b768-f4365e146b67",
+      "targetId": "12bc7b4d-1797-4285-a999-5bb94f29ee82",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "1a03b4e3-4986-4d22-bc22-bd39da587877",
+      "sourceId": "9405fed5-c9cc-422e-b1d1-a4a51aa8c104",
+      "targetId": "1879fbd0-2145-498f-b768-f4365e146b67",
+      "distance": 68,
+      "no_stairs": true
+    },
+    {
+      "id": "a8045da9-9803-4e7d-af8a-d688ea8df375",
+      "sourceId": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "targetId": "0d265ada-cc71-456c-a7e7-c82ed60d4322",
+      "distance": 13,
+      "no_stairs": true
+    },
+    {
+      "id": "c8dcf60d-1e90-473e-bf90-fb8c9217d106",
+      "sourceId": "7d247c83-f281-4a00-a52a-cde6319ff4e9",
+      "targetId": "9405fed5-c9cc-422e-b1d1-a4a51aa8c104",
+      "distance": 43,
+      "no_stairs": true
+    },
+    {
+      "id": "354e3598-a373-4fc6-8382-3cc638320167",
+      "sourceId": "77b55581-e8ee-4109-8065-7641f8d533bf",
+      "targetId": "1879fbd0-2145-498f-b768-f4365e146b67",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "cf6dae85-3869-40fe-88cf-eefaca7a5317",
+      "sourceId": "77b55581-e8ee-4109-8065-7641f8d533bf",
+      "targetId": "cc6c345c-b96b-48ca-9b0c-073c59693f05",
+      "distance": 33,
+      "no_stairs": true
+    },
+    {
+      "id": "6ece75fd-af35-4e66-8faa-65542101dc0c",
+      "sourceId": "cc6c345c-b96b-48ca-9b0c-073c59693f05",
+      "targetId": "ad2779c0-2a01-4680-8e72-98be3fe6b478",
+      "distance": 40,
+      "no_stairs": true
+    },
+    {
+      "id": "7516d9fd-4778-428c-9f8c-29a26f041ce9",
+      "sourceId": "ad2779c0-2a01-4680-8e72-98be3fe6b478",
+      "targetId": "93ca333e-8d9b-4788-81b3-16b02e88e588",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "e32dd6e6-b32c-48dc-aed3-ad88e266e31b",
+      "sourceId": "93ca333e-8d9b-4788-81b3-16b02e88e588",
+      "targetId": "6b626142-5506-4016-81d4-fe3a5b95225b",
+      "distance": 55,
+      "no_stairs": true
+    },
+    {
+      "id": "a9b815cd-40a1-49e1-a230-f187f3764077",
+      "sourceId": "6b626142-5506-4016-81d4-fe3a5b95225b",
+      "targetId": "114bc23a-bc80-44c0-b6c2-4af3858ca18f",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "9ef9a15c-df54-447f-82ac-c2faaa83eda0",
+      "sourceId": "6b626142-5506-4016-81d4-fe3a5b95225b",
+      "targetId": "f69d779f-8e86-43ac-a687-fbb491522fc5",
+      "distance": 66,
+      "no_stairs": true
+    },
+    {
+      "id": "52cdd844-80ca-477e-914a-60fddf864dbd",
+      "sourceId": "cc6c345c-b96b-48ca-9b0c-073c59693f05",
+      "targetId": "93ca333e-8d9b-4788-81b3-16b02e88e588",
+      "distance": 43,
+      "no_stairs": true
+    },
+    {
+      "id": "c32977e2-fb1b-4afb-9494-62b561189d17",
+      "sourceId": "9405fed5-c9cc-422e-b1d1-a4a51aa8c104",
+      "targetId": "88d04ed7-291e-459f-bc47-95aaea61723b",
+      "distance": 96,
+      "no_stairs": false
+    },
+    {
+      "id": "e845ca4a-262c-46d1-b7cb-3c6a1c891f74",
+      "sourceId": "1fbd4b0a-824c-4f6c-8d33-3b5b933822d9",
+      "targetId": "f69d779f-8e86-43ac-a687-fbb491522fc5",
+      "distance": 24,
+      "no_stairs": true
+    },
+    {
+      "id": "7c7f1469-95ed-4cce-a24a-878117df0f18",
+      "sourceId": "934e226f-040d-483f-88f1-496d6019e590",
+      "targetId": "88d04ed7-291e-459f-bc47-95aaea61723b",
+      "distance": 32,
+      "no_stairs": true
+    },
+    {
+      "id": "cb500f29-05c2-4de1-a2f6-654c52ddf3b3",
+      "sourceId": "a54dcd22-1b5c-450c-99af-4ed660882e7b",
+      "targetId": "1fbd4b0a-824c-4f6c-8d33-3b5b933822d9",
+      "distance": 54,
+      "no_stairs": true
+    },
+    {
+      "id": "b0a98882-2f7a-4d77-9508-7a410927fbde",
+      "sourceId": "a54dcd22-1b5c-450c-99af-4ed660882e7b",
+      "targetId": "934e226f-040d-483f-88f1-496d6019e590",
+      "distance": 58,
+      "no_stairs": true
+    },
+    {
+      "id": "110932f9-b08f-4190-9ab9-23bf85b22382",
+      "sourceId": "88d04ed7-291e-459f-bc47-95aaea61723b",
+      "targetId": "cfde8be6-1f2d-4e25-9d08-b21d3a2cc4e5",
+      "distance": 67,
+      "no_stairs": true
+    },
+    {
+      "id": "2573351d-1bb3-4687-9ea0-fd206a5c819c",
+      "sourceId": "cfde8be6-1f2d-4e25-9d08-b21d3a2cc4e5",
+      "targetId": "4d6edaeb-7511-4234-aadf-1ad36086d80d",
+      "distance": 42,
+      "no_stairs": true
+    },
+    {
+      "id": "78d82a5f-b431-4458-9d81-1af3cef3ba31",
+      "sourceId": "49fc0c8e-fbbf-4a74-b474-338da3e2a8bd",
+      "targetId": "6fc1c721-fee2-4cdb-bb6b-9329a96838ed",
+      "distance": 29,
+      "no_stairs": true
+    },
+    {
+      "id": "2089a74c-9513-4045-b7f1-e39c80bff39e",
+      "sourceId": "6fc1c721-fee2-4cdb-bb6b-9329a96838ed",
+      "targetId": "43434973-7d60-47af-a47c-96b3a4af4fdd",
+      "distance": 19,
+      "no_stairs": true
+    },
+    {
+      "id": "b1452b62-7117-41e3-a0b8-f0b315954f20",
+      "sourceId": "6fc1c721-fee2-4cdb-bb6b-9329a96838ed",
+      "targetId": "84f843e4-260b-46d9-833a-38b9f2824f9f",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "54e910f0-468a-4321-8238-4662a5642364",
+      "sourceId": "40b5073d-76b5-4069-b68c-599be82ced5a",
+      "targetId": "84f843e4-260b-46d9-833a-38b9f2824f9f",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "9a49da10-f006-4661-929d-4c79718e28b3",
+      "sourceId": "40b5073d-76b5-4069-b68c-599be82ced5a",
+      "targetId": "6c845be7-7cf9-4ec0-9c87-cbb50bdf78ff",
+      "distance": 22,
+      "no_stairs": true
+    },
+    {
+      "id": "6d1aaa54-ce32-432c-83b8-07b5e6a9e5a2",
+      "sourceId": "84f843e4-260b-46d9-833a-38b9f2824f9f",
+      "targetId": "52868054-8c85-40f6-9bae-d2ba95e4bf98",
+      "distance": 69,
+      "no_stairs": true
+    },
+    {
+      "id": "4b21f9a5-baae-4cce-b521-76a90da71bf9",
+      "sourceId": "52868054-8c85-40f6-9bae-d2ba95e4bf98",
+      "targetId": "323c5181-59a4-4901-ad7c-61126404d4df",
+      "distance": 43,
+      "no_stairs": true
+    },
+    {
+      "id": "7ceb1744-06b4-40b3-8bb2-a2c7193acb57",
+      "sourceId": "323c5181-59a4-4901-ad7c-61126404d4df",
+      "targetId": "73e3d451-8fe3-42df-9393-4d3729c1abe2",
+      "distance": 23,
+      "no_stairs": true
+    },
+    {
+      "id": "ce9b60aa-2dfa-4eae-8de5-a4c0b8eee91a",
+      "sourceId": "73e3d451-8fe3-42df-9393-4d3729c1abe2",
+      "targetId": "5d3643eb-a3d1-482d-b5af-65d2ffb6c2f2",
+      "distance": 23,
+      "no_stairs": true
+    },
+    {
+      "id": "1b482af6-7ad3-4809-af4b-5f42c8b1f7fc",
+      "sourceId": "5d3643eb-a3d1-482d-b5af-65d2ffb6c2f2",
+      "targetId": "4d6edaeb-7511-4234-aadf-1ad36086d80d",
+      "distance": 24,
+      "no_stairs": true
+    },
+    {
+      "id": "1f453e2a-4b65-4c7d-90ee-27131c3134fc",
+      "sourceId": "5d3643eb-a3d1-482d-b5af-65d2ffb6c2f2",
+      "targetId": "60c31c81-5d07-435d-ad55-e2a2ef5bafb1",
+      "distance": 70,
+      "no_stairs": true
+    },
+    {
+      "id": "d0693a9b-758b-4ad4-b0b3-b701b9c32b22",
+      "sourceId": "60913465-793c-408e-a95d-e89f38014cc7",
+      "targetId": "60c31c81-5d07-435d-ad55-e2a2ef5bafb1",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "0547d2bf-ce91-4a14-9f48-8a9ef3bf1a0d",
+      "sourceId": "1d243206-60c5-4007-af7c-1c1bad40dc0b",
+      "targetId": "114bc23a-bc80-44c0-b6c2-4af3858ca18f",
+      "distance": 34,
+      "no_stairs": true
+    },
+    {
+      "id": "cd1171a4-7d54-4abf-83aa-598727ac4fe1",
+      "sourceId": "252deece-d966-442e-80f9-92ed39f72be9",
+      "targetId": "e348e138-f5d6-4d8f-8523-8ba4ba1150f5",
+      "distance": 40,
+      "no_stairs": true
+    },
+    {
+      "id": "c29c51d4-19bb-4007-b798-677cdc846c8b",
+      "sourceId": "92d1b7bb-0c23-4b29-b004-a227560d4ec7",
+      "targetId": "252deece-d966-442e-80f9-92ed39f72be9",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "a4db20ea-e439-4de2-a287-033b35d26ae5",
+      "sourceId": "f84160d1-c7b3-4423-a399-c5f747a981b8",
+      "targetId": "92d1b7bb-0c23-4b29-b004-a227560d4ec7",
+      "distance": 39,
+      "no_stairs": true
+    },
+    {
+      "id": "be36a9ea-de1f-426d-820c-58b94161afb5",
+      "sourceId": "e348e138-f5d6-4d8f-8523-8ba4ba1150f5",
+      "targetId": "f84160d1-c7b3-4423-a399-c5f747a981b8",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "de4b73fa-80c4-4d57-a7c9-709eb277e7d7",
+      "sourceId": "e348e138-f5d6-4d8f-8523-8ba4ba1150f5",
+      "targetId": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "distance": 19,
+      "no_stairs": true
+    },
+    {
+      "id": "abc1135d-08be-47ed-8b5d-6dc4c8b74fbc",
+      "sourceId": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "targetId": "f84160d1-c7b3-4423-a399-c5f747a981b8",
+      "distance": 19,
+      "no_stairs": true
+    },
+    {
+      "id": "311062d3-f6cd-400a-a4b6-47875160b1a9",
+      "sourceId": "9a0aa377-b619-48ec-90e1-bcf5fddad2fe",
+      "targetId": "6ecc52ca-019d-4aef-b235-85ab32017c33",
+      "distance": 106,
+      "no_stairs": true
+    },
+    {
+      "id": "f8662a40-aa71-47f8-a6d9-c4a1a6e5e132",
+      "sourceId": "6ecc52ca-019d-4aef-b235-85ab32017c33",
+      "targetId": "e348e138-f5d6-4d8f-8523-8ba4ba1150f5",
+      "distance": 391,
+      "no_stairs": true
+    },
+    {
+      "id": "ed3c1b69-fb81-4261-953d-6df9b5225e0a",
+      "sourceId": "9a0aa377-b619-48ec-90e1-bcf5fddad2fe",
+      "targetId": "49fc0c8e-fbbf-4a74-b474-338da3e2a8bd",
+      "distance": 385,
+      "no_stairs": true
+    },
+    {
+      "id": "748c76c5-f708-438e-9a31-dcb35ccfb3e8",
+      "sourceId": "f0fbf7f2-1764-476f-9e5c-84a0c957b556",
+      "targetId": "49fc0c8e-fbbf-4a74-b474-338da3e2a8bd",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "af0f7c8f-7ec9-4b30-9360-075748034f82",
+      "sourceId": "631b0519-a99d-4ca6-90d8-17df0d6474bc",
+      "targetId": "40b5073d-76b5-4069-b68c-599be82ced5a",
+      "distance": 19,
+      "no_stairs": true
+    },
+    {
+      "id": "9d628983-d2a3-4eed-ae9b-390182c9273c",
+      "sourceId": "b69d5e75-e708-4470-aaff-4980749a5d8d",
+      "targetId": "83d7d29d-b5c9-4c08-a87a-991fb8ad5350",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "69865055-ff7c-47d0-a9f0-ed6552deee6a",
+      "sourceId": "83d7d29d-b5c9-4c08-a87a-991fb8ad5350",
+      "targetId": "cfde8be6-1f2d-4e25-9d08-b21d3a2cc4e5",
+      "distance": 45,
+      "no_stairs": true
+    },
+    {
+      "id": "738c096a-23ce-4959-930e-a6ee85ad43f3",
+      "sourceId": "88d04ed7-291e-459f-bc47-95aaea61723b",
+      "targetId": "463f6a66-a578-42fd-9f06-630a62d1c2b0",
+      "distance": 49,
+      "no_stairs": true
+    },
+    {
+      "id": "479bcfb5-c7f9-4732-a719-d6d12e6bc8c6",
+      "sourceId": "f69d779f-8e86-43ac-a687-fbb491522fc5",
+      "targetId": "614a6e14-a4dd-46a1-8833-118299122fb0",
+      "distance": 47,
+      "no_stairs": true
+    },
+    {
+      "id": "e8c5d05b-b1b0-4b96-91e9-388a9b0ae96e",
+      "sourceId": "7aa48e79-4e1b-487f-8252-33198b7ac863",
+      "targetId": "7d503de4-5d5c-4c5a-a029-986423c8427d",
+      "distance": 25,
+      "no_stairs": true
+    },
+    {
+      "id": "a946624b-46ff-4ce6-bf2b-a59c11d85703",
+      "sourceId": "7d503de4-5d5c-4c5a-a029-986423c8427d",
+      "targetId": "31be4f34-2c3d-4de0-917f-403c3c741621",
+      "distance": 51,
+      "no_stairs": true
+    },
+    {
+      "id": "c05d5b5f-0039-4fba-9082-5713dfecb0bf",
+      "sourceId": "31be4f34-2c3d-4de0-917f-403c3c741621",
+      "targetId": "6c61df1e-9240-4120-a582-a9e5700271b8",
+      "distance": 133,
+      "no_stairs": true
+    },
+    {
+      "id": "154a925e-6d7a-400e-b583-90f26753dd73",
+      "sourceId": "7aa48e79-4e1b-487f-8252-33198b7ac863",
+      "targetId": "25cd6728-11f5-472b-853a-31f74d776028",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "50bacfd5-378c-40b2-9224-8f3619432bec",
+      "sourceId": "25cd6728-11f5-472b-853a-31f74d776028",
+      "targetId": "7950087f-10c3-449a-bbb1-eb394dd7d67c",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "9a2a1972-09b5-4253-86db-e9f163332ece",
+      "sourceId": "7950087f-10c3-449a-bbb1-eb394dd7d67c",
+      "targetId": "7d503de4-5d5c-4c5a-a029-986423c8427d",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "5450c006-d7bf-46d4-ac71-cbcecb12858c",
+      "sourceId": "7950087f-10c3-449a-bbb1-eb394dd7d67c",
+      "targetId": "2d09213d-d8f5-464a-8415-5d055b324039",
+      "distance": 26,
+      "no_stairs": true
+    },
+    {
+      "id": "46070de8-2762-4bbd-9931-3f91d94cf6e1",
+      "sourceId": "83d7d29d-b5c9-4c08-a87a-991fb8ad5350",
+      "targetId": "463f6a66-a578-42fd-9f06-630a62d1c2b0",
+      "distance": 84,
+      "no_stairs": true
+    },
+    {
+      "id": "c080bdce-2269-44d4-8039-676c27f9944d",
+      "sourceId": "463f6a66-a578-42fd-9f06-630a62d1c2b0",
+      "targetId": "9f234dbf-bcca-4228-b6eb-b099ea912ced",
+      "distance": 104,
+      "no_stairs": true
+    },
+    {
+      "id": "ba94e1fe-abcd-4440-ab82-c2629f79c821",
+      "sourceId": "9f234dbf-bcca-4228-b6eb-b099ea912ced",
+      "targetId": "614a6e14-a4dd-46a1-8833-118299122fb0",
+      "distance": 27,
+      "no_stairs": true
+    },
+    {
+      "id": "829a7c6f-df3b-4da3-8538-9ddff86bbe1d",
+      "sourceId": "614a6e14-a4dd-46a1-8833-118299122fb0",
+      "targetId": "a894a80b-50f8-4b96-b12b-c8b465cc720e",
+      "distance": 27,
+      "no_stairs": true
+    },
+    {
+      "id": "1375ca5a-9df8-4508-b3df-05a92ef561d1",
+      "sourceId": "a894a80b-50f8-4b96-b12b-c8b465cc720e",
+      "targetId": "d772d818-0eb3-4f96-8f54-3d99a7e1f567",
+      "distance": 29,
+      "no_stairs": true
+    },
+    {
+      "id": "104ed8eb-c304-48c0-bfd3-cede15f74c5f",
+      "sourceId": "d772d818-0eb3-4f96-8f54-3d99a7e1f567",
+      "targetId": "cc9427c4-a050-4e10-9817-b4c1f9cc987b",
+      "distance": 32,
+      "no_stairs": true
+    },
+    {
+      "id": "654d6a7d-0aed-4210-90b3-f394d7e842e5",
+      "sourceId": "d772d818-0eb3-4f96-8f54-3d99a7e1f567",
+      "targetId": "9f234dbf-bcca-4228-b6eb-b099ea912ced",
+      "distance": 29,
+      "no_stairs": true
+    },
+    {
+      "id": "85ffdf2f-80a4-4347-8b98-1efca0a8d459",
+      "sourceId": "463f6a66-a578-42fd-9f06-630a62d1c2b0",
+      "targetId": "52b5e303-61b0-4d45-8e7d-c2a88c4ae484",
+      "distance": 90,
+      "no_stairs": true
+    },
+    {
+      "id": "d8f7548f-4559-40a7-83fa-8098307e3487",
+      "sourceId": "52b5e303-61b0-4d45-8e7d-c2a88c4ae484",
+      "targetId": "5eb4f45e-61de-41f2-bebd-44f8287fdab5",
+      "distance": 45,
+      "no_stairs": true
+    },
+    {
+      "id": "7005ce36-cadf-4c17-b63c-c35475d381ac",
+      "sourceId": "5eb4f45e-61de-41f2-bebd-44f8287fdab5",
+      "targetId": "10a34a3c-8dd6-49f7-a923-53c6c2d54348",
+      "distance": 27,
+      "no_stairs": true
+    },
+    {
+      "id": "53acafe8-b5d2-4f1e-a04b-1c1383fe6531",
+      "sourceId": "10a34a3c-8dd6-49f7-a923-53c6c2d54348",
+      "targetId": "ba93381d-f9e0-4d7f-b819-c48b617d0d08",
+      "distance": 32,
+      "no_stairs": true
+    },
+    {
+      "id": "434c8a2d-bb05-4a3f-b374-62ddb600d2b3",
+      "sourceId": "ba93381d-f9e0-4d7f-b819-c48b617d0d08",
+      "targetId": "4091bfa3-da4c-4da1-99a0-baf935d50242",
+      "distance": 24,
+      "no_stairs": true
+    },
+    {
+      "id": "768f6b08-45cf-49a1-86b4-8eb9d50502c6",
+      "sourceId": "4091bfa3-da4c-4da1-99a0-baf935d50242",
+      "targetId": "99ced907-a128-4c5f-9f70-576171a9970f",
+      "distance": 30,
+      "no_stairs": true
+    },
+    {
+      "id": "bfa41a86-a443-437d-b6d3-9a15d0cefe8d",
+      "sourceId": "99ced907-a128-4c5f-9f70-576171a9970f",
+      "targetId": "83d7d29d-b5c9-4c08-a87a-991fb8ad5350",
+      "distance": 40,
+      "no_stairs": true
+    },
+    {
+      "id": "f9022db9-f88b-47b7-952b-addacb7f9bbf",
+      "sourceId": "10a34a3c-8dd6-49f7-a923-53c6c2d54348",
+      "targetId": "3f2b6017-4ffd-43c2-ad02-bdd8762d0f6e",
+      "distance": 50,
+      "no_stairs": true
+    },
+    {
+      "id": "f47bf169-2bee-4068-9b1d-0b6045f3ff57",
+      "sourceId": "64bcaebf-2a18-4c3d-9781-1c2c0019d94b",
+      "targetId": "09052c8a-4442-4022-bce0-2c5dbbe63394",
+      "distance": 26,
+      "no_stairs": true
+    },
+    {
+      "id": "e207f22d-5b81-46af-8c46-3e90dfda9206",
+      "sourceId": "09052c8a-4442-4022-bce0-2c5dbbe63394",
+      "targetId": "5eb4f45e-61de-41f2-bebd-44f8287fdab5",
+      "distance": 26,
+      "no_stairs": true
+    },
+    {
+      "id": "01c37a08-b778-4e2c-b3f4-1a28b76ad7d6",
+      "sourceId": "2db16bb9-b43a-450b-a045-f331fc8d9a5a",
+      "targetId": "bf5bcb2a-0e28-4fd1-9a95-4614741f91cc",
+      "distance": 28,
+      "no_stairs": true
+    },
+    {
+      "id": "aecabf2a-f15a-4533-bba4-6ad7987e2a26",
+      "sourceId": "bf5bcb2a-0e28-4fd1-9a95-4614741f91cc",
+      "targetId": "3f2b6017-4ffd-43c2-ad02-bdd8762d0f6e",
+      "distance": 20,
+      "no_stairs": true
+    },
+    {
+      "id": "78c12a88-15da-48ea-9aa5-97036935ce50",
+      "sourceId": "7dfe3d76-54e4-47a3-ae03-6b553f9962d5",
+      "targetId": "502dd798-a71a-4251-aeda-fc0b231989e4",
+      "distance": 31,
+      "no_stairs": true
+    },
+    {
+      "id": "28b76c59-3f8f-4d31-8a7b-4c41734a924b",
+      "sourceId": "614a6e14-a4dd-46a1-8833-118299122fb0",
+      "targetId": "7dfe3d76-54e4-47a3-ae03-6b553f9962d5",
+      "distance": 19,
+      "no_stairs": true
+    },
+    {
+      "id": "8c162f98-8906-43f7-919c-2fcdf7180f49",
+      "sourceId": "3f2b6017-4ffd-43c2-ad02-bdd8762d0f6e",
+      "targetId": "368521ab-290b-4e8f-8992-c294761df02b",
+      "distance": 53,
+      "no_stairs": true
+    },
+    {
+      "id": "db563a3f-980b-4740-8d14-cbb4373befd6",
+      "sourceId": "6c61df1e-9240-4120-a582-a9e5700271b8",
+      "targetId": "368521ab-290b-4e8f-8992-c294761df02b",
+      "distance": 21,
+      "no_stairs": true
+    },
+    {
+      "id": "abed32c8-60d2-442f-839a-663cf83206f5",
+      "sourceId": "28a63433-cf83-4d9f-9e68-028b26361900",
+      "targetId": "31be4f34-2c3d-4de0-917f-403c3c741621",
+      "distance": 20,
+      "no_stairs": true
+    },
+    {
+      "id": "728dc22b-dfcc-4705-8475-96c302db7bb7",
+      "sourceId": "5f38c732-566f-4105-8e97-5bfb28595fd5",
+      "targetId": "50b177f4-e26f-446b-b58c-9de0633f5552",
+      "distance": 52,
+      "no_stairs": true
+    },
+    {
+      "id": "6721d70c-ecd0-4aae-956e-0e3a504adbbd",
+      "sourceId": "50b177f4-e26f-446b-b58c-9de0633f5552",
+      "targetId": "78a285e8-4bb5-41f7-acef-8d1389802909",
+      "distance": 51,
+      "no_stairs": true
+    },
+    {
+      "id": "00827e5f-9523-4993-b50c-6e4fc65260a5",
+      "sourceId": "78a285e8-4bb5-41f7-acef-8d1389802909",
+      "targetId": "77b55581-e8ee-4109-8065-7641f8d533bf",
+      "distance": 49,
+      "no_stairs": true
+    },
+    {
+      "id": "41988533-ddb8-4296-8bf8-65a0f57716b1",
+      "sourceId": "78a285e8-4bb5-41f7-acef-8d1389802909",
+      "targetId": "4a008fa6-6ece-426b-9be1-c7c0646ad40a",
+      "distance": 55,
+      "no_stairs": true
+    },
+    {
+      "id": "888ee280-797b-4f1d-bff4-c5d9d456347c",
+      "sourceId": "4a008fa6-6ece-426b-9be1-c7c0646ad40a",
+      "targetId": "8a66e8aa-b057-402b-bcd5-ceef1bf83729",
+      "distance": 51,
+      "no_stairs": true
+    },
+    {
+      "id": "4fbc4857-3d6d-4534-87ac-b8a2dabb3100",
+      "sourceId": "8a66e8aa-b057-402b-bcd5-ceef1bf83729",
+      "targetId": "217e6e3e-1459-4787-8ff8-785fe24b022c",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "cd51ffb8-514a-447e-a617-e04ea333849d",
+      "sourceId": "217e6e3e-1459-4787-8ff8-785fe24b022c",
+      "targetId": "54fd6773-5c19-4a9b-9848-5bf5b2c3b390",
+      "distance": 32,
+      "no_stairs": true
+    },
+    {
+      "id": "88fdf3fb-cdc9-4afd-9cab-2adf957f6fc8",
+      "sourceId": "54fd6773-5c19-4a9b-9848-5bf5b2c3b390",
+      "targetId": "ad2779c0-2a01-4680-8e72-98be3fe6b478",
+      "distance": 21,
+      "no_stairs": true
+    },
+    {
+      "id": "dc7cfec1-b238-445c-a105-66da7d70cf19",
+      "sourceId": "217e6e3e-1459-4787-8ff8-785fe24b022c",
+      "targetId": "2ef295f8-72ba-4e2c-8ac1-391483bbf6e1",
+      "distance": 23,
+      "no_stairs": true
+    },
+    {
+      "id": "674faf9a-a259-4f88-a629-92d81e204e77",
+      "sourceId": "2ef295f8-72ba-4e2c-8ac1-391483bbf6e1",
+      "targetId": "ff8fb601-4b5c-4a66-a4f5-b0296ab11719",
+      "distance": 37,
+      "no_stairs": true
+    },
+    {
+      "id": "48a81f3d-53ec-4f28-9e01-cf92c8447c38",
+      "sourceId": "ff8fb601-4b5c-4a66-a4f5-b0296ab11719",
+      "targetId": "5720d7d4-ba0f-4a48-89b3-6c9a20f070d9",
+      "distance": 45,
+      "no_stairs": true
+    },
+    {
+      "id": "7afc8c79-e563-49af-a412-c01e7cf0e414",
+      "sourceId": "f69d779f-8e86-43ac-a687-fbb491522fc5",
+      "targetId": "31da44f5-1e2a-48c3-89e9-b9a163571ec0",
+      "distance": 89,
+      "no_stairs": true
+    },
+    {
+      "id": "d4baf3a3-6137-4606-8b70-03b8f870eb95",
+      "sourceId": "31da44f5-1e2a-48c3-89e9-b9a163571ec0",
+      "targetId": "111792b7-57c8-4511-8807-d6298b1f9183",
+      "distance": 33,
+      "no_stairs": true
+    },
+    {
+      "id": "e357cd1d-afbd-4706-9b97-4bcd8be1573f",
+      "sourceId": "43f9dd68-e5c0-4e4a-8957-b184d2aa1059",
+      "targetId": "6ecc52ca-019d-4aef-b235-85ab32017c33",
+      "distance": 42,
+      "no_stairs": true
+    },
+    {
+      "id": "22a53d2e-6cc9-41b3-8f1f-e2db3d09797b",
+      "sourceId": "43f9dd68-e5c0-4e4a-8957-b184d2aa1059",
+      "targetId": "5109ed19-9bee-43ad-8236-ebdf795a3b53",
+      "distance": 60,
+      "no_stairs": true
+    },
+    {
+      "id": "37598201-6285-49f2-8ed2-4d34ed08a024",
+      "sourceId": "5109ed19-9bee-43ad-8236-ebdf795a3b53",
+      "targetId": "111792b7-57c8-4511-8807-d6298b1f9183",
+      "distance": 25,
+      "no_stairs": true
+    },
+    {
+      "id": "73c7db6b-6fa7-49a3-9109-dbf6c15fbfa2",
+      "sourceId": "31da44f5-1e2a-48c3-89e9-b9a163571ec0",
+      "targetId": "f2e2ab0c-3bb3-4285-a068-c89d41824c78",
+      "distance": 64,
+      "no_stairs": true
+    },
+    {
+      "id": "a2f54f70-4192-4736-86dc-661e65619cbf",
+      "sourceId": "f2e2ab0c-3bb3-4285-a068-c89d41824c78",
+      "targetId": "d09ebb2e-789f-4ed2-9a6a-669c98bb68b8",
+      "distance": 24,
+      "no_stairs": true
+    },
+    {
+      "id": "1aeaa2f6-28e9-4f8a-825d-1b59faf118a3",
+      "sourceId": "a49f115e-0764-4f45-96b9-0f1ecaf857d2",
+      "targetId": "666dfc03-5fa2-4bb9-8994-123203f10e53",
+      "distance": 30,
+      "no_stairs": true
+    },
+    {
+      "id": "aeea1381-9d91-4732-be7c-a3f5c21ca5bb",
+      "sourceId": "666dfc03-5fa2-4bb9-8994-123203f10e53",
+      "targetId": "4fb52ec3-b347-4080-986a-aff11ea6da27",
+      "distance": 38,
+      "no_stairs": true
+    },
+    {
+      "id": "4fa15cf2-5a08-4443-9b0a-4a210f27b5b1",
+      "sourceId": "e515716d-cdb4-4820-8240-ec8d6413018f",
+      "targetId": "4fb52ec3-b347-4080-986a-aff11ea6da27",
+      "distance": 82,
+      "no_stairs": true
+    },
+    {
+      "id": "b8c1bdde-84ca-461d-9b8b-2d7e9479d019",
+      "sourceId": "4fb52ec3-b347-4080-986a-aff11ea6da27",
+      "targetId": "2943961b-7b45-45df-9595-42ebdadc1a4a",
+      "distance": 30,
+      "no_stairs": true
+    },
+    {
+      "id": "3b55abc1-2a00-4167-8e43-40bda85b5ae8",
+      "sourceId": "2943961b-7b45-45df-9595-42ebdadc1a4a",
+      "targetId": "43b2a086-9be2-44e1-94c3-847786143d52",
+      "distance": 20,
+      "no_stairs": true
+    },
+    {
+      "id": "98e1a0be-2f63-4c25-9860-1fdad13d82ff",
+      "sourceId": "2943961b-7b45-45df-9595-42ebdadc1a4a",
+      "targetId": "151ccbe3-8010-4e67-98db-ac4dbcf5a278",
+      "distance": 22,
+      "no_stairs": true
+    },
+    {
+      "id": "819021a3-9fdb-468e-8e15-755f21532ce3",
+      "sourceId": "151ccbe3-8010-4e67-98db-ac4dbcf5a278",
+      "targetId": "7222eb82-4d5b-49c9-afdb-fb7bb1186f6d",
+      "distance": 114,
+      "no_stairs": true
+    },
+    {
+      "id": "31eefe7c-7450-4c84-ab92-97c0e7caf47e",
+      "sourceId": "7222eb82-4d5b-49c9-afdb-fb7bb1186f6d",
+      "targetId": "e515716d-cdb4-4820-8240-ec8d6413018f",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "dccc956c-c2a8-4022-baa6-dd9c7d262671",
+      "sourceId": "6afce5ea-dc3f-476c-b09d-71bffe85f04b",
+      "targetId": "7222eb82-4d5b-49c9-afdb-fb7bb1186f6d",
+      "distance": 21,
+      "no_stairs": true
+    },
+    {
+      "id": "4901a512-add1-4827-ba3c-dda28bcb95e4",
+      "sourceId": "6afce5ea-dc3f-476c-b09d-71bffe85f04b",
+      "targetId": "26641423-518c-4583-90d6-c7001d267905",
+      "distance": 113,
+      "no_stairs": true
+    },
+    {
+      "id": "713944c4-56c8-4f8a-b1a2-a815ab520a7a",
+      "sourceId": "26641423-518c-4583-90d6-c7001d267905",
+      "targetId": "a7052bd0-3fb6-4709-9c9f-22ab1e45a860",
+      "distance": 77,
+      "no_stairs": true
+    },
+    {
+      "id": "ac36f88e-25db-4ea0-aa86-a04f832c7c26",
+      "sourceId": "a7052bd0-3fb6-4709-9c9f-22ab1e45a860",
+      "targetId": "6fa51eeb-97b3-41f1-a377-e653b8cfa552",
+      "distance": 73,
+      "no_stairs": true
+    },
+    {
+      "id": "ff22bf45-3207-4fa3-81cf-418faa0aa6b4",
+      "sourceId": "6fa51eeb-97b3-41f1-a377-e653b8cfa552",
+      "targetId": "f8ebad14-545d-41da-aab9-b55a523d340a",
+      "distance": 107,
+      "no_stairs": true
+    },
+    {
+      "id": "8f9efdbb-858f-4e49-aa5d-9054140f2bd0",
+      "sourceId": "d6d759e5-2be8-4b96-8bda-e765822a18f3",
+      "targetId": "f8ebad14-545d-41da-aab9-b55a523d340a",
+      "distance": 22,
+      "no_stairs": true
+    },
+    {
+      "id": "d6c3141e-e623-4b9f-b398-4e543fe88c89",
+      "sourceId": "4206aa24-cff9-42ab-987a-f8fce0682bca",
+      "targetId": "d6d759e5-2be8-4b96-8bda-e765822a18f3",
+      "distance": 23,
+      "no_stairs": true
+    },
+    {
+      "id": "a62c1ea8-c180-4fe6-9bdb-4dd0280ca836",
+      "sourceId": "4206aa24-cff9-42ab-987a-f8fce0682bca",
+      "targetId": "20bc3d71-1723-4da9-81f3-71c4eaa5d914",
+      "distance": 74,
+      "no_stairs": true
+    },
+    {
+      "id": "215ca278-8d59-4dde-aab5-1cb2ce3976b6",
+      "sourceId": "20bc3d71-1723-4da9-81f3-71c4eaa5d914",
+      "targetId": "e6778c1f-e83e-4c2c-95e6-032ee29ce210",
+      "distance": 34,
+      "no_stairs": true
+    },
+    {
+      "id": "2b54b45f-a0ec-4123-bf9b-bdbc49cf04de",
+      "sourceId": "e6778c1f-e83e-4c2c-95e6-032ee29ce210",
+      "targetId": "32472859-c0fd-4ade-a8be-1f93ac91a98b",
+      "distance": 21,
+      "no_stairs": true
+    },
+    {
+      "id": "ab25dc27-51da-4b88-90eb-30c76127b0c0",
+      "sourceId": "32472859-c0fd-4ade-a8be-1f93ac91a98b",
+      "targetId": "6fa51eeb-97b3-41f1-a377-e653b8cfa552",
+      "distance": 22,
+      "no_stairs": true
+    },
+    {
+      "id": "b0bae746-de63-4940-9097-a9e1c1237d19",
+      "sourceId": "32472859-c0fd-4ade-a8be-1f93ac91a98b",
+      "targetId": "d6d759e5-2be8-4b96-8bda-e765822a18f3",
+      "distance": 107,
+      "no_stairs": true
+    },
+    {
+      "id": "3a62d8b1-ef6e-4aff-9753-aacbf2606190",
+      "sourceId": "32472859-c0fd-4ade-a8be-1f93ac91a98b",
+      "targetId": "c260aaf1-2793-4622-9447-edc80aaa80ba",
+      "distance": 75,
+      "no_stairs": true
+    },
+    {
+      "id": "667ba3e7-f61a-4cfd-822d-cf7f944a87c3",
+      "sourceId": "c260aaf1-2793-4622-9447-edc80aaa80ba",
+      "targetId": "a7052bd0-3fb6-4709-9c9f-22ab1e45a860",
+      "distance": 20,
+      "no_stairs": true
+    },
+    {
+      "id": "7b4ca2b0-7b7e-48c2-a503-31a122644607",
+      "sourceId": "c260aaf1-2793-4622-9447-edc80aaa80ba",
+      "targetId": "fa54c9b3-a3db-43cf-ae98-faa41cfe0155",
+      "distance": 24,
+      "no_stairs": true
+    },
+    {
+      "id": "ab595773-57ee-417e-aa9a-672a734b5b4a",
+      "sourceId": "c260aaf1-2793-4622-9447-edc80aaa80ba",
+      "targetId": "151ccbe3-8010-4e67-98db-ac4dbcf5a278",
+      "distance": 76,
+      "no_stairs": true
+    },
+    {
+      "id": "bed1ef33-f001-4c20-9cba-5a5b000c9abe",
+      "sourceId": "fa54c9b3-a3db-43cf-ae98-faa41cfe0155",
+      "targetId": "e6778c1f-e83e-4c2c-95e6-032ee29ce210",
+      "distance": 76,
+      "no_stairs": true
+    },
+    {
+      "id": "5e22268f-c76b-471a-970e-1d361760edd8",
+      "sourceId": "fa54c9b3-a3db-43cf-ae98-faa41cfe0155",
+      "targetId": "2943961b-7b45-45df-9595-42ebdadc1a4a",
+      "distance": 75,
+      "no_stairs": true
+    },
+    {
+      "id": "f41d8eb0-d101-4989-af8b-4e3955e8f1ec",
+      "sourceId": "400ada44-4091-4009-a452-36cb6c3cc6ac",
+      "targetId": "7222eb82-4d5b-49c9-afdb-fb7bb1186f6d",
+      "distance": 14,
+      "no_stairs": true
+    },
+    {
+      "id": "2ae617d5-48c1-4b1b-9734-aec211a59737",
+      "sourceId": "400ada44-4091-4009-a452-36cb6c3cc6ac",
+      "targetId": "e515716d-cdb4-4820-8240-ec8d6413018f",
+      "distance": 25,
+      "no_stairs": true
+    },
+    {
+      "id": "3116fb64-4bcd-4614-9b77-272b642bac44",
+      "sourceId": "400ada44-4091-4009-a452-36cb6c3cc6ac",
+      "targetId": "6afce5ea-dc3f-476c-b09d-71bffe85f04b",
+      "distance": 25,
+      "no_stairs": true
+    },
+    {
+      "id": "2d0d0479-07f9-49e9-af02-6f2ca3c04a34",
+      "sourceId": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "targetId": "4206aa24-cff9-42ab-987a-f8fce0682bca",
+      "distance": 29,
+      "no_stairs": true
+    },
+    {
+      "id": "3ecc259b-b0cc-4507-9afa-987cff4e50f5",
+      "sourceId": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "targetId": "d6d759e5-2be8-4b96-8bda-e765822a18f3",
+      "distance": 18,
+      "no_stairs": true
+    },
+    {
+      "id": "76fc557d-fd9d-4a57-b7f0-d2f80853a23a",
+      "sourceId": "98f2b79c-6e2d-4e99-bde5-1c5bcc7255d0",
+      "targetId": "f8ebad14-545d-41da-aab9-b55a523d340a",
+      "distance": 28,
+      "no_stairs": true
+    },
+    {
+      "id": "18db741f-9347-4444-9521-bcc8f5bee366",
+      "sourceId": "20bc3d71-1723-4da9-81f3-71c4eaa5d914",
+      "targetId": "afb2c1a0-c8c0-4f3c-8065-0f7f493d2e6c",
+      "distance": 29,
+      "no_stairs": true
+    },
+    {
+      "id": "31a20d65-8856-4deb-b44b-7a2ebd4bf1de",
+      "sourceId": "afb2c1a0-c8c0-4f3c-8065-0f7f493d2e6c",
+      "targetId": "e75c409b-5d41-4c7a-8f40-f99df18cf735",
+      "distance": 27,
+      "no_stairs": true
+    },
+    {
+      "id": "33cdd339-e9c2-4d85-8248-039798d3744d",
+      "sourceId": "e75c409b-5d41-4c7a-8f40-f99df18cf735",
+      "targetId": "6136a4a7-6fd7-43e7-95f2-211b67f86b3e",
+      "distance": 53,
+      "no_stairs": true
+    },
+    {
+      "id": "d074a5d4-4daf-4ced-af45-3fe71509245e",
+      "sourceId": "28a63433-cf83-4d9f-9e68-028b26361900",
+      "targetId": "6136a4a7-6fd7-43e7-95f2-211b67f86b3e",
+      "distance": 33,
+      "no_stairs": true
+    },
+    {
+      "id": "cc5c7a79-17be-4310-9884-f132c24ff98a",
+      "sourceId": "43b2a086-9be2-44e1-94c3-847786143d52",
+      "targetId": "5ca332b9-9a7e-438c-a2a5-00555d18480d",
+      "distance": 25,
+      "no_stairs": true
+    },
+    {
+      "id": "b970d908-5cb4-41ed-9386-a33e55d3d4ef",
+      "sourceId": "5ca332b9-9a7e-438c-a2a5-00555d18480d",
+      "targetId": "a49f115e-0764-4f45-96b9-0f1ecaf857d2",
+      "distance": 67,
+      "no_stairs": true
+    },
+    {
+      "id": "a8cbc634-e102-451d-b65c-1e1b560d22f5",
+      "sourceId": "5ca332b9-9a7e-438c-a2a5-00555d18480d",
+      "targetId": "368521ab-290b-4e8f-8992-c294761df02b",
+      "distance": 34,
+      "no_stairs": true
+    }
+  ]
+}
