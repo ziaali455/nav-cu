@@ -387,8 +387,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     transform: [
-      { translateX: -120 },
-      { translateY: -60 },
+      { translateX: 80 },
+      { translateY: 40 },
     ],
   },
   overlayWrapper: {
