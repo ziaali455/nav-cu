@@ -460,6 +460,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingBottom: 250,
+    transformOrigin: 'top center',
   },
   horizontalScrollContent: {
     flexGrow: 1,
