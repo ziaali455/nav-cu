@@ -11,6 +11,8 @@ interface GraphOverlayProps {
   originalHeight?: number; // Height of the coordinate system in JSON
   highlightedPath?: string[]; // Array of node IDs
   highlightedNodes?: string[]; // Array of node IDs to highlight specifically
+  offsetX?: number; // Horizontal offset for the graph
+  offsetY?: number; // Vertical offset for the graph
 }
 
 // Based on the JSON data scan, the coordinates seem to be roughly in a 1000x1000 box?
@@ -29,7 +31,9 @@ export default function GraphOverlay({
   originalWidth = DEFAULT_COORD_WIDTH,
   originalHeight = DEFAULT_COORD_HEIGHT,
   highlightedPath = [],
-  highlightedNodes = []
+  highlightedNodes = [],
+  offsetX = 0,
+  offsetY = 0
 }: GraphOverlayProps) {
   
   // Calculate scaling factors
@@ -79,10 +83,10 @@ export default function GraphOverlay({
             return (
               <Line
                 key={edge.id}
-                x1={source.x * scaleX}
-                y1={source.y * scaleY}
-                x2={target.x * scaleX}
-                y2={target.y * scaleY}
+                x1={source.x * scaleX + offsetX}
+                y1={source.y * scaleY + offsetY}
+                x2={target.x * scaleX + offsetX}
+                y2={target.y * scaleY + offsetY}
                 stroke={isHighlighted ? "#FF4B4B" : "rgba(0,0,255, 0.15)"}
                 strokeWidth={isHighlighted ? 4 : 1}
               />
@@ -100,8 +104,8 @@ export default function GraphOverlay({
             return (
               <Circle
                 key={node.id}
-                cx={node.x * scaleX}
-                cy={node.y * scaleY}
+                cx={node.x * scaleX + offsetX}
+                cy={node.y * scaleY + offsetY}
                 r={isHighlighted || isPathNode ? 4 : 2}
                 fill={isHighlighted ? "red" : (isPathNode ? "orange" : "rgba(0,0,255, 0.5)")}
               />
