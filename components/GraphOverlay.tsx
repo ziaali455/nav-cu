@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Line, Circle, G } from 'react-native-svg';
+import { View, StyleSheet, Image } from 'react-native';
+import Svg, { Line, G } from 'react-native-svg';
 import { GraphData, Node } from '@/types/graph';
 
 interface GraphOverlayProps {
@@ -23,6 +23,39 @@ interface GraphOverlayProps {
 
 const DEFAULT_COORD_WIDTH = 1000; 
 const DEFAULT_COORD_HEIGHT = 1000;
+
+// Icon size in pixels
+const ICON_SIZE = 24;
+
+// Icon mapping based on node properties
+function getNodeIconType(node: Node): string {
+  const name = node.name.toLowerCase();
+  
+  if (node.elevator) {
+    return 'elevator';
+  } else if (name.includes('building connection')) {
+    return 'arrow';
+  } else if (name.includes('campus entrance')) {
+    return 'information';
+  } else if (name.includes('ramp')) {
+    return 'ramp';
+  } else if (name.includes('entrance')) {
+    return 'door';
+  }
+  
+  // Default: handicap sign for accessible locations
+  return 'handicap_sign';
+}
+
+// Icon assets mapping
+const iconAssets: { [key: string]: any } = {
+  elevator: require('@/assets/icons/elevator.png'),
+  door: require('@/assets/icons/door.png'),
+  ramp: require('@/assets/icons/ramp.png'),
+  arrow: require('@/assets/icons/arrow.png'),
+  information: require('@/assets/icons/information.png'),
+  handicap_sign: require('@/assets/icons/handicap_sign.png'),
+};
 
 export default function GraphOverlay({ 
   data, 
@@ -92,27 +125,43 @@ export default function GraphOverlay({
               />
             );
           })}
-
-          {/* Draw Nodes */}
-          {data.nodes.map(node => {
-            const isHighlighted = highlightedNodes.includes(node.id);
-            const isPathNode = highlightedPath.includes(node.id);
-            
-            // Only draw relevant nodes or all nodes? User asked to "overlay this graph".
-            // Drawing all might be cluttered. Let's draw small dots for all, bigger for highlighted.
-            
-            return (
-              <Circle
-                key={node.id}
-                cx={(node.x + offsetX) * scaleX}
-                cy={(node.y + offsetY) * scaleY}
-                r={isHighlighted || isPathNode ? 4 : 2}
-                fill={isHighlighted ? "red" : (isPathNode ? "orange" : "rgba(0,0,255, 0.5)")}
-              />
-            );
-          })}
         </G>
       </Svg>
+
+      {/* Draw Node Icons as Overlay */}
+      {data.nodes.map(node => {
+        const isHighlighted = highlightedNodes.includes(node.id);
+        const isPathNode = highlightedPath.includes(node.id);
+        const x = (node.x + offsetX) * scaleX;
+        const y = (node.y + offsetY) * scaleY;
+        const iconType = getNodeIconType(node);
+        
+        return (
+          <View
+            key={node.id}
+            style={{
+              position: 'absolute',
+              left: x - ICON_SIZE / 2,
+              top: y - ICON_SIZE / 2,
+              width: ICON_SIZE,
+              height: ICON_SIZE,
+              opacity: isHighlighted || isPathNode ? 1 : 0.7,
+              borderRadius: ICON_SIZE / 2,
+              borderWidth: isHighlighted || isPathNode ? 2 : 0,
+              borderColor: isHighlighted ? 'red' : 'orange',
+            }}
+          >
+            <Image
+              source={iconAssets[iconType]}
+              resizeMode="contain"
+              style={{
+                width: ICON_SIZE,
+                height: ICON_SIZE,
+              }}
+            />
+          </View>
+        );
+      })}
     </View>
   );
 }
