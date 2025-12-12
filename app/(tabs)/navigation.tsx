@@ -239,14 +239,14 @@ export default function NavigationScreen() {
           horizontal={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          scrollEnabled={zoomLevel > 1}
+          scrollEnabled={true}
           maximumZoomScale={1}
           minimumZoomScale={1}
         >
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            scrollEnabled={zoomLevel > 1}
+            scrollEnabled={true}
             contentContainerStyle={styles.horizontalScrollContent}
           >
             <View style={styles.mapWrapper}>
@@ -457,16 +457,15 @@ const styles = StyleSheet.create({
   },
   zoomContentContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    minHeight: '100%',
-    paddingVertical: 200,
+    paddingBottom: 250,
+    transformOrigin: 'top center',
   },
   horizontalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '100%',
+    alignItems: 'flex-start',
     paddingHorizontal: 200,
   },
   mapWrapper: {
