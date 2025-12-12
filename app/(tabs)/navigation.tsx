@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, Animated } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, Animated, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -176,7 +176,6 @@ export default function NavigationScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      
       {/* Search Header */}
       <View style={styles.headerContainer}>
         {mode === 'explore' ? (
@@ -244,89 +243,93 @@ export default function NavigationScreen() {
         )}
       </View>
 
-      <PinchGestureHandler 
-        onGestureEvent={onPinchEvent}
-        onHandlerStateChange={onPinchStateChange}
-      >
-        <Animated.View style={styles.mapWrapper}>
-          <PanGestureHandler
-            onGestureEvent={onPanEvent}
-            onHandlerStateChange={onPanStateChange}
-          >
-            <Animated.View
-              onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
-              style={{
-                flex: 1,
-                width: '100%',
+      {/* Scrollable Content */}
+      <ScrollView style={styles.scrollContainer} bounces={true}>
+        <PinchGestureHandler 
+          onGestureEvent={onPinchEvent}
+          onHandlerStateChange={onPinchStateChange}
+        >
+          <Animated.View
+            onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
+            style={[
+              styles.mapWrapper,
+              {
                 transform: [
                   { scale: Animated.add(1, Animated.multiply(scale, 0.1 * lastScale.current)) },
                   { translateX: Animated.add(translateX, lastOffset.current.x) },
                   { translateY: Animated.add(translateY, lastOffset.current.y) }
                 ]
-              }}
+              }
+            ]}
+          >
+            <PanGestureHandler
+              onGestureEvent={onPanEvent}
+              onHandlerStateChange={onPanStateChange}
             >
-              <Image
-                source={mapSource}
-                style={styles.mapImage}
-                resizeMode="contain"
-              />
-              
-              {renderedMapDimensions.width > 0 && (
-                <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
-                  <GraphOverlay 
-                    data={graphData}
-                    width={renderedMapDimensions.width}
-                    height={renderedMapDimensions.height}
-                    originalWidth={originalWidth}
-                    originalHeight={originalHeight}
-                    offsetX={-300}
-                    offsetY={-75}
-                    highlightedPath={routePath}
-                    highlightedNodes={[
-                      ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
-                      ...(startNode ? [startNode.id] : []),
-                      ...(endNode ? [endNode.id] : [])
-                    ]}
-                  />
-                </View>
-              )}
-            </Animated.View>
-          </PanGestureHandler>
-        </Animated.View>
-      </PinchGestureHandler>
+              <Animated.View style={styles.innerMapContainer}>
+                <Image
+                  source={mapSource}
+                  style={styles.mapImage}
+                  resizeMode="contain"
+                />
+                
+                {renderedMapDimensions.width > 0 && (
+                  <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
+                    <GraphOverlay 
+                      data={graphData}
+                      width={renderedMapDimensions.width}
+                      height={renderedMapDimensions.height}
+                      originalWidth={originalWidth}
+                      originalHeight={originalHeight}
+                      offsetX={-300}
+                      offsetY={-75}
+                      highlightedPath={routePath}
+                      highlightedNodes={[
+                        ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
+                        ...(startNode ? [startNode.id] : []),
+                        ...(endNode ? [endNode.id] : [])
+                      ]}
+                    />
+                  </View>
+                )}
+              </Animated.View>
+            </PanGestureHandler>
+          </Animated.View>
+        </PinchGestureHandler>
 
-      {/* Info Card / Legend */}
-      {routePath.length > 0 ? (
-        <View style={styles.infoCard}>
-          <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
-          <ThemedText>Distance: {routePath.length} nodes (approx)</ThemedText>
-        </View>
-      ) : (
-        <View style={styles.legendCard}>
-        <View style={styles.legendRow}>
-          <View style={styles.legendItem}>
-            <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
-              <IconSymbol name="figure.roll" size={18} color="#fff" />
-            </View>
-            <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
+        {/* Info Card / Legend */}
+        {routePath.length > 0 ? (
+          <View style={styles.infoCard}>
+            <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
+            <ThemedText>Distance: {routePath.length} nodes (approx)</ThemedText>
           </View>
-          
-          <View style={styles.legendItem}>
-            <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
-              <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
+        ) : (
+          <View style={styles.legendCard}>
+          <View style={styles.legendRow}>
+            <View style={styles.legendItem}>
+              <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
+                <IconSymbol name="figure.roll" size={18} color="#fff" />
+              </View>
+              <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
             </View>
-            <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
+            
+            <View style={styles.legendItem}>
+              <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
+                <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
+              </View>
+              <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
+            </View>
           </View>
         </View>
-      </View>
-      )}
+        )}
 
-      <View style={styles.nextStepContainer}>
-        <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
-        <ThemedText style={styles.nextStepText}>
-          Next Step: Continue on the accessible path
-        </ThemedText>
-      </View>
+        <View style={styles.nextStepContainer}>
+          <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
+          <ThemedText style={styles.nextStepText}>
+            Next Step: Continue on the accessible path
+          </ThemedText>
+        </View>
+      </ScrollView>
     </ThemedView>
   );
 }
@@ -433,13 +436,22 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   
+  // Scrollable container
+  scrollContainer: {
+    flex: 1,
+  },
+
   // Map
   mapWrapper: {
-    flex: 1,
+    height: 400,
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+  },
+  innerMapContainer: {
+    flex: 1,
+    width: '100%',
   },
   mapImage: {
     width: '100%',
