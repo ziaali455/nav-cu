@@ -232,8 +232,6 @@ export default function NavigationScreen() {
                 ...(startNode ? [startNode.id] : []),
                 ...(endNode ? [endNode.id] : [])
               ]}
-              offsetX={80}
-              offsetY={40}
             />
           </View>
         )}
