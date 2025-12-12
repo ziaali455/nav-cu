@@ -36,6 +36,14 @@ export default function NavigationScreen() {
   const mapSource = require('@/assets/images/columbia-ods-map-2.png');
 
   // Safely resolve image dimensions
+  // Upper campus viewport bounds (coordinates in the map image)
+  const UPPER_CAMPUS_CROP = {
+    startX: 400,
+    startY: 150,
+    endX: 600,
+    endY: 500,
+  };
+
   const { originalWidth, originalHeight } = useMemo(() => {
     let width = 1000;
     let height = 1000;
@@ -55,7 +63,11 @@ export default function NavigationScreen() {
       console.log('Error resolving image source:', e);
     }
     
-    return { originalWidth: width, originalHeight: height };
+    // Return crop dimensions as the "original" viewport
+    const cropWidth = UPPER_CAMPUS_CROP.endX - UPPER_CAMPUS_CROP.startX;
+    const cropHeight = UPPER_CAMPUS_CROP.endY - UPPER_CAMPUS_CROP.startY;
+    
+    return { originalWidth: cropWidth, originalHeight: cropHeight, fullWidth: width, fullHeight: height };
   }, []);
 
   // Calculate Route
@@ -209,7 +221,7 @@ export default function NavigationScreen() {
       </View>
 
       <View 
-        style={styles.mapWrapper}
+        style={[styles.mapWrapper, { aspectRatio: (originalWidth / originalHeight) || undefined }]}
         onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
       >
         <Image
@@ -226,6 +238,8 @@ export default function NavigationScreen() {
               height={renderedMapDimensions.height}
               originalWidth={originalWidth}
               originalHeight={originalHeight}
+              cropOffsetX={UPPER_CAMPUS_CROP.startX}
+              cropOffsetY={UPPER_CAMPUS_CROP.startY}
               highlightedPath={routePath}
               highlightedNodes={[
                 ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
