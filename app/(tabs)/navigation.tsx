@@ -1,9 +1,8 @@
-import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, Animated, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { PinchGestureHandler, PanGestureHandler, State } from 'react-native-gesture-handler';
+import { useState, useMemo, useEffect } from 'react';
 import GraphOverlay from '@/components/GraphOverlay';
 import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
 import { GraphData, Node } from '@/types/graph';
@@ -33,13 +32,6 @@ export default function NavigationScreen() {
   
   // Layout
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
-  
-  // Gesture animations
-  const scale = useRef(new Animated.Value(1)).current;
-  const translateX = useRef(new Animated.Value(0)).current;
-  const translateY = useRef(new Animated.Value(0)).current;
-  const lastScale = useRef(1);
-  const lastOffset = useRef({ x: 0, y: 0 });
 
   const mapSource = require('@/assets/images/columbia-ods-map-2.png');
 
@@ -128,34 +120,6 @@ export default function NavigationScreen() {
     setActiveInput(null);
   };
 
-  // Pinch gesture handler
-  const onPinchEvent = Animated.event(
-    [{ nativeEvent: { scale } }],
-    { useNativeDriver: false }
-  );
-
-  const onPinchStateChange = (event: any) => {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      lastScale.current *= event.nativeEvent.scale;
-      scale.setValue(1);
-    }
-  };
-
-  // Pan gesture handler
-  const onPanEvent = Animated.event(
-    [{ nativeEvent: { translationX: translateX, translationY: translateY } }],
-    { useNativeDriver: false }
-  );
-
-  const onPanStateChange = (event: any) => {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      lastOffset.current.x += event.nativeEvent.translationX;
-      lastOffset.current.y += event.nativeEvent.translationY;
-      translateX.setValue(0);
-      translateY.setValue(0);
-    }
-  };
-
   // Image Scaling Logic
   const renderedMapDimensions = useMemo(() => {
     if (!containerDimensions.width || !containerDimensions.height) {
@@ -176,6 +140,7 @@ export default function NavigationScreen() {
 
   return (
     <ThemedView style={styles.container}>
+      
       {/* Search Header */}
       <View style={styles.headerContainer}>
         {mode === 'explore' ? (
@@ -243,93 +208,69 @@ export default function NavigationScreen() {
         )}
       </View>
 
-      {/* Scrollable Content */}
-      <ScrollView style={styles.scrollContainer} bounces={true}>
-        <PinchGestureHandler 
-          onGestureEvent={onPinchEvent}
-          onHandlerStateChange={onPinchStateChange}
-        >
-          <Animated.View
-            onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
-            style={[
-              styles.mapWrapper,
-              {
-                transform: [
-                  { scale: Animated.add(1, Animated.multiply(scale, 0.1 * lastScale.current)) },
-                  { translateX: Animated.add(translateX, lastOffset.current.x) },
-                  { translateY: Animated.add(translateY, lastOffset.current.y) }
-                ]
-              }
-            ]}
-          >
-            <PanGestureHandler
-              onGestureEvent={onPanEvent}
-              onHandlerStateChange={onPanStateChange}
-            >
-              <Animated.View style={styles.innerMapContainer}>
-                <Image
-                  source={mapSource}
-                  style={styles.mapImage}
-                  resizeMode="contain"
-                />
-                
-                {renderedMapDimensions.width > 0 && (
-                  <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
-                    <GraphOverlay 
-                      data={graphData}
-                      width={renderedMapDimensions.width}
-                      height={renderedMapDimensions.height}
-                      originalWidth={originalWidth}
-                      originalHeight={originalHeight}
-                      offsetX={-300}
-                      offsetY={-75}
-                      highlightedPath={routePath}
-                      highlightedNodes={[
-                        ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
-                        ...(startNode ? [startNode.id] : []),
-                        ...(endNode ? [endNode.id] : [])
-                      ]}
-                    />
-                  </View>
-                )}
-              </Animated.View>
-            </PanGestureHandler>
-          </Animated.View>
-        </PinchGestureHandler>
-
-        {/* Info Card / Legend */}
-        {routePath.length > 0 ? (
-          <View style={styles.infoCard}>
-            <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
-            <ThemedText>Distance: {routePath.length} nodes (approx)</ThemedText>
+      <View 
+        style={styles.mapWrapper}
+        onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
+      >
+        <Image
+          source={mapSource}
+          style={styles.mapImage}
+          resizeMode="contain"
+        />
+        
+        {renderedMapDimensions.width > 0 && (
+          <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
+            <GraphOverlay 
+              data={graphData}
+              width={renderedMapDimensions.width}
+              height={renderedMapDimensions.height}
+              originalWidth={originalWidth}
+              originalHeight={originalHeight}
+              offsetX={-300}
+              offsetY={-75}
+              highlightedPath={routePath}
+              highlightedNodes={[
+                ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
+                ...(startNode ? [startNode.id] : []),
+                ...(endNode ? [endNode.id] : [])
+              ]}
+            />
           </View>
-        ) : (
-          <View style={styles.legendCard}>
-          <View style={styles.legendRow}>
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
-                <IconSymbol name="figure.roll" size={18} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
-            </View>
-            
-            <View style={styles.legendItem}>
-              <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
-                <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
-              </View>
-              <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
-            </View>
-          </View>
-        </View>
         )}
+      </View>
 
-        <View style={styles.nextStepContainer}>
-          <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
-          <ThemedText style={styles.nextStepText}>
-            Next Step: Continue on the accessible path
-          </ThemedText>
+      {/* Info Card / Legend */}
+      {routePath.length > 0 ? (
+        <View style={styles.infoCard}>
+          <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
+          <ThemedText>Distance: {routePath.length} nodes (approx)</ThemedText>
         </View>
-      </ScrollView>
+      ) : (
+        <View style={styles.legendCard}>
+        <View style={styles.legendRow}>
+          <View style={styles.legendItem}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
+              <IconSymbol name="figure.roll" size={18} color="#fff" />
+            </View>
+            <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
+          </View>
+          
+          <View style={styles.legendItem}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
+              <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
+            </View>
+            <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
+          </View>
+        </View>
+      </View>
+      )}
+
+      <View style={styles.nextStepContainer}>
+        <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
+        <ThemedText style={styles.nextStepText}>
+          Next Step: Continue on the accessible path
+        </ThemedText>
+      </View>
     </ThemedView>
   );
 }
@@ -436,22 +377,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   
-  // Scrollable container
-  scrollContainer: {
-    flex: 1,
-  },
-
   // Map
   mapWrapper: {
-    height: 400,
+    flex: 1,
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-  },
-  innerMapContainer: {
-    flex: 1,
-    width: '100%',
   },
   mapImage: {
     width: '100%',
