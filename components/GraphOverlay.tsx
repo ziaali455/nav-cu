@@ -9,6 +9,8 @@ interface GraphOverlayProps {
   height: number;
   originalWidth?: number; // Width of the coordinate system in JSON
   originalHeight?: number; // Height of the coordinate system in JSON
+  offsetX?: number; // Horizontal offset to shift graph
+  offsetY?: number; // Vertical offset to shift graph
   highlightedPath?: string[]; // Array of node IDs
   highlightedNodes?: string[]; // Array of node IDs to highlight specifically
 }
@@ -28,6 +30,8 @@ export default function GraphOverlay({
   height, 
   originalWidth = DEFAULT_COORD_WIDTH,
   originalHeight = DEFAULT_COORD_HEIGHT,
+  offsetX = 0,
+  offsetY = 0,
   highlightedPath = [],
   highlightedNodes = []
 }: GraphOverlayProps) {
@@ -79,10 +83,10 @@ export default function GraphOverlay({
             return (
               <Line
                 key={edge.id}
-                x1={source.x * scaleX}
-                y1={source.y * scaleY}
-                x2={target.x * scaleX}
-                y2={target.y * scaleY}
+                x1={(source.x + offsetX) * scaleX}
+                y1={(source.y + offsetY) * scaleY}
+                x2={(target.x + offsetX) * scaleX}
+                y2={(target.y + offsetY) * scaleY}
                 stroke={isHighlighted ? "#FF4B4B" : "rgba(0,0,255, 0.15)"}
                 strokeWidth={isHighlighted ? 4 : 1}
               />
@@ -100,8 +104,8 @@ export default function GraphOverlay({
             return (
               <Circle
                 key={node.id}
-                cx={node.x * scaleX}
-                cy={node.y * scaleY}
+                cx={(node.x + offsetX) * scaleX}
+                cy={(node.y + offsetY) * scaleY}
                 r={isHighlighted || isPathNode ? 4 : 2}
                 fill={isHighlighted ? "red" : (isPathNode ? "orange" : "rgba(0,0,255, 0.5)")}
               />
