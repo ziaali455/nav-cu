@@ -25,7 +25,7 @@ const DEFAULT_COORD_WIDTH = 1000;
 const DEFAULT_COORD_HEIGHT = 1000;
 
 // Icon size in pixels
-const ICON_SIZE = 24;
+const ICON_SIZE = 16;
 
 // Icon mapping based on node properties
 function getNodeIconType(node: Node): string {
@@ -145,7 +145,7 @@ export default function GraphOverlay({
               top: y - ICON_SIZE / 2,
               width: ICON_SIZE,
               height: ICON_SIZE,
-              opacity: isHighlighted || isPathNode ? 1 : 0.7,
+              opacity: 1,
               borderRadius: ICON_SIZE / 2,
               borderWidth: isHighlighted || isPathNode ? 2 : 0,
               borderColor: isHighlighted ? 'red' : 'orange',
