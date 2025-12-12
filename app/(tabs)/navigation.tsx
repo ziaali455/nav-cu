@@ -386,6 +386,10 @@ const styles = StyleSheet.create({
   mapImage: {
     width: '100%',
     height: '100%',
+    transform: [
+      { translateX: -120 },
+      { translateY: -60 },
+    ],
   },
   overlayWrapper: {
     position: 'absolute',
