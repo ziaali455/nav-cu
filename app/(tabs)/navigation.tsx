@@ -460,12 +460,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100%',
+    paddingVertical: 200,
   },
   horizontalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     minWidth: '100%',
+    paddingHorizontal: 200,
   },
   mapWrapper: {
     justifyContent: 'center',
