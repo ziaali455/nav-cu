@@ -463,9 +463,9 @@ const styles = StyleSheet.create({
   },
   horizontalScrollContent: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingRight: 200,
+    paddingHorizontal: 200,
   },
   mapWrapper: {
     justifyContent: 'center',
