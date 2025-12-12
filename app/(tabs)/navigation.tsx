@@ -226,8 +226,8 @@ export default function NavigationScreen() {
               height={renderedMapDimensions.height}
               originalWidth={originalWidth}
               originalHeight={originalHeight}
-              offsetX={-150}
-              offsetY={-50}
+              offsetX={-300}
+              offsetY={-75}
               highlightedPath={routePath}
               highlightedNodes={[
                 ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
