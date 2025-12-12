@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -32,6 +32,24 @@ export default function NavigationScreen() {
   
   // Layout
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+  
+  // Zoom controls
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 3;
+  const ZOOM_STEP = 0.25;
+  
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
+  };
+  
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - ZOOM_STEP, MIN_ZOOM));
+  };
+  
+  const handleResetZoom = () => {
+    setZoomLevel(1);
+  };
 
   const mapSource = require('@/assets/images/columbia-ods-map-2.png');
 
@@ -209,34 +227,83 @@ export default function NavigationScreen() {
       </View>
 
       <View 
-        style={styles.mapWrapper}
+        style={styles.mapContainer}
         onLayout={(event) => setContainerDimensions(event.nativeEvent.layout)}
       >
-        <Image
-          source={mapSource}
-          style={styles.mapImage}
-          resizeMode="contain"
-        />
+        <ScrollView
+          style={styles.zoomScrollView}
+          contentContainerStyle={[
+            styles.zoomContentContainer,
+            { transform: [{ scale: zoomLevel }] }
+          ]}
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={zoomLevel > 1}
+          maximumZoomScale={1}
+          minimumZoomScale={1}
+        >
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={zoomLevel > 1}
+            contentContainerStyle={styles.horizontalScrollContent}
+          >
+            <View style={styles.mapWrapper}>
+              <Image
+                source={mapSource}
+                style={styles.mapImage}
+                resizeMode="contain"
+              />
+              
+              {renderedMapDimensions.width > 0 && (
+                <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
+                  <GraphOverlay 
+                    data={graphData}
+                    width={renderedMapDimensions.width}
+                    height={renderedMapDimensions.height}
+                    originalWidth={originalWidth}
+                    originalHeight={originalHeight}
+                    offsetX={-300}
+                    offsetY={-75}
+                    highlightedPath={routePath}
+                    highlightedNodes={[
+                      ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
+                      ...(startNode ? [startNode.id] : []),
+                      ...(endNode ? [endNode.id] : [])
+                    ]}
+                  />
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        </ScrollView>
         
-        {renderedMapDimensions.width > 0 && (
-          <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
-            <GraphOverlay 
-              data={graphData}
-              width={renderedMapDimensions.width}
-              height={renderedMapDimensions.height}
-              originalWidth={originalWidth}
-              originalHeight={originalHeight}
-              offsetX={-300}
-              offsetY={-75}
-              highlightedPath={routePath}
-              highlightedNodes={[
-                ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
-                ...(startNode ? [startNode.id] : []),
-                ...(endNode ? [endNode.id] : [])
-              ]}
-            />
-          </View>
-        )}
+        {/* Zoom Controls */}
+        <View style={styles.zoomControls}>
+          <TouchableOpacity 
+            style={[styles.zoomButton, zoomLevel >= MAX_ZOOM && styles.zoomButtonDisabled]} 
+            onPress={handleZoomIn}
+            disabled={zoomLevel >= MAX_ZOOM}
+          >
+            <ThemedText style={[styles.zoomIcon, zoomLevel >= MAX_ZOOM && styles.zoomIconDisabled]}>+</ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.zoomLevelButton} 
+            onPress={handleResetZoom}
+          >
+            <ThemedText style={styles.zoomLevelText}>{Math.round(zoomLevel * 100)}%</ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.zoomButton, zoomLevel <= MIN_ZOOM && styles.zoomButtonDisabled]} 
+            onPress={handleZoomOut}
+            disabled={zoomLevel <= MIN_ZOOM}
+          >
+            <ThemedText style={[styles.zoomIcon, zoomLevel <= MIN_ZOOM && styles.zoomIconDisabled]}>−</ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Info Card / Legend */}
@@ -377,17 +444,35 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   
-  // Map
-  mapWrapper: {
+  // Map Container with Zoom
+  mapContainer: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    position: 'relative',
+  },
+  zoomScrollView: {
+    flex: 1,
+  },
+  zoomContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  horizontalScrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-  },
-  mapImage: {
     width: '100%',
     height: '100%',
+  },
+  mapImage: {
+    width: 1000,
+    height: 1000,
   },
   overlayWrapper: {
     position: 'absolute',
@@ -395,6 +480,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 5,
     pointerEvents: 'none',
+  },
+  
+  // Zoom Controls
+  zoomControls: {
+    position: 'absolute',
+    right: 16,
+    top: '50%',
+    transform: [{ translateY: -60 }],
+    gap: 8,
+    zIndex: 30,
+  },
+  zoomButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  zoomButtonDisabled: {
+    opacity: 0.4,
+  },
+  zoomIcon: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#333',
+  },
+  zoomIconDisabled: {
+    color: '#999',
+  },
+  zoomLevelButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  zoomLevelText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#333',
   },
   
   // Bottom Cards
