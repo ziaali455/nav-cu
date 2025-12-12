@@ -250,11 +250,13 @@ export default function NavigationScreen() {
             contentContainerStyle={styles.horizontalScrollContent}
           >
             <View style={styles.mapWrapper}>
-              <Image
-                source={mapSource}
-                style={styles.mapImage}
-                resizeMode="contain"
-              />
+              <View style={{ width: renderedMapDimensions.width, height: renderedMapDimensions.height }}>
+                <Image
+                  source={mapSource}
+                  style={styles.mapImage}
+                  resizeMode="contain"
+                />
+              </View>
               
               {renderedMapDimensions.width > 0 && (
                 <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
@@ -457,22 +459,22 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: '100%',
   },
   horizontalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: '100%',
   },
   mapWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    width: '100%',
-    height: '100%',
   },
   mapImage: {
-    width: 1000,
-    height: 1000,
+    width: '100%',
+    height: '100%',
   },
   overlayWrapper: {
     position: 'absolute',
