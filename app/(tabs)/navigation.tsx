@@ -37,12 +37,11 @@ export default function NavigationScreen() {
 
   // Safely resolve image dimensions
   // Upper campus viewport bounds (coordinates in the map image)
-  // This region covers: Pupin Hall, Uris, Low Library, and surrounding walkways
   const UPPER_CAMPUS_CROP = {
-    startX: 350,
-    startY: 100,
-    endX: 750,
-    endY: 450,
+    startX: 400,
+    startY: 150,
+    endX: 600,
+    endY: 500,
   };
 
   const { originalWidth, originalHeight } = useMemo(() => {

@@ -54,25 +54,16 @@ export default function GraphOverlay({
   const nodeMap = new Map<string, Node>();
   data.nodes.forEach(node => nodeMap.set(node.id, node));
 
-  // Filter nodes to only show those within the crop region
-  const isNodeInRegion = (node: Node) => {
-    return node.x >= cropOffsetX && 
-           node.x <= (cropOffsetX + originalWidth) &&
-           node.y >= cropOffsetY && 
-           node.y <= (cropOffsetY + originalHeight);
-  };
-
   return (
     <View style={[styles.container, { width, height }]} pointerEvents="none">
       <Svg height={height} width={width}>
         <G>
-          {/* Draw Edges - only for nodes in the crop region */}
+          {/* Draw Edges */}
           {data.edges.map(edge => {
             const source = nodeMap.get(edge.sourceId);
             const target = nodeMap.get(edge.targetId);
 
             if (!source || !target) return null;
-            if (!isNodeInRegion(source) || !isNodeInRegion(target)) return null;
 
             // Check if this edge is part of the highlighted path
             let isHighlighted = false;
@@ -102,12 +93,13 @@ export default function GraphOverlay({
             );
           })}
 
-          {/* Draw Nodes - only those in the crop region */}
+          {/* Draw Nodes */}
           {data.nodes.map(node => {
-            if (!isNodeInRegion(node)) return null;
-            
             const isHighlighted = highlightedNodes.includes(node.id);
             const isPathNode = highlightedPath.includes(node.id);
+            
+            // Only draw relevant nodes or all nodes? User asked to "overlay this graph".
+            // Drawing all might be cluttered. Let's draw small dots for all, bigger for highlighted.
             
             return (
               <Circle
