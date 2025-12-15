@@ -3,8 +3,9 @@ import React from 'react';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -12,13 +13,17 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#4A90E2', // Blue color for selected icons
-        tabBarInactiveTintColor: '#8E8E93', // Gray for unselected icons
+        tabBarActiveTintColor: '#3B82F6', // Blue for selected
+        tabBarInactiveTintColor: '#9CA3AF', // Gray for unselected
         tabBarStyle: {
-          backgroundColor: '#2C3E50', // Navy gray background
-          borderTopColor: '#34495E',
+          backgroundColor: '#111827',
+          borderTopColor: '#1F2937',
           borderTopWidth: 1,
+          height: 100,
+          paddingBottom: 30,
+          paddingTop: 12,
         },
+        tabBarLabelPosition: 'below-icon',
         headerShown: false,
         tabBarButton: HapticTab,
       }}>
@@ -26,8 +31,8 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color, focused }) => (
-            <IconSymbol size={28} name={focused ? 'gear.fill' : 'gear'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Feather name="settings" size={24} color={color} />
           ),
         }}
       />
@@ -35,8 +40,8 @@ export default function TabLayout() {
         name="navigation"
         options={{
           title: 'Navigation',
-          tabBarIcon: ({ color, focused }) => (
-            <IconSymbol size={28} name={focused ? 'location.fill' : 'location'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <EvilIcons name="location" size={32} color={color} />
           ),
         }}
       />
@@ -44,8 +49,8 @@ export default function TabLayout() {
         name="reports"
         options={{
           title: 'Reports',
-          tabBarIcon: ({ color, focused }) => (
-            <IconSymbol size={28} name={focused ? 'exclamationmark.circle.fill' : 'exclamationmark.circle'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="exclamationmark.circle" color={color} />
           ),
         }}
       />
