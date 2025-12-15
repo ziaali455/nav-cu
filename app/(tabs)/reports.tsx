@@ -301,19 +301,19 @@ export default function ReportsScreen() {
         });
 
         // Create report object with Firebase doc ID
-        const newReport: Report = {
+      const newReport: Report = {
           id: reportId,
           description: description.trim(),
           tags: selectedTag,
           createdBy: currentUserId,
           firebaseDocId: docRef.id,
-          x: selectedReport.x,
-          y: selectedReport.y,
-        };
+        x: selectedReport.x,
+        y: selectedReport.y,
+      };
 
         console.log('Submitting report at:', selectedReport.x, selectedReport.y);
         // Update local state
-        setReports([...reports, newReport]);
+      setReports([...reports, newReport]);
         
         Alert.alert('Success', 'Report submitted successfully!');
         resetForm();
@@ -355,7 +355,7 @@ export default function ReportsScreen() {
         // Update local state
         setReports(reports.filter(r => r.id !== editingReport.id));
         setModalVisible(false);
-        resetForm();
+      resetForm();
         Alert.alert('Success', 'Report deleted successfully!');
       } catch (error) {
         console.error('Error deleting report:', error);
@@ -459,7 +459,10 @@ export default function ReportsScreen() {
       </ThemedView>
 
       <View 
-        style={styles.mapContainer}
+        style={[
+          styles.mapContainer,
+          { backgroundColor: colorScheme === 'dark' ? '#1D2535' : '#F5F5F5' }
+        ]}
         onLayout={(event) => {
           const { x, y, width, height } = event.nativeEvent.layout;
           setContainerLayout({ x, y, width, height });
@@ -487,22 +490,22 @@ export default function ReportsScreen() {
           >
             <View style={styles.mapContentWrapper}>
               <Pressable onPress={handleMapPress} style={styles.mapPressableArea}>
-                <Image
+          <Image
                   source={require('@/assets/images/columbia-ods-map-2.png')}
-                  style={styles.mapImage}
-                  resizeMode="contain"
+            style={styles.mapImage}
+            resizeMode="contain"
                   onLayout={(event) => {
                     const { x, y, width, height } = event.nativeEvent.layout;
                     setImageLayout({ x, y, width, height });
                     console.log('Image layout:', x, y, width, height);
                   }}
-                />
+          />
               </Pressable>
               
               {/* Render report markers - absolutely positioned on top */}
-              {reports.map((report) => (
+          {reports.map((report) => (
                 <DraggableMarker
-                  key={report.id}
+              key={report.id}
                   report={report}
                   onDragEnd={handleDragEnd}
                   onPress={handleMarkerPress}
@@ -538,19 +541,6 @@ export default function ReportsScreen() {
             <ThemedText style={[styles.zoomIcon, zoomLevel <= MIN_ZOOM && styles.zoomIconDisabled]}>−</ThemedText>
           </TouchableOpacity>
         </View>
-        
-        {/* Debug Info */}
-        <View style={styles.debugInfo} pointerEvents="none">
-          <ThemedText style={{ color: 'white', fontSize: 12 }}>
-            Last Tap: {selectedReport ? `${Math.round(selectedReport.x)}, ${Math.round(selectedReport.y)}` : 'None'}
-          </ThemedText>
-          <ThemedText style={{ color: 'white', fontSize: 12 }}>
-            Reports: {reports.length}
-          </ThemedText>
-          <ThemedText style={{ color: 'white', fontSize: 12 }}>
-            Zoom: {Math.round(zoomLevel * 100)}%
-          </ThemedText>
-        </View>
       </View>
 
       <ThemedView style={styles.footer}>
@@ -574,7 +564,7 @@ export default function ReportsScreen() {
         <View style={styles.modalOverlay}>
           <View style={[
             styles.modalContent,
-            { backgroundColor: colorScheme === 'dark' ? '#1C1C1E' : '#FFFFFF' }
+            { backgroundColor: colorScheme === 'dark' ? '#1D2535' : '#FFFFFF' }
           ]}>
             <View style={[
               styles.modalHeader,
@@ -593,13 +583,13 @@ export default function ReportsScreen() {
                     />
                   </TouchableOpacity>
                 )}
-                <TouchableOpacity onPress={handleCancelReport}>
+              <TouchableOpacity onPress={handleCancelReport}>
                   <IconSymbol 
                     size={24} 
                     name="xmark.circle.fill" 
                     color={colorScheme === 'dark' ? '#8E8E93' : '#8E8E93'} 
                   />
-                </TouchableOpacity>
+              </TouchableOpacity>
               </View>
             </View>
 
@@ -623,7 +613,7 @@ export default function ReportsScreen() {
                 <View style={[
                   styles.checkbox,
                   { 
-                    backgroundColor: colorScheme === 'dark' ? '#2C2C2E' : '#FFFFFF',
+                    backgroundColor: colorScheme === 'dark' ? '#2A3447' : '#FFFFFF',
                   },
                   selectedTag === 'broken' && styles.checkboxChecked,
                   !isOwnReport && { opacity: 0.6 }
@@ -648,7 +638,7 @@ export default function ReportsScreen() {
                 <View style={[
                   styles.checkbox,
                   { 
-                    backgroundColor: colorScheme === 'dark' ? '#2C2C2E' : '#FFFFFF',
+                    backgroundColor: colorScheme === 'dark' ? '#2A3447' : '#FFFFFF',
                   },
                   selectedTag === 'construction' && styles.checkboxChecked,
                   !isOwnReport && { opacity: 0.6 }
@@ -668,7 +658,7 @@ export default function ReportsScreen() {
                   {
                     color: colorScheme === 'dark' ? '#FFFFFF' : '#000000',
                     borderColor: colorScheme === 'dark' ? '#38383A' : '#8E8E93',
-                    backgroundColor: colorScheme === 'dark' ? '#2C2C2E' : '#F2F2F7',
+                    backgroundColor: colorScheme === 'dark' ? '#2A3447' : '#F2F2F7',
                   },
                   !isOwnReport && { opacity: 0.6 }
                 ]}
@@ -695,15 +685,15 @@ export default function ReportsScreen() {
                 </ThemedText>
               </TouchableOpacity>
               {isOwnReport && (
-                <TouchableOpacity
-                  style={[styles.button, styles.submitButton]}
-                  onPress={handleSubmitReport}
+              <TouchableOpacity
+                style={[styles.button, styles.submitButton]}
+                onPress={handleSubmitReport}
                   disabled={isSaving}
-                >
+              >
                   <ThemedText style={styles.submitButtonText}>
                     {isSaving ? 'Saving...' : editingReport ? 'Update Report' : 'Submit Report'}
-                  </ThemedText>
-                </TouchableOpacity>
+                </ThemedText>
+              </TouchableOpacity>
               )}
             </View>
           </View>
@@ -732,7 +722,6 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   mapPressableArea: {
     width: '100%',
@@ -760,15 +749,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 4,
     elevation: 10,
-  },
-  debugInfo: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    padding: 8,
-    zIndex: 9999,
-    borderRadius: 4,
   },
   zoomScrollView: {
     flex: 1,
@@ -837,7 +817,7 @@ const styles = StyleSheet.create({
   },
   instruction: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#FFFFFF',
   },
   modalOverlay: {
     flex: 1,
