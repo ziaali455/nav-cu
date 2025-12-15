@@ -812,8 +812,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 15,
     gap: 8,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5EA',
   },
   instruction: {
     fontSize: 14,
