@@ -26,6 +26,11 @@ jobs:
       - name: Build web app
         run: npx expo export --platform web
 
+      - name: Fix base URL for GitHub Pages
+        run: |
+          # Fix absolute paths in all HTML files for GitHub Pages subdirectory
+          find dist -name "*.html" -type f -exec sed -i 's|href="/|href="/nav-cu/|g; s|src="/|src="/nav-cu/|g' {} \;
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
