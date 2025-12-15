@@ -3,6 +3,13 @@ import { View, StyleSheet, Image } from 'react-native';
 import Svg, { Line, G } from 'react-native-svg';
 import { GraphData, Node } from '@/types/graph';
 
+interface MarkerVisibility {
+  showElevators: boolean;
+  showRamps: boolean;
+  showEntrances: boolean;
+  showWheelchairAccess: boolean;
+}
+
 interface GraphOverlayProps {
   data: GraphData;
   width: number;
@@ -13,6 +20,7 @@ interface GraphOverlayProps {
   offsetY?: number; // Vertical offset to shift graph
   highlightedPath?: string[]; // Array of node IDs
   highlightedNodes?: string[]; // Array of node IDs to highlight specifically
+  markerVisibility?: MarkerVisibility; // Controls which markers are visible
 }
 
 // Based on the JSON data scan, the coordinates seem to be roughly in a 1000x1000 box?
@@ -66,7 +74,13 @@ export default function GraphOverlay({
   offsetX = 0,
   offsetY = 0,
   highlightedPath = [],
-  highlightedNodes = []
+  highlightedNodes = [],
+  markerVisibility = {
+    showElevators: true,
+    showRamps: true,
+    showEntrances: true,
+    showWheelchairAccess: true,
+  }
 }: GraphOverlayProps) {
   
   // Calculate scaling factors
@@ -86,6 +100,29 @@ export default function GraphOverlay({
   // Helper to get node by ID for edge drawing
   const nodeMap = new Map<string, Node>();
   data.nodes.forEach(node => nodeMap.set(node.id, node));
+
+  // Check if a node should be visible based on marker visibility settings
+  const shouldShowNode = (node: Node): boolean => {
+    const iconType = getNodeIconType(node);
+    
+    switch (iconType) {
+      case 'elevator':
+        return markerVisibility.showElevators;
+      case 'ramp':
+        return markerVisibility.showRamps;
+      case 'door':
+      case 'information':
+      case 'arrow':
+        return markerVisibility.showEntrances;
+      case 'handicap_sign':
+        return markerVisibility.showWheelchairAccess;
+      default:
+        return true;
+    }
+  };
+
+  // Filter nodes based on visibility settings
+  const visibleNodes = data.nodes.filter(shouldShowNode);
 
   return (
     <View style={[styles.container, { width, height }]} pointerEvents="none">
@@ -129,7 +166,7 @@ export default function GraphOverlay({
       </Svg>
 
       {/* Draw Node Icons as Overlay */}
-      {data.nodes.map(node => {
+      {visibleNodes.map(node => {
         const isHighlighted = highlightedNodes.includes(node.id);
         const isPathNode = highlightedPath.includes(node.id);
         const x = (node.x + offsetX) * scaleX;

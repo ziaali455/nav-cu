@@ -7,10 +7,14 @@ import GraphOverlay from '@/components/GraphOverlay';
 import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
 import { GraphData, Node } from '@/types/graph';
 import { findShortestPath } from '@/utils/routing';
+import { useSettings } from '@/context/SettingsContext';
 
 const graphData = graphDataRaw as GraphData;
 
 export default function NavigationScreen() {
+  // Get marker visibility from settings
+  const { markerVisibility } = useSettings();
+  
   // Mode: 'explore' (single search) or 'navigate' (start/end)
   const [mode, setMode] = useState<'explore' | 'navigate'>('explore');
   
@@ -219,7 +223,7 @@ export default function NavigationScreen() {
                 onPress={() => handleSelectSuggestion(node)}
               >
                 <IconSymbol name="mappin.circle.fill" size={16} color="#666" style={{marginRight: 8}} />
-                <ThemedText>{node.name}</ThemedText>
+                <ThemedText style={styles.suggestionText}>{node.name}</ThemedText>
               </TouchableOpacity>
             ))}
           </View>
@@ -274,6 +278,7 @@ export default function NavigationScreen() {
                       ...(startNode ? [startNode.id] : []),
                       ...(endNode ? [endNode.id] : [])
                     ]}
+                    markerVisibility={markerVisibility}
                   />
                 </View>
               )}
@@ -434,9 +439,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     zIndex: 30,
-    maxHeight: 200,
+    maxHeight: 300,
     borderWidth: 1,
     borderColor: '#eee',
+    overflow: 'hidden',
   },
   suggestionItem: {
     flexDirection: 'row',
@@ -444,6 +450,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+  },
+  suggestionText: {
+    color: '#000000',
   },
   
   // Map Container with Zoom
@@ -488,53 +497,45 @@ const styles = StyleSheet.create({
   // Zoom Controls
   zoomControls: {
     position: 'absolute',
-    right: 16,
+    right: 15,
     top: '50%',
-    transform: [{ translateY: -60 }],
-    gap: 8,
-    zIndex: 30,
+    transform: [{ translateY: -75 }],
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    borderRadius: 25,
+    padding: 8,
+    gap: 5,
+    zIndex: 1000,
   },
   zoomButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#fff',
+    backgroundColor: '#4A90E2',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
   },
   zoomButtonDisabled: {
-    opacity: 0.4,
+    backgroundColor: '#3A3A3C',
   },
   zoomIcon: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#333',
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: 32,
   },
   zoomIconDisabled: {
-    color: '#999',
+    color: '#8E8E93',
   },
   zoomLevelButton: {
     width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#fff',
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
   },
   zoomLevelText: {
+    color: '#FFFFFF',
     fontSize: 12,
     fontWeight: '600',
-    color: '#333',
   },
   
   // Bottom Cards

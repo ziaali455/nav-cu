@@ -1,28 +1,37 @@
-import { useState } from 'react';
-import { StyleSheet, Switch, TouchableOpacity, ScrollView, Modal, Pressable } from 'react-native';
-import * as Linking from 'expo-linking';
-import { openBrowserAsync } from 'expo-web-browser';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { useSettings } from '@/context/SettingsContext';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import * as Linking from 'expo-linking';
+import { openBrowserAsync } from 'expo-web-browser';
+import { useState } from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Switch } from 'react-native-paper';
 
 export default function SettingsScreen() {
   const iconColor = useThemeColor({}, 'icon');
-  const textColor = useThemeColor({}, 'text');
   const [showContactModal, setShowContactModal] = useState(false);
 
-  // Accessibility Preference states
-  const [standardMobility, setStandardMobility] = useState(false);
-  const [caneCrutches, setCaneCrutches] = useState(true);
-  const [wheelchairUser, setWheelchairUser] = useState(true);
-
-  // Route Options states
-  const [avoidStairs, setAvoidStairs] = useState(true);
-  const [preferElevators, setPreferElevators] = useState(true);
-  const [showRamps, setShowRamps] = useState(true);
-  const [minimizeOutdoorPaths, setMinimizeOutdoorPaths] = useState(true);
-  const [entrances, setEntrances] = useState(true);
+  // Get settings from context
+  const {
+    standardMobility,
+    setStandardMobility,
+    caneCrutches,
+    setCaneCrutches,
+    wheelchairUser,
+    setWheelchairUser,
+    avoidStairs,
+    setAvoidStairs,
+    preferElevators,
+    setPreferElevators,
+    showRamps,
+    setShowRamps,
+    minimizeOutdoorPaths,
+    setMinimizeOutdoorPaths,
+    entrances,
+    setEntrances,
+  } = useSettings();
 
   const handleSaveChanges = () => {
     // TODO: Implement save functionality
@@ -70,9 +79,8 @@ export default function SettingsScreen() {
       <Switch
         value={value}
         onValueChange={onValueChange}
-        trackColor={{ false: '#E5E5EA', true: '#4A90E2' }}
-        thumbColor={value ? '#FFFFFF' : '#F4F3F4'}
-        ios_backgroundColor="#E5E5EA"
+        color="#4A90E2"
+        style={{ transform: [{ scale: 0.9 }] }}
       />
     </ThemedView>
   );
@@ -259,13 +267,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 16,
+    marginBottom: 10,
   },
   settingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 6,
   },
   settingLabel: {
     fontSize: 16,
@@ -277,14 +285,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   buttonContainer: {
-    marginTop: 32,
-    gap: 16,
+    marginTop: 24,
+    gap: 10,
   },
   button: {
     backgroundColor: '#4A90E2',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
