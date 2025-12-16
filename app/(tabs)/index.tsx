@@ -1,5 +1,6 @@
 import { Redirect } from 'expo-router';
 
 export default function Index() {
-  return <Redirect href="/(tabs)/settings" />;
+  // Use relative path for GitHub Pages compatibility
+  return <Redirect href="/settings" />;
 }

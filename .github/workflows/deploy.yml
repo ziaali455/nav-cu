@@ -28,8 +28,11 @@ jobs:
 
       - name: Fix base URL for GitHub Pages
         run: |
-          # Fix absolute paths in all HTML files for GitHub Pages subdirectory
-          find dist -name "*.html" -type f -exec sed -i 's|href="/|href="/nav-cu/|g; s|src="/|src="/nav-cu/|g' {} \;
+          # Fix script and asset paths (src attributes) for GitHub Pages subdirectory
+          # Don't replace href for navigation links - the router handles those with baseUrl
+          find dist -name "*.html" -type f -exec sed -i 's|src="/_expo|src="/nav-cu/_expo|g; s|src="/assets|src="/nav-cu/assets|g; s|href="/favicon|href="/nav-cu/favicon|g' {} \;
+          # Copy index.html to 404.html for SPA client-side routing fallback
+          cp dist/index.html dist/404.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
