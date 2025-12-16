@@ -29,14 +29,12 @@ jobs:
       - name: Build web app
         run: npx expo export --platform web
 
-      - name: Fix base URL for GitHub Pages
+      - name: Fix paths for GitHub Pages subdirectory
         run: |
-          # Fix script and asset paths (src attributes) for GitHub Pages subdirectory
+          # Fix script and asset paths for GitHub Pages subdirectory
+          # Expo generates paths like /_expo and /assets which need to be /nav-cu/_expo and /nav-cu/assets
           find dist -name "*.html" -type f -exec sed -i 's|src="/_expo|src="/nav-cu/_expo|g; s|src="/assets|src="/nav-cu/assets|g; s|href="/favicon|href="/nav-cu/favicon|g' {} \;
-          # Fix tab navigation hrefs in static HTML (for SSR rendered tab links)
-          # Route groups like (tabs) don't appear in URLs, so /settings not /(tabs)/settings
-          find dist -name "*.html" -type f -exec sed -i 's|href="/settings"|href="/nav-cu/settings"|g; s|href="/navigation"|href="/nav-cu/navigation"|g; s|href="/reports"|href="/nav-cu/reports"|g; s|href="/explore"|href="/nav-cu/explore"|g; s|href="/modal"|href="/nav-cu/modal"|g' {} \;
-          # Copy index.html to 404.html for SPA client-side routing fallback (after fixes)
+          # Copy index.html to 404.html for SPA client-side routing fallback
           cp dist/index.html dist/404.html
 
       - name: Setup Pages
