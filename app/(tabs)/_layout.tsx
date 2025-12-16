@@ -31,6 +31,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
+          href: '/(tabs)/settings',
           tabBarIcon: ({ color }) => (
             <Feather name="settings" size={24} color={color} />
           ),
@@ -40,6 +41,7 @@ export default function TabLayout() {
         name="navigation"
         options={{
           title: 'Navigation',
+          href: '/(tabs)/navigation',
           tabBarIcon: ({ color }) => (
             <EvilIcons name="location" size={32} color={color} />
           ),
@@ -49,6 +51,7 @@ export default function TabLayout() {
         name="reports"
         options={{
           title: 'Reports',
+          href: '/(tabs)/reports',
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="exclamationmark.circle" color={color} />
           ),
