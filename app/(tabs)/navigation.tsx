@@ -222,7 +222,7 @@ export default function NavigationScreen() {
                 style={styles.suggestionItem}
                 onPress={() => handleSelectSuggestion(node)}
               >
-                <IconSymbol name="mappin.circle.fill" size={16} color="#666" style={{marginRight: 8}} />
+                <IconSymbol name="mappin.circle.fill" size={16} color="#9BA1A6" style={{marginRight: 8}} />
                 <ThemedText style={styles.suggestionText}>{node.name}</ThemedText>
               </TouchableOpacity>
             ))}
@@ -354,16 +354,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1D2535',
     zIndex: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5E5',
+    borderBottomColor: '#2A3441',
     paddingBottom: 8,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#2A3441',
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333',
+    color: '#ECEDEE',
     height: 24, // Fix height for proper alignment
   },
   directionsButton: {
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   },
   navInputs: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#2A3441',
     borderRadius: 12,
     padding: 8,
   },
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   },
   inputDivider: {
     height: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: '#3A4451',
     marginLeft: 24,
     marginVertical: 4,
   },
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
   navInput: {
     flex: 1,
     fontSize: 15,
-    color: '#333',
+    color: '#ECEDEE',
     padding: 4,
   },
 
@@ -431,17 +431,17 @@ const styles = StyleSheet.create({
     top: '100%',
     left: 16,
     right: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#2A3441',
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
     zIndex: 30,
     maxHeight: 300,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#3A4451',
     overflow: 'hidden',
   },
   suggestionItem: {
@@ -449,16 +449,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#3A4451',
   },
   suggestionText: {
-    color: '#000000',
+    color: '#ECEDEE',
   },
   
   // Map Container with Zoom
   mapContainer: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1D2535',
     position: 'relative',
   },
   zoomScrollView: {
@@ -540,18 +540,18 @@ const styles = StyleSheet.create({
   
   // Bottom Cards
   legendCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1D2535',
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: '#2A3441',
     zIndex: 10,
   },
   infoCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1D2535',
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: '#2A3441',
     zIndex: 10,
   },
   infoTitle: {
@@ -580,17 +580,17 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 13,
-    color: '#2C3E50',
+    color: '#ECEDEE',
     fontWeight: '500',
   },
   nextStepContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#1D2535',
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: '#2A3441',
   },
   nextStepIcon: {
     marginRight: 12,
@@ -599,6 +599,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#ECEDEE',
   },
 });
