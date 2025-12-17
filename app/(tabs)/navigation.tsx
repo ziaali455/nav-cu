@@ -491,7 +491,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 5,
-    pointerEvents: 'none',
+    pointerEvents: 'box-none',
   },
   
   // Zoom Controls
