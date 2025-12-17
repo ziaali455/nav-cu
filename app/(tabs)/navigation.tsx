@@ -1,19 +1,29 @@
-import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, ScrollView } from 'react-native';
+import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
+import GraphOverlay, { MAP_ICON_ASSETS, MAP_ICON_LEGEND } from '@/components/GraphOverlay';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useState, useMemo, useEffect } from 'react';
-import GraphOverlay from '@/components/GraphOverlay';
-import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
+import { useSettings } from '@/context/SettingsContext';
 import { GraphData, Node } from '@/types/graph';
 import { findShortestPath } from '@/utils/routing';
-import { useSettings } from '@/context/SettingsContext';
+import { useEffect, useMemo, useState } from 'react';
+import { Image, Keyboard, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 const graphData = graphDataRaw as GraphData;
+const mapSource = require('@/assets/images/columbia-ods-map-2.png');
 
 export default function NavigationScreen() {
   // Get marker visibility from settings
-  const { markerVisibility } = useSettings();
+  const {
+    markerVisibility,
+    avoidStairs,
+    minimizeOutdoorPaths,
+    caneCrutches,
+    wheelchairUser,
+    setWheelchairUser,
+    preferElevators,
+    setPreferElevators,
+  } = useSettings();
   
   // Mode: 'explore' (single search) or 'navigate' (start/end)
   const [mode, setMode] = useState<'explore' | 'navigate'>('explore');
@@ -55,8 +65,6 @@ export default function NavigationScreen() {
     setZoomLevel(1);
   };
 
-  const mapSource = require('@/assets/images/columbia-ods-map-2.png');
-
   // Safely resolve image dimensions
   const { originalWidth, originalHeight } = useMemo(() => {
     let width = 1000;
@@ -80,30 +88,80 @@ export default function NavigationScreen() {
     return { originalWidth: width, originalHeight: height };
   }, []);
 
+  const routePreferences = useMemo(() => {
+    const disallowStairs = wheelchairUser || avoidStairs;
+    const stairsPenalty = disallowStairs
+      ? 0
+      : Math.max(preferElevators ? 250 : 0, caneCrutches ? 150 : 0);
+
+    return {
+      disallowStairs,
+      stairsPenalty,
+      outdoorPenalty: minimizeOutdoorPaths ? 50 : 0,
+      preferElevators,
+      elevatorBias: 0.9,
+    };
+  }, [avoidStairs, caneCrutches, minimizeOutdoorPaths, preferElevators, wheelchairUser]);
+
+  const displayGraphData = useMemo(() => {
+    if (!routePreferences.disallowStairs) return graphData;
+
+    // Remove non-accessible edges (stairs). This may isolate some nodes; hide those nodes too.
+    const isStairsNodeName = (name?: string) => (name ?? '').toLowerCase().includes('stair');
+
+    const allowedNodeIds = new Set(
+      graphData.nodes
+        .filter(node => !isStairsNodeName(node.name))
+        .map(node => node.id)
+    );
+
+    const edges = graphData.edges
+      .filter(edge => edge.no_stairs !== false)
+      .filter(edge => allowedNodeIds.has(edge.sourceId) && allowedNodeIds.has(edge.targetId));
+
+    const connectedNodeIds = new Set<string>();
+    edges.forEach(edge => {
+      connectedNodeIds.add(edge.sourceId);
+      connectedNodeIds.add(edge.targetId);
+    });
+
+    // Keep currently-selected nodes visible even if isolated (so search doesn't feel broken)
+    if (selectedNode?.id && allowedNodeIds.has(selectedNode.id)) connectedNodeIds.add(selectedNode.id);
+    if (startNode?.id && allowedNodeIds.has(startNode.id)) connectedNodeIds.add(startNode.id);
+    if (endNode?.id && allowedNodeIds.has(endNode.id)) connectedNodeIds.add(endNode.id);
+
+    const nodes = graphData.nodes.filter(node => connectedNodeIds.has(node.id));
+
+    return { nodes, edges };
+  }, [endNode?.id, routePreferences.disallowStairs, selectedNode?.id, startNode?.id]);
+
   // Calculate Route
   useEffect(() => {
     if (startNode && endNode) {
-      const path = findShortestPath(graphData, startNode.id, endNode.id);
+      const path = findShortestPath(graphData, startNode.id, endNode.id, routePreferences);
       setRoutePath(path || []);
     } else {
       setRoutePath([]);
     }
-  }, [startNode, endNode]);
+  }, [endNode, routePreferences, startNode]);
 
   // Suggestions Logic
-  const getSuggestions = (query: string) => {
+  const suggestions = useMemo(() => {
+    const query =
+      activeInput === 'search'
+        ? searchQuery
+        : activeInput === 'start'
+          ? startQuery
+          : activeInput === 'end'
+            ? endQuery
+            : '';
+
     if (!query || query.length < 2) return [];
-    return graphData.nodes
+
+    return displayGraphData.nodes
       .filter(node => node.name && node.name.toLowerCase().includes(query.toLowerCase()))
       .slice(0, 5);
-  };
-
-  const suggestions = useMemo(() => {
-    if (activeInput === 'search') return getSuggestions(searchQuery);
-    if (activeInput === 'start') return getSuggestions(startQuery);
-    if (activeInput === 'end') return getSuggestions(endQuery);
-    return [];
-  }, [activeInput, searchQuery, startQuery, endQuery]);
+  }, [activeInput, displayGraphData, endQuery, searchQuery, startQuery]);
 
   const handleSelectSuggestion = (node: Node) => {
     if (activeInput === 'search') {
@@ -159,6 +217,28 @@ export default function NavigationScreen() {
     }
     return { width: renderWidth, height: renderHeight };
   }, [containerDimensions, originalWidth, originalHeight]);
+
+  const scaledMapDimensions = useMemo(() => {
+    if (!renderedMapDimensions.width || !renderedMapDimensions.height) {
+      return { width: 0, height: 0 };
+    }
+    return {
+      width: renderedMapDimensions.width * zoomLevel,
+      height: renderedMapDimensions.height * zoomLevel,
+    };
+  }, [renderedMapDimensions, zoomLevel]);
+
+  const mapLegendVisibility = useMemo(() => {
+    return {
+      elevator: markerVisibility.showElevators,
+      ramp: markerVisibility.showRamps,
+      door: markerVisibility.showEntrances,
+      arrow: markerVisibility.showEntrances,
+      handicap_sign: markerVisibility.showWheelchairAccess,
+      ladder: !routePreferences.disallowStairs,
+      triangle: markerVisibility.showEntrances,
+    } as const;
+  }, [markerVisibility, routePreferences.disallowStairs]);
 
   return (
     <ThemedView style={styles.container}>
@@ -236,25 +316,24 @@ export default function NavigationScreen() {
       >
         <ScrollView
           style={styles.zoomScrollView}
-          contentContainerStyle={[
-            styles.zoomContentContainer,
-            { transform: [{ scale: zoomLevel }] }
-          ]}
+          contentContainerStyle={styles.zoomContentContainer}
           horizontal={false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          scrollEnabled={true}
+          scrollEnabled={zoomLevel > 1}
           maximumZoomScale={1}
           minimumZoomScale={1}
+          nestedScrollEnabled
         >
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            scrollEnabled={true}
+            scrollEnabled={zoomLevel > 1}
             contentContainerStyle={styles.horizontalScrollContent}
+            nestedScrollEnabled
           >
             <View style={styles.mapWrapper}>
-              <View style={{ width: renderedMapDimensions.width, height: renderedMapDimensions.height }}>
+              <View style={{ width: scaledMapDimensions.width, height: scaledMapDimensions.height }}>
                 <Image
                   source={mapSource}
                   style={styles.mapImage}
@@ -262,12 +341,12 @@ export default function NavigationScreen() {
                 />
               </View>
               
-              {renderedMapDimensions.width > 0 && (
-                <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
+              {scaledMapDimensions.width > 0 && (
+                <View style={[styles.overlayWrapper, { width: scaledMapDimensions.width, height: scaledMapDimensions.height }]}>
                   <GraphOverlay 
-                    data={graphData}
-                    width={renderedMapDimensions.width}
-                    height={renderedMapDimensions.height}
+                    data={displayGraphData}
+                    width={scaledMapDimensions.width}
+                    height={scaledMapDimensions.height}
                     originalWidth={originalWidth}
                     originalHeight={originalHeight}
                     offsetX={-300}
@@ -279,6 +358,7 @@ export default function NavigationScreen() {
                       ...(endNode ? [endNode.id] : [])
                     ]}
                     markerVisibility={markerVisibility}
+                    iconScale={zoomLevel}
                   />
                 </View>
               )}
@@ -314,30 +394,87 @@ export default function NavigationScreen() {
       </View>
 
       {/* Info Card / Legend */}
-      {routePath.length > 0 ? (
-        <View style={styles.infoCard}>
-          <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
-          <ThemedText>Distance: {routePath.length} nodes (approx)</ThemedText>
-        </View>
-      ) : (
+      <View style={styles.bottomPanel}>
+        {routePath.length > 0 && (
+          <View style={styles.infoCard}>
+            <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
+            <ThemedText style={styles.infoText}>Distance: {routePath.length} nodes (approx)</ThemedText>
+          </View>
+        )}
+        {startNode && endNode && routePath.length === 0 && (
+          <View style={styles.infoCard}>
+            <ThemedText style={styles.infoTitle}>No Route Found</ThemedText>
+            <ThemedText style={styles.infoText}>
+              Try adjusting your accessibility settings (stairs / outdoor / elevators).
+            </ThemedText>
+          </View>
+        )}
+
+        {/* Accessibility settings (synced with Settings tab) */}
         <View style={styles.legendCard}>
-        <View style={styles.legendRow}>
-          <View style={styles.legendItem}>
-            <View style={[styles.iconWrapper, { backgroundColor: '#4A90E2' }]}>
-              <IconSymbol name="figure.roll" size={18} color="#fff" />
-            </View>
-            <ThemedText style={styles.legendText}>Wheelchair Access</ThemedText>
+          <View style={styles.legendRow}>
+            <TouchableOpacity
+              style={styles.legendItem}
+              activeOpacity={0.75}
+              onPress={() => setWheelchairUser(!wheelchairUser)}
+            >
+              <View
+                style={[
+                  styles.iconWrapper,
+                  { backgroundColor: wheelchairUser ? '#4A90E2' : '#3A4451' },
+                ]}
+              >
+                <IconSymbol name="figure.roll" size={18} color={wheelchairUser ? '#fff' : '#9BA1A6'} />
+              </View>
+              <ThemedText style={[styles.legendText, !wheelchairUser && styles.legendTextDisabled]}>
+                Wheelchair Access
+              </ThemedText>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.legendItem}
+              activeOpacity={0.75}
+              onPress={() => setPreferElevators(!preferElevators)}
+            >
+              <View
+                style={[
+                  styles.iconWrapper,
+                  { backgroundColor: preferElevators ? '#FD9644' : '#3A4451' },
+                ]}
+              >
+                <IconSymbol name="arrow.up.arrow.down" size={18} color={preferElevators ? '#fff' : '#9BA1A6'} />
+              </View>
+              <ThemedText style={[styles.legendText, !preferElevators && styles.legendTextDisabled]}>
+                Elevator Access
+              </ThemedText>
+            </TouchableOpacity>
           </View>
-          
-          <View style={styles.legendItem}>
-            <View style={[styles.iconWrapper, { backgroundColor: '#FD9644' }]}>
-              <IconSymbol name="arrow.up.arrow.down" size={18} color="#fff" />
-            </View>
-            <ThemedText style={styles.legendText}>Elevator Access</ThemedText>
-          </View>
+        </View>
+
+        {/* Map icon legend (mirrors icons rendered on the map) */}
+        <View style={styles.mapIconLegendCard}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.mapIconLegendContent}
+          >
+            {MAP_ICON_LEGEND.map(({ type, label }) => {
+              const isEnabled = mapLegendVisibility[type];
+              return (
+                <View
+                  key={type}
+                  style={[styles.mapIconLegendItem, !isEnabled && styles.mapIconLegendItemDisabled]}
+                >
+                  <Image source={MAP_ICON_ASSETS[type]} style={styles.mapLegendIcon} resizeMode="contain" />
+                  <ThemedText style={[styles.mapIconLegendLabel, !isEnabled && styles.mapIconLegendLabelDisabled]}>
+                    {label}
+                  </ThemedText>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
-      )}
 
       <View style={styles.nextStepContainer}>
         <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
@@ -466,16 +603,12 @@ const styles = StyleSheet.create({
   },
   zoomContentContainer: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 250,
-    transformOrigin: 'top center',
+    justifyContent: 'center',
   },
   horizontalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingHorizontal: 200,
+    alignItems: 'center',
   },
   mapWrapper: {
     justifyContent: 'center',
@@ -488,8 +621,8 @@ const styles = StyleSheet.create({
   },
   overlayWrapper: {
     position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: 0,
+    left: 0,
     zIndex: 5,
     pointerEvents: 'box-none',
   },
@@ -538,31 +671,35 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   
-  // Bottom Cards
-  legendCard: {
+  // Bottom Panel
+  bottomPanel: {
     backgroundColor: '#1D2535',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: '#2A3441',
     zIndex: 10,
   },
+  legendCard: {
+    backgroundColor: '#1D2535',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
   infoCard: {
     backgroundColor: '#1D2535',
     padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#2A3441',
-    zIndex: 10,
   },
   infoTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 4,
   },
+  infoText: {
+    color: '#ECEDEE',
+  },
   legendRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    gap: 12,
   },
   legendItem: {
     flexDirection: 'row',
@@ -582,6 +719,44 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#ECEDEE',
     fontWeight: '500',
+  },
+  legendTextDisabled: {
+    color: '#9BA1A6',
+  },
+
+  mapIconLegendCard: {
+    backgroundColor: '#1D2535',
+    paddingTop: 2,
+    paddingBottom: 12,
+    paddingHorizontal: 12,
+  },
+  mapIconLegendContent: {
+    gap: 14,
+    paddingHorizontal: 4,
+  },
+  mapIconLegendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    backgroundColor: '#2A3441',
+  },
+  mapIconLegendItemDisabled: {
+    opacity: 0.35,
+  },
+  mapLegendIcon: {
+    width: 18,
+    height: 18,
+  },
+  mapIconLegendLabel: {
+    fontSize: 12,
+    color: '#ECEDEE',
+    fontWeight: '500',
+  },
+  mapIconLegendLabelDisabled: {
+    color: '#9BA1A6',
   },
   nextStepContainer: {
     flexDirection: 'row',
