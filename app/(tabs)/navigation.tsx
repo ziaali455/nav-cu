@@ -1,13 +1,13 @@
-import { StyleSheet, TextInput, View, Image, Dimensions, TouchableOpacity, FlatList, Text, Keyboard, ScrollView } from 'react-native';
+import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
+import GraphOverlay from '@/components/GraphOverlay';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useState, useMemo, useEffect } from 'react';
-import GraphOverlay from '@/components/GraphOverlay';
-import graphDataRaw from '@/assets/graphs/upper_campus_graph_data.json';
+import { useSettings } from '@/context/SettingsContext';
 import { GraphData, Node } from '@/types/graph';
 import { findShortestPath } from '@/utils/routing';
-import { useSettings } from '@/context/SettingsContext';
+import { useEffect, useMemo, useState } from 'react';
+import { Image, Keyboard, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 const graphData = graphDataRaw as GraphData;
 
@@ -56,6 +56,13 @@ export default function NavigationScreen() {
   };
 
   const mapSource = require('@/assets/images/columbia-ods-map-2.png');
+
+  // Graph Coordinate System Configuration
+  // Adjust these to align the graph nodes with the map image
+  const GRAPH_WIDTH = 825; // Lower value = Graph gets bigger
+  const GRAPH_HEIGHT = 1250;
+  const GRAPH_X_OFFSET = -320; // Increase to shift graph right
+  const GRAPH_Y_OFFSET = -95;
 
   // Safely resolve image dimensions
   const { originalWidth, originalHeight } = useMemo(() => {
@@ -268,10 +275,10 @@ export default function NavigationScreen() {
                     data={graphData}
                     width={renderedMapDimensions.width}
                     height={renderedMapDimensions.height}
-                    originalWidth={originalWidth}
-                    originalHeight={originalHeight}
-                    offsetX={-300}
-                    offsetY={-75}
+                    originalWidth={GRAPH_WIDTH}
+                    originalHeight={GRAPH_HEIGHT}
+                    offsetX={GRAPH_X_OFFSET}
+                    offsetY={GRAPH_Y_OFFSET}
                     highlightedPath={routePath}
                     highlightedNodes={[
                       ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
