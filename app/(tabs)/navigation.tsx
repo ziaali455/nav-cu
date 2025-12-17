@@ -236,38 +236,47 @@ export default function NavigationScreen() {
       >
         <ScrollView
           style={styles.zoomScrollView}
-          contentContainerStyle={[
-            styles.zoomContentContainer,
-            { transform: [{ scale: zoomLevel }] }
-          ]}
+          contentContainerStyle={styles.zoomContentContainer}
           horizontal={false}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
+          showsHorizontalScrollIndicator={true}
           scrollEnabled={true}
-          maximumZoomScale={1}
-          minimumZoomScale={1}
+          nestedScrollEnabled={true}
         >
           <ScrollView
             horizontal={true}
-            showsHorizontalScrollIndicator={false}
+            showsHorizontalScrollIndicator={true}
             scrollEnabled={true}
+            nestedScrollEnabled={true}
             contentContainerStyle={styles.horizontalScrollContent}
           >
-            <View style={styles.mapWrapper}>
-              <View style={{ width: renderedMapDimensions.width, height: renderedMapDimensions.height }}>
+            <View style={[styles.mapWrapper, { 
+              width: renderedMapDimensions.width * zoomLevel, 
+              height: renderedMapDimensions.height * zoomLevel 
+            }]}>
+              <View style={{ 
+                width: renderedMapDimensions.width * zoomLevel, 
+                height: renderedMapDimensions.height * zoomLevel 
+              }}>
                 <Image
                   source={mapSource}
-                  style={styles.mapImage}
+                  style={{ 
+                    width: renderedMapDimensions.width * zoomLevel, 
+                    height: renderedMapDimensions.height * zoomLevel 
+                  }}
                   resizeMode="contain"
                 />
               </View>
               
               {renderedMapDimensions.width > 0 && (
-                <View style={[styles.overlayWrapper, { width: renderedMapDimensions.width, height: renderedMapDimensions.height }]}>
+                <View style={[styles.overlayWrapper, { 
+                  width: renderedMapDimensions.width * zoomLevel, 
+                  height: renderedMapDimensions.height * zoomLevel 
+                }]}>
                   <GraphOverlay 
                     data={graphData}
-                    width={renderedMapDimensions.width}
-                    height={renderedMapDimensions.height}
+                    width={renderedMapDimensions.width * zoomLevel}
+                    height={renderedMapDimensions.height * zoomLevel}
                     originalWidth={originalWidth}
                     originalHeight={originalHeight}
                     offsetX={-300}
@@ -466,16 +475,12 @@ const styles = StyleSheet.create({
   },
   zoomContentContainer: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingBottom: 250,
-    transformOrigin: 'top center',
   },
   horizontalScrollContent: {
     flexGrow: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingHorizontal: 200,
   },
   mapWrapper: {
     justifyContent: 'center',
