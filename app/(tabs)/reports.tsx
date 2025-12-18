@@ -148,7 +148,7 @@ export default function ReportsScreen() {
   const colorScheme = useColorScheme();
 
   const MIN_ZOOM = 0.5;
-  const MAX_ZOOM = 3;
+  const MAX_ZOOM = 6;
   const ZOOM_STEP = 0.25;
 
   const handleZoomIn = () => {
@@ -388,19 +388,6 @@ export default function ReportsScreen() {
   };
 
   const handleDragEnd = async (id: string, newX: number, newY: number) => {
-    if (!imageLayout) {
-      // If we don't have layout info, keep the original position
-      return;
-    }
-
-    // Check if new position is within image bounds
-    if (newX < imageLayout.x || newX > imageLayout.x + imageLayout.width || 
-        newY < imageLayout.y || newY > imageLayout.y + imageLayout.height) {
-      console.log('Cannot drag pin outside image bounds');
-      // Don't update the position - keep it at the old position
-      return;
-    }
-
     // Find the report and check ownership
     const report = reports.find(r => r.id === id);
     if (!report) return;
