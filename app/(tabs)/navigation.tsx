@@ -217,8 +217,7 @@ export default function NavigationScreen() {
     if (!query || query.length < 2) return [];
 
     return displayGraphData.nodes
-      .filter(node => node.name && node.name.toLowerCase().includes(query.toLowerCase()))
-      .slice(0, 5);
+      .filter(node => node.name && node.name.toLowerCase().includes(query.toLowerCase()));
   }, [activeInput, displayGraphData, endQuery, searchQuery, startQuery]);
 
   const handleSelectSuggestion = (node: Node) => {
@@ -376,16 +375,18 @@ export default function NavigationScreen() {
         {/* Suggestions Dropdown */}
         {suggestions.length > 0 && (
           <View style={styles.suggestionsContainer}>
-            {suggestions.map(node => (
-              <TouchableOpacity 
-                key={node.id} 
-                style={styles.suggestionItem}
-                onPress={() => handleSelectSuggestion(node)}
-              >
-                <IconSymbol name="mappin.circle.fill" size={16} color="#9BA1A6" style={{marginRight: 8}} />
-                <ThemedText style={styles.suggestionText}>{node.name}</ThemedText>
-              </TouchableOpacity>
-            ))}
+            <ScrollView style={styles.suggestionsScroll} nestedScrollEnabled>
+              {suggestions.map(node => (
+                <TouchableOpacity 
+                  key={node.id} 
+                  style={styles.suggestionItem}
+                  onPress={() => handleSelectSuggestion(node)}
+                >
+                  <IconSymbol name="mappin.circle.fill" size={16} color="#9BA1A6" style={{marginRight: 8}} />
+                  <ThemedText style={styles.suggestionText}>{node.name}</ThemedText>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
           </View>
         )}
       </View>
@@ -717,10 +718,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     zIndex: 30,
-    maxHeight: 300,
+    maxHeight: 180, // ~3 items visible with scrolling
     borderWidth: 1,
     borderColor: '#3A4451',
     overflow: 'hidden',
+  },
+  suggestionsScroll: {
+    maxHeight: 180,
   },
   suggestionItem: {
     flexDirection: 'row',
