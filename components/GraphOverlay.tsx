@@ -21,12 +21,15 @@ interface GraphOverlayProps {
   highlightedPath?: string[];
   highlightedNodes?: string[];
   markerVisibility?: MarkerVisibility;
+  onSetStart?: (node: Node) => void;
+  onSetEnd?: (node: Node) => void;
 }
 
 const DEFAULT_COORD_WIDTH = 1000; 
 const DEFAULT_COORD_HEIGHT = 1000;
 
 const ICON_SIZE = 16;
+const DOT_SIZE = 8; // Smaller size for default dot
 
 function getNodeIconType(node: Node): string {
   const name = node.name.toLowerCase();
@@ -46,6 +49,7 @@ function getNodeIconType(node: Node): string {
   return 'handicap_sign';
 }
 
+
 const iconAssets: { [key: string]: any } = {
   elevator: require('@/assets/icons/elevator.png'),
   door: require('@/assets/icons/door.png'),
@@ -60,11 +64,14 @@ interface NodePopupProps {
   position: { x: number; y: number };
   onClose: () => void;
   containerWidth: number;
+  onSetStart?: (node: Node) => void;
+  onSetEnd?: (node: Node) => void;
 }
 
-function NodePopup({ node, position, onClose, containerWidth }: NodePopupProps) {
+function NodePopup({ node, position, onClose, containerWidth, onSetStart, onSetEnd }: NodePopupProps) {
   const popupWidth = 200;
-  const popupHeight = 160;
+  // Increase height to accommodate buttons
+  const popupHeight = 220;
   
   let popupX = position.x - popupWidth / 2;
   let popupY = position.y - popupHeight - 20;
@@ -123,6 +130,21 @@ function NodePopup({ node, position, onClose, containerWidth }: NodePopupProps) 
             </View>
           </View>
         </View>
+
+        <View style={styles.actionButtonsContainer}>
+          <TouchableOpacity 
+            style={[styles.actionButton, styles.startButton]} 
+            onPress={() => { onSetStart?.(node); onClose(); }}
+          >
+            <Text style={styles.actionButtonText}>Set Start</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.actionButton, styles.endButton]} 
+            onPress={() => { onSetEnd?.(node); onClose(); }}
+          >
+            <Text style={styles.actionButtonText}>Set Dest</Text>
+          </TouchableOpacity>
+        </View>
         
         <View style={styles.popupArrow} />
       </View>
@@ -145,7 +167,9 @@ export default function GraphOverlay({
     showRamps: true,
     showEntrances: true,
     showWheelchairAccess: true,
-  }
+  },
+  onSetStart,
+  onSetEnd
 }: GraphOverlayProps) {
   
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
@@ -236,15 +260,26 @@ export default function GraphOverlay({
         const y = (node.y + offsetY) * scaleY;
         const iconType = getNodeIconType(node);
         
+        // Logic: Show full icon if it's an elevator, selected, or highlighted. 
+        // Otherwise, show a small dot.
+        const showFullIcon = node.elevator || isSelected || isHighlighted || isPathNode;
+        const currentSize = showFullIcon ? ICON_SIZE : DOT_SIZE;
+        const touchSize = ICON_SIZE + 12; // Always keep touch target accessible
+
+        // Center centering logic
+        // x and y are the center coordinates of the node.
+        // We position the touchable absolutely at (x - width/2, y - height/2) so that its center aligns with (x,y).
+        
         return (
           <TouchableOpacity
             key={node.id}
             style={{
               position: 'absolute',
-              left: x - ICON_SIZE / 2,
-              top: y - ICON_SIZE / 2,
-              width: ICON_SIZE + 8,
-              height: ICON_SIZE + 8,
+              // Center the touch target around the point (x,y)
+              left: x - touchSize / 2, 
+              top: y - touchSize / 2,
+              width: touchSize,
+              height: touchSize,
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: isSelected ? 100 : 1,
@@ -252,26 +287,44 @@ export default function GraphOverlay({
             onPress={() => handleNodePress(node, x, y)}
             activeOpacity={0.7}
           >
-            <View
-              style={{
-                width: ICON_SIZE,
-                height: ICON_SIZE,
-                opacity: 1,
-                borderRadius: ICON_SIZE / 2,
-                borderWidth: isHighlighted || isPathNode || isSelected ? 2 : 0,
-                borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
-                backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
-              }}
-            >
-              <Image
-                source={iconAssets[iconType]}
-                resizeMode="contain"
+            {showFullIcon ? (
+              <View
                 style={{
                   width: ICON_SIZE,
                   height: ICON_SIZE,
+                  // No offset needed here if the container (TouchableOpacity) is already centered
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  opacity: 1,
+                  borderRadius: ICON_SIZE / 2,
+                  borderWidth: isHighlighted || isPathNode || isSelected ? 2 : 0,
+                  borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
+                  backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
+                }}
+              >
+                <Image
+                  source={iconAssets[iconType]}
+                  resizeMode="contain"
+                  style={{
+                    width: ICON_SIZE,
+                    height: ICON_SIZE,
+                  }}
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  width: DOT_SIZE,
+                  height: DOT_SIZE,
+                  // No offset needed here either
+                  borderRadius: DOT_SIZE / 2,
+                  backgroundColor: '#3A3A3C', // Dark gray for unobtrusive nodes
+                  borderWidth: 1,
+                  borderColor: '#fff',
+                  opacity: 0.8,
                 }}
               />
-            </View>
+            )}
           </TouchableOpacity>
         );
       })}
@@ -282,6 +335,8 @@ export default function GraphOverlay({
           position={popupPosition} 
           onClose={handleClosePopup}
           containerWidth={width}
+          onSetStart={onSetStart}
+          onSetEnd={onSetEnd}
         />
       )}
     </View>
@@ -371,5 +426,29 @@ const styles = StyleSheet.create({
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderTopColor: '#1D2535',
+  },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+    gap: 8,
+  },
+  actionButton: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startButton: {
+    backgroundColor: '#27ae60',
+  },
+  endButton: {
+    backgroundColor: '#4A90E2',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
 });

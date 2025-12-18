@@ -2084,6 +2084,20 @@
       "targetId": "368521ab-290b-4e8f-8992-c294761df02b",
       "distance": 34,
       "no_stairs": true
+    },
+    {
+      "id": "a2aac1e9-49b9-4af4-a50e-b561823b4350",
+      "sourceId": "52b5e303-61b0-4d45-8e7d-c2a88c4ae484",
+      "targetId": "6c61df1e-9240-4120-a582-a9e5700271b8",
+      "distance": 50,
+      "no_stairs": true
+    },
+    {
+      "id": "ec1a019d-6e37-421d-8f03-8a348ae3be86",
+      "sourceId": "7aa48e79-4e1b-487f-8252-33198b7ac863",
+      "targetId": "a894a80b-50f8-4b96-b12b-c8b465cc720e",
+      "distance": 40,
+      "no_stairs": true
     }
   ]
 }

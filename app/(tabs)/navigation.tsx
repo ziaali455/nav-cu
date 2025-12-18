@@ -59,10 +59,10 @@ export default function NavigationScreen() {
 
   // Graph Coordinate System Configuration
   // Adjust these to align the graph nodes with the map image
-  const GRAPH_WIDTH = 825; // Lower value = Graph gets bigger
+  const GRAPH_WIDTH = 820; // Lower value = Graph gets bigger
   const GRAPH_HEIGHT = 1250;
-  const GRAPH_X_OFFSET = -320; // Increase to shift graph right
-  const GRAPH_Y_OFFSET = -95;
+  const GRAPH_X_OFFSET = -310; // Increase to shift graph right
+  const GRAPH_Y_OFFSET = -85;
 
   // Safely resolve image dimensions
   const { originalWidth, originalHeight } = useMemo(() => {
@@ -126,6 +126,27 @@ export default function NavigationScreen() {
       setEndQuery(node.name);
       setEndNode(node);
       setActiveInput(null);
+    }
+  };
+  
+  // Handlers for Node Popup Actions
+  const handleSetStart = (node: Node) => {
+    setMode('navigate');
+    setStartNode(node);
+    setStartQuery(node.name);
+    // If we don't have an end node, focus it
+    if (!endNode) {
+       setActiveInput('end');
+    }
+  };
+
+  const handleSetEnd = (node: Node) => {
+    setMode('navigate');
+    setEndNode(node);
+    setEndQuery(node.name);
+    // If we don't have a start node, focus it
+    if (!startNode) {
+       setActiveInput('start');
     }
   };
 
@@ -286,6 +307,8 @@ export default function NavigationScreen() {
                       ...(endNode ? [endNode.id] : [])
                     ]}
                     markerVisibility={markerVisibility}
+                    onSetStart={handleSetStart}
+                    onSetEnd={handleSetEnd}
                   />
                 </View>
               )}
