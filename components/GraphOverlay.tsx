@@ -51,12 +51,15 @@ interface GraphOverlayProps {
   highlightedNodes?: string[];
   markerVisibility?: MarkerVisibility;
   iconScale?: number;
+  onSetStart?: (node: Node) => void;
+  onSetEnd?: (node: Node) => void;
 }
 
 const DEFAULT_COORD_WIDTH = 1000; 
 const DEFAULT_COORD_HEIGHT = 1000;
 
 const BASE_ICON_SIZE = 16;
+const DOT_SIZE = 8; // Smaller size for default dot (unscaled)
 
 function getNodeIconType(node: Node): MapIconType {
   const name = (node.name ?? '').toLowerCase();
@@ -85,11 +88,14 @@ interface NodePopupProps {
   position: { x: number; y: number };
   onClose: () => void;
   containerWidth: number;
+  onSetStart?: (node: Node) => void;
+  onSetEnd?: (node: Node) => void;
 }
 
-function NodePopup({ node, position, onClose, containerWidth }: NodePopupProps) {
+function NodePopup({ node, position, onClose, containerWidth, onSetStart, onSetEnd }: NodePopupProps) {
   const popupWidth = 200;
-  const popupHeight = 160;
+  // Increase height to accommodate buttons
+  const popupHeight = 220;
   
   let popupX = position.x - popupWidth / 2;
   let popupY = position.y - popupHeight - 20;
@@ -148,6 +154,21 @@ function NodePopup({ node, position, onClose, containerWidth }: NodePopupProps) 
             </View>
           </View>
         </View>
+
+        <View style={styles.actionButtonsContainer}>
+          <TouchableOpacity 
+            style={[styles.actionButton, styles.startButton]} 
+            onPress={() => { onSetStart?.(node); onClose(); }}
+          >
+            <Text style={styles.actionButtonText}>Set Start</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.actionButton, styles.endButton]} 
+            onPress={() => { onSetEnd?.(node); onClose(); }}
+          >
+            <Text style={styles.actionButtonText}>Set Dest</Text>
+          </TouchableOpacity>
+        </View>
         
         <View style={styles.popupArrow} />
       </View>
@@ -171,12 +192,15 @@ export default function GraphOverlay({
     showRamps: true,
     showEntrances: true,
     showWheelchairAccess: true,
-  }
+  },
+  onSetStart,
+  onSetEnd
 }: GraphOverlayProps) {
   
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const iconSize = BASE_ICON_SIZE * Math.max(0.5, iconScale);
+  const touchSize = Math.max(iconSize + 12, 28); // keep accessible tap target
   
   const scaleX = width / originalWidth;
   const scaleY = height / originalHeight;
@@ -269,15 +293,20 @@ export default function GraphOverlay({
         const y = (node.y + offsetY) * scaleY;
         const iconType = getNodeIconType(node);
         
+        // Logic: Show full icon if it's an elevator, selected, or highlighted. 
+        // Otherwise, show a small dot.
+        const showFullIcon = node.elevator || isSelected || isHighlighted || isPathNode;
+        const currentSize = showFullIcon ? iconSize : DOT_SIZE;
+        
         return (
           <TouchableOpacity
             key={node.id}
             style={{
               position: 'absolute',
-              left: x - iconSize / 2,
-              top: y - iconSize / 2,
-              width: iconSize + 8,
-              height: iconSize + 8,
+              left: x - touchSize / 2,
+              top: y - touchSize / 2,
+              width: touchSize,
+              height: touchSize,
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: isSelected ? 100 : 1,
@@ -287,23 +316,40 @@ export default function GraphOverlay({
           >
             <View
               style={{
-                width: iconSize,
-                height: iconSize,
+                width: currentSize,
+                height: currentSize,
                 opacity: 1,
-                borderRadius: iconSize / 2,
-                borderWidth: isHighlighted || isPathNode || isSelected ? Math.max(1, Math.round(2 * iconScale)) : 0,
+                borderRadius: currentSize / 2,
+                borderWidth:
+                  showFullIcon && (isHighlighted || isPathNode || isSelected)
+                    ? Math.max(1, Math.round(2 * iconScale))
+                    : 0,
                 borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
                 backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
               }}
             >
-              <Image
-                source={MAP_ICON_ASSETS[iconType]}
-                resizeMode="contain"
-                style={{
-                  width: iconSize,
-                  height: iconSize,
-                }}
-              />
+              {showFullIcon ? (
+                <Image
+                  source={MAP_ICON_ASSETS[iconType]}
+                  resizeMode="contain"
+                  style={{
+                    width: currentSize,
+                    height: currentSize,
+                  }}
+                />
+              ) : (
+                <View
+                  style={{
+                    width: currentSize,
+                    height: currentSize,
+                    borderRadius: currentSize / 2,
+                    backgroundColor: '#3A3A3C',
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    opacity: 0.8,
+                  }}
+                />
+              )}
             </View>
           </TouchableOpacity>
         );
@@ -315,6 +361,8 @@ export default function GraphOverlay({
           position={popupPosition} 
           onClose={handleClosePopup}
           containerWidth={width}
+          onSetStart={onSetStart}
+          onSetEnd={onSetEnd}
         />
       )}
     </View>
@@ -404,5 +452,29 @@ const styles = StyleSheet.create({
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderTopColor: '#1D2535',
+  },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+    gap: 8,
+  },
+  actionButton: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startButton: {
+    backgroundColor: '#27ae60',
+  },
+  endButton: {
+    backgroundColor: '#4A90E2',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
 });

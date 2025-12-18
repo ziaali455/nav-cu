@@ -65,6 +65,12 @@ export default function NavigationScreen() {
     setZoomLevel(1);
   };
 
+  // Graph Coordinate System Configuration
+  // Adjust these to align the graph nodes with the map image
+  const GRAPH_WIDTH = 820; // tuned for current map alignment
+  const GRAPH_HEIGHT = 1250;
+  const GRAPH_X_OFFSET = -310;
+  const GRAPH_Y_OFFSET = -85;
   // Safely resolve image dimensions
   const { originalWidth, originalHeight } = useMemo(() => {
     let width = 1000;
@@ -177,6 +183,27 @@ export default function NavigationScreen() {
       setEndQuery(node.name);
       setEndNode(node);
       setActiveInput(null);
+    }
+  };
+  
+  // Handlers for Node Popup Actions
+  const handleSetStart = (node: Node) => {
+    setMode('navigate');
+    setStartNode(node);
+    setStartQuery(node.name);
+    // If we don't have an end node, focus it
+    if (!endNode) {
+       setActiveInput('end');
+    }
+  };
+
+  const handleSetEnd = (node: Node) => {
+    setMode('navigate');
+    setEndNode(node);
+    setEndQuery(node.name);
+    // If we don't have a start node, focus it
+    if (!startNode) {
+       setActiveInput('start');
     }
   };
 
@@ -347,10 +374,10 @@ export default function NavigationScreen() {
                     data={displayGraphData}
                     width={scaledMapDimensions.width}
                     height={scaledMapDimensions.height}
-                    originalWidth={originalWidth}
-                    originalHeight={originalHeight}
-                    offsetX={-300}
-                    offsetY={-75}
+                    originalWidth={GRAPH_WIDTH}
+                    originalHeight={GRAPH_HEIGHT}
+                    offsetX={GRAPH_X_OFFSET}
+                    offsetY={GRAPH_Y_OFFSET}
                     highlightedPath={routePath}
                     highlightedNodes={[
                       ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
@@ -359,6 +386,8 @@ export default function NavigationScreen() {
                     ]}
                     markerVisibility={markerVisibility}
                     iconScale={zoomLevel}
+                    onSetStart={handleSetStart}
+                    onSetEnd={handleSetEnd}
                   />
                 </View>
               )}
