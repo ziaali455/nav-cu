@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface MarkerVisibility {
   showElevators: boolean;
@@ -49,10 +49,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   // Derive marker visibility from settings
   const markerVisibility: MarkerVisibility = {
-    showElevators: preferElevators,
+    // These control what's rendered on the map (not routing constraints)
+    showElevators: true,
     showRamps: showRamps,
     showEntrances: entrances,
-    showWheelchairAccess: wheelchairUser,
+    showWheelchairAccess: true,
   };
 
   return (

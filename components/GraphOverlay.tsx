@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, Modal, Pressable } from 'react-native';
-import Svg, { Line, G } from 'react-native-svg';
 import { GraphData, Node } from '@/types/graph';
+import React, { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Svg, { G, Line } from 'react-native-svg';
 
 interface MarkerVisibility {
   showElevators: boolean;
@@ -9,6 +9,35 @@ interface MarkerVisibility {
   showEntrances: boolean;
   showWheelchairAccess: boolean;
 }
+
+export type MapIconType =
+  | 'elevator'
+  | 'door'
+  | 'ramp'
+  | 'arrow'
+  | 'triangle'
+  | 'handicap_sign'
+  | 'ladder';
+
+export const MAP_ICON_ASSETS: Record<MapIconType, any> = {
+  elevator: require('@/assets/icons/elevator.png'),
+  door: require('@/assets/icons/door.png'),
+  ramp: require('@/assets/icons/ramp.png'),
+  arrow: require('@/assets/icons/arrow.png'),
+  triangle: require('@/assets/icons/triangle.png'),
+  handicap_sign: require('@/assets/icons/handicap_sign.png'),
+  ladder: require('@/assets/icons/ladder.png'),
+};
+
+export const MAP_ICON_LEGEND: { type: MapIconType; label: string }[] = [
+  { type: 'elevator', label: 'Elevator' },
+  { type: 'ramp', label: 'Ramp' },
+  { type: 'ladder', label: 'Stairs' },
+  { type: 'door', label: 'Entrance' },
+  { type: 'triangle', label: 'Campus entry' },
+  { type: 'arrow', label: 'Indoor link' },
+  { type: 'handicap_sign', label: 'Path point' },
+];
 
 interface GraphOverlayProps {
   data: GraphData;
@@ -21,6 +50,7 @@ interface GraphOverlayProps {
   highlightedPath?: string[];
   highlightedNodes?: string[];
   markerVisibility?: MarkerVisibility;
+  iconScale?: number;
   onSetStart?: (node: Node) => void;
   onSetEnd?: (node: Node) => void;
 }
@@ -28,18 +58,22 @@ interface GraphOverlayProps {
 const DEFAULT_COORD_WIDTH = 1000; 
 const DEFAULT_COORD_HEIGHT = 1000;
 
-const ICON_SIZE = 16;
-const DOT_SIZE = 8; // Smaller size for default dot
+const BASE_ICON_SIZE = 16;
+const DOT_SIZE = 8; // Smaller size for default dot (unscaled)
 
-function getNodeIconType(node: Node): string {
-  const name = node.name.toLowerCase();
+function getNodeIconType(node: Node): MapIconType {
+  const name = (node.name ?? '').toLowerCase();
   
   if (node.elevator) {
     return 'elevator';
+  } else if (name.includes('stair')) {
+    // Stairs nodes are not wheelchair-accessible, but appear in the dataset by name.
+    // Keep these visually distinct.
+    return 'ladder';
   } else if (name.includes('building connection')) {
     return 'arrow';
   } else if (name.includes('campus entrance')) {
-    return 'information';
+    return 'triangle';
   } else if (name.includes('ramp')) {
     return 'ramp';
   } else if (name.includes('entrance')) {
@@ -48,16 +82,6 @@ function getNodeIconType(node: Node): string {
   
   return 'handicap_sign';
 }
-
-
-const iconAssets: { [key: string]: any } = {
-  elevator: require('@/assets/icons/elevator.png'),
-  door: require('@/assets/icons/door.png'),
-  ramp: require('@/assets/icons/ramp.png'),
-  arrow: require('@/assets/icons/arrow.png'),
-  information: require('@/assets/icons/information.png'),
-  handicap_sign: require('@/assets/icons/handicap_sign.png'),
-};
 
 interface NodePopupProps {
   node: Node;
@@ -162,6 +186,7 @@ export default function GraphOverlay({
   offsetY = 0,
   highlightedPath = [],
   highlightedNodes = [],
+  iconScale = 1,
   markerVisibility = {
     showElevators: true,
     showRamps: true,
@@ -174,6 +199,8 @@ export default function GraphOverlay({
   
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [popupPosition, setPopupPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const iconSize = BASE_ICON_SIZE * Math.max(0.5, iconScale);
+  const touchSize = Math.max(iconSize + 12, 28); // keep accessible tap target
   
   const scaleX = width / originalWidth;
   const scaleY = height / originalHeight;
@@ -182,6 +209,12 @@ export default function GraphOverlay({
   data.nodes.forEach(node => nodeMap.set(node.id, node));
 
   const shouldShowNode = (node: Node): boolean => {
+    // Always render nodes that are actively highlighted (selection / routing),
+    // even if the user hides that marker category.
+    if (highlightedNodes.includes(node.id) || highlightedPath.includes(node.id)) {
+      return true;
+    }
+
     const iconType = getNodeIconType(node);
     
     switch (iconType) {
@@ -190,7 +223,7 @@ export default function GraphOverlay({
       case 'ramp':
         return markerVisibility.showRamps;
       case 'door':
-      case 'information':
+      case 'triangle':
       case 'arrow':
         return markerVisibility.showEntrances;
       case 'handicap_sign':
@@ -263,20 +296,14 @@ export default function GraphOverlay({
         // Logic: Show full icon if it's an elevator, selected, or highlighted. 
         // Otherwise, show a small dot.
         const showFullIcon = node.elevator || isSelected || isHighlighted || isPathNode;
-        const currentSize = showFullIcon ? ICON_SIZE : DOT_SIZE;
-        const touchSize = ICON_SIZE + 12; // Always keep touch target accessible
-
-        // Center centering logic
-        // x and y are the center coordinates of the node.
-        // We position the touchable absolutely at (x - width/2, y - height/2) so that its center aligns with (x,y).
+        const currentSize = showFullIcon ? iconSize : DOT_SIZE;
         
         return (
           <TouchableOpacity
             key={node.id}
             style={{
               position: 'absolute',
-              // Center the touch target around the point (x,y)
-              left: x - touchSize / 2, 
+              left: x - touchSize / 2,
               top: y - touchSize / 2,
               width: touchSize,
               height: touchSize,
@@ -287,44 +314,43 @@ export default function GraphOverlay({
             onPress={() => handleNodePress(node, x, y)}
             activeOpacity={0.7}
           >
-            {showFullIcon ? (
-              <View
-                style={{
-                  width: ICON_SIZE,
-                  height: ICON_SIZE,
-                  // No offset needed here if the container (TouchableOpacity) is already centered
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  opacity: 1,
-                  borderRadius: ICON_SIZE / 2,
-                  borderWidth: isHighlighted || isPathNode || isSelected ? 2 : 0,
-                  borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
-                  backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
-                }}
-              >
+            <View
+              style={{
+                width: currentSize,
+                height: currentSize,
+                opacity: 1,
+                borderRadius: currentSize / 2,
+                borderWidth:
+                  showFullIcon && (isHighlighted || isPathNode || isSelected)
+                    ? Math.max(1, Math.round(2 * iconScale))
+                    : 0,
+                borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
+                backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
+              }}
+            >
+              {showFullIcon ? (
                 <Image
-                  source={iconAssets[iconType]}
+                  source={MAP_ICON_ASSETS[iconType]}
                   resizeMode="contain"
                   style={{
-                    width: ICON_SIZE,
-                    height: ICON_SIZE,
+                    width: currentSize,
+                    height: currentSize,
                   }}
                 />
-              </View>
-            ) : (
-              <View
-                style={{
-                  width: DOT_SIZE,
-                  height: DOT_SIZE,
-                  // No offset needed here either
-                  borderRadius: DOT_SIZE / 2,
-                  backgroundColor: '#3A3A3C', // Dark gray for unobtrusive nodes
-                  borderWidth: 1,
-                  borderColor: '#fff',
-                  opacity: 0.8,
-                }}
-              />
-            )}
+              ) : (
+                <View
+                  style={{
+                    width: currentSize,
+                    height: currentSize,
+                    borderRadius: currentSize / 2,
+                    backgroundColor: '#3A3A3C',
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    opacity: 0.8,
+                  }}
+                />
+              )}
+            </View>
           </TouchableOpacity>
         );
       })}

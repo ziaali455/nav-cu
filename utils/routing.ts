@@ -1,37 +1,109 @@
-import { GraphData, Node, Edge } from '@/types/graph';
+import { GraphData, Node } from '@/types/graph';
 
-interface GraphMap {
-  [nodeId: string]: {
-    [neighborId: string]: number; // distance
-  };
-}
+export type RoutePreferences = {
+  /**
+   * If true, remove any edge where `no_stairs === false`.
+   * Use this for wheelchair mode or explicit "avoid stairs".
+   */
+  disallowStairs?: boolean;
+  /**
+   * Extra cost added to edges where `no_stairs === false` (only used when stairs are allowed).
+   * Use this for "prefer elevators" / "cane or crutches" style preferences.
+   */
+  stairsPenalty?: number;
+  /**
+   * Extra cost added when traversing an outdoor segment (based on node fields).
+   * Used for "minimize outdoor paths".
+   */
+  outdoorPenalty?: number;
+  /**
+   * If true, slightly prefers edges adjacent to elevator nodes.
+   */
+  preferElevators?: boolean;
+  /**
+   * Multiplier applied to edge weights when an endpoint is an elevator node.
+   * Must be > 0 and <= 1. Defaults to 0.9.
+   */
+  elevatorBias?: number;
+};
 
-export function findShortestPath(data: GraphData, startId: string, endId: string): string[] | null {
-  // Build adjacency list
-  const graph: GraphMap = {};
-  
+type Neighbor = {
+  id: string;
+  distance: number;
+  no_stairs: boolean;
+};
+
+type GraphAdj = Record<string, Neighbor[]>;
+
+export function findShortestPath(
+  data: GraphData,
+  startId: string,
+  endId: string,
+  preferences: RoutePreferences = {}
+): string[] | null {
+  const nodeMap = new Map<string, Node>();
+  data.nodes.forEach(node => nodeMap.set(node.id, node));
+
+  const graph: GraphAdj = {};
   data.nodes.forEach(node => {
-    graph[node.id] = {};
+    graph[node.id] = [];
   });
 
-  data.edges.forEach(edge => {
-    if (!graph[edge.sourceId]) graph[edge.sourceId] = {};
-    if (!graph[edge.targetId]) graph[edge.targetId] = {};
-    
-    // Assuming undirected graph or bidirectional edges?
-    // Looking at the data, edges have source and target.
-    // Usually walkable paths are bidirectional unless specified.
-    // The dataset has "edges" array. Let's assume bidirectional for now as they are walkways.
-    
-    // Check if edge already exists to avoid overwriting shorter path if duplicates
-    const currentDist = graph[edge.sourceId][edge.targetId];
-    if (currentDist === undefined || edge.distance < currentDist) {
-       graph[edge.sourceId][edge.targetId] = edge.distance;
+  const disallowStairs = !!preferences.disallowStairs;
+  const stairsPenalty = Math.max(0, preferences.stairsPenalty ?? 0);
+  const outdoorPenalty = Math.max(0, preferences.outdoorPenalty ?? 0);
+  const preferElevators = !!preferences.preferElevators;
+  const elevatorBiasRaw = preferences.elevatorBias ?? 0.9;
+  const elevatorBias =
+    elevatorBiasRaw > 0 && elevatorBiasRaw <= 1 ? elevatorBiasRaw : 0.9;
+
+  const isOutdoorNode = (node?: Node) =>
+    node?.indoor === false || node?.outside_campus === true;
+
+  const edgeCost = (fromId: string, toId: string, neighbor: Neighbor) => {
+    let cost = neighbor.distance;
+
+    if (neighbor.no_stairs === false) {
+      cost += stairsPenalty;
     }
-    
-    const currentDistReverse = graph[edge.targetId][edge.sourceId];
-    if (currentDistReverse === undefined || edge.distance < currentDistReverse) {
-       graph[edge.targetId][edge.sourceId] = edge.distance;
+
+    if (outdoorPenalty > 0) {
+      const fromNode = nodeMap.get(fromId);
+      const toNode = nodeMap.get(toId);
+      if (isOutdoorNode(fromNode) || isOutdoorNode(toNode)) {
+        cost += outdoorPenalty;
+      }
+    }
+
+    if (preferElevators) {
+      const fromNode = nodeMap.get(fromId);
+      const toNode = nodeMap.get(toId);
+      if (fromNode?.elevator || toNode?.elevator) {
+        cost *= elevatorBias;
+      }
+    }
+
+    return cost > 0 ? cost : neighbor.distance;
+  };
+
+  data.edges.forEach(edge => {
+    // Remove non-accessible edges when required (wheelchair / avoid stairs)
+    if (disallowStairs && edge.no_stairs === false) return;
+
+    if (graph[edge.sourceId]) {
+      graph[edge.sourceId].push({
+        id: edge.targetId,
+        distance: edge.distance,
+        no_stairs: edge.no_stairs,
+      });
+    }
+
+    if (graph[edge.targetId]) {
+      graph[edge.targetId].push({
+        id: edge.sourceId,
+        distance: edge.distance,
+        no_stairs: edge.no_stairs,
+      });
     }
   });
 
@@ -60,13 +132,15 @@ export function findShortestPath(data: GraphData, startId: string, endId: string
     const neighbors = graph[shortestNodeId];
     if (!neighbors) continue;
 
-    for (const neighborId in neighbors) {
-      const distance = neighbors[neighborId];
-      const alt = distances[shortestNodeId] + distance;
+    for (const neighbor of neighbors) {
+      if (distances[neighbor.id] === undefined) continue;
 
-      if (alt < distances[neighborId]) {
-        distances[neighborId] = alt;
-        previous[neighborId] = shortestNodeId;
+      const alt =
+        distances[shortestNodeId] + edgeCost(shortestNodeId, neighbor.id, neighbor);
+
+      if (alt < distances[neighbor.id]) {
+        distances[neighbor.id] = alt;
+        previous[neighbor.id] = shortestNodeId;
       }
     }
   }
