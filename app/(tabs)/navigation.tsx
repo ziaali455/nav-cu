@@ -44,13 +44,16 @@ export default function NavigationScreen() {
   // Routing Result
   const [routePath, setRoutePath] = useState<string[]>([]);
   
+  // Show Only Route mode
+  const [showOnlyRoute, setShowOnlyRoute] = useState(false);
+  
   // Layout
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
   
   // Zoom controls
   const [zoomLevel, setZoomLevel] = useState(1);
   const MIN_ZOOM = 0.5;
-  const MAX_ZOOM = 3;
+  const MAX_ZOOM = 6;
   const ZOOM_STEP = 0.25;
   
   const handleZoomIn = () => {
@@ -225,6 +228,7 @@ export default function NavigationScreen() {
     setStartQuery('');
     setEndQuery('');
     setActiveInput(null);
+    setShowOnlyRoute(false);
   };
 
   // Image Scaling Logic
@@ -386,6 +390,7 @@ export default function NavigationScreen() {
                     ]}
                     markerVisibility={markerVisibility}
                     iconScale={zoomLevel}
+                    showOnlyRoute={showOnlyRoute}
                     onSetStart={handleSetStart}
                     onSetEnd={handleSetEnd}
                   />
@@ -394,6 +399,23 @@ export default function NavigationScreen() {
             </View>
           </ScrollView>
         </ScrollView>
+        
+        {/* Show Only Route Button */}
+        {startNode && endNode && routePath.length > 0 && (
+          <TouchableOpacity 
+            style={[styles.showRouteButton, showOnlyRoute && styles.showRouteButtonActive]}
+            onPress={() => setShowOnlyRoute(!showOnlyRoute)}
+          >
+            <IconSymbol 
+              name={showOnlyRoute ? "eye.slash.fill" : "eye.fill"} 
+              size={18} 
+              color={showOnlyRoute ? "#fff" : "#4A90E2"} 
+            />
+            <ThemedText style={[styles.showRouteButtonText, showOnlyRoute && styles.showRouteButtonTextActive]}>
+              {showOnlyRoute ? "Show All" : "Show Only Route"}
+            </ThemedText>
+          </TouchableOpacity>
+        )}
         
         {/* Zoom Controls */}
         <View style={styles.zoomControls}>
@@ -590,6 +612,39 @@ const styles = StyleSheet.create({
     color: '#ECEDEE',
     padding: 4,
   },
+  showRouteButton: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(42, 52, 65, 0.95)',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#4A90E2',
+    gap: 6,
+    zIndex: 1000,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  showRouteButtonActive: {
+    backgroundColor: 'rgba(74, 144, 226, 0.95)',
+    borderColor: '#4A90E2',
+  },
+  showRouteButtonText: {
+    fontSize: 13,
+    color: '#4A90E2',
+    fontWeight: '600',
+  },
+  showRouteButtonTextActive: {
+    color: '#fff',
+  },
 
   // Suggestions
   suggestionsContainer: {
@@ -666,7 +721,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     padding: 8,
     gap: 5,
-    zIndex: 1000,
+    zIndex: 999,
   },
   zoomButton: {
     width: 44,

@@ -51,6 +51,7 @@ interface GraphOverlayProps {
   highlightedNodes?: string[];
   markerVisibility?: MarkerVisibility;
   iconScale?: number;
+  showOnlyRoute?: boolean;
   onSetStart?: (node: Node) => void;
   onSetEnd?: (node: Node) => void;
 }
@@ -187,6 +188,7 @@ export default function GraphOverlay({
   highlightedPath = [],
   highlightedNodes = [],
   iconScale = 1,
+  showOnlyRoute = false,
   markerVisibility = {
     showElevators: true,
     showRamps: true,
@@ -209,6 +211,14 @@ export default function GraphOverlay({
   data.nodes.forEach(node => nodeMap.set(node.id, node));
 
   const shouldShowNode = (node: Node): boolean => {
+    // If "Show Only Route" mode is active, only show start and end nodes
+    if (showOnlyRoute) {
+      if (highlightedPath.length === 0) return false;
+      const firstNodeId = highlightedPath[0];
+      const lastNodeId = highlightedPath[highlightedPath.length - 1];
+      return node.id === firstNodeId || node.id === lastNodeId;
+    }
+    
     // Always render nodes that are actively highlighted (selection / routing),
     // even if the user hides that marker category.
     if (highlightedNodes.includes(node.id) || highlightedPath.includes(node.id)) {
@@ -268,6 +278,11 @@ export default function GraphOverlay({
                   isHighlighted = true;
                 }
               }
+            }
+            
+            // If "Show Only Route" mode is active, only show route edges
+            if (showOnlyRoute && !isHighlighted) {
+              return null;
             }
             
             return (
