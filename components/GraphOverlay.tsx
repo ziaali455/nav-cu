@@ -52,6 +52,7 @@ interface GraphOverlayProps {
   markerVisibility?: MarkerVisibility;
   iconScale?: number;
   showOnlyRoute?: boolean;
+  currentStepNodeId?: string | null;
   onSetStart?: (node: Node) => void;
   onSetEnd?: (node: Node) => void;
 }
@@ -195,6 +196,7 @@ export default function GraphOverlay({
     showEntrances: true,
     showWheelchairAccess: true,
   },
+  currentStepNodeId = null,
   onSetStart,
   onSetEnd
 }: GraphOverlayProps) {
@@ -211,14 +213,11 @@ export default function GraphOverlay({
   data.nodes.forEach(node => nodeMap.set(node.id, node));
 
   const shouldShowNode = (node: Node): boolean => {
-    // If "Show Only Route" mode is active, only show start and end nodes
-    if (showOnlyRoute) {
-      if (highlightedPath.length === 0) return false;
-      const firstNodeId = highlightedPath[0];
-      const lastNodeId = highlightedPath[highlightedPath.length - 1];
-      return node.id === firstNodeId || node.id === lastNodeId;
+    // If "Show Only Route" mode is active, only show nodes that are on the highlighted path
+    if (showOnlyRoute && highlightedPath.length > 0) {
+      return highlightedPath.includes(node.id);
     }
-    
+
     // Always render nodes that are actively highlighted (selection / routing),
     // even if the user hides that marker category.
     if (highlightedNodes.includes(node.id) || highlightedPath.includes(node.id)) {
@@ -252,10 +251,6 @@ export default function GraphOverlay({
       setSelectedNode(node);
       setPopupPosition({ x, y });
     }
-  };
-  
-  const handleClosePopup = () => {
-    setSelectedNode(null);
   };
 
   return (
@@ -312,6 +307,7 @@ export default function GraphOverlay({
         // Otherwise, show a small dot.
         const showFullIcon = node.elevator || isSelected || isHighlighted || isPathNode;
         const currentSize = showFullIcon ? iconSize : DOT_SIZE;
+        const isCurrentStep = currentStepNodeId === node.id;
         
         return (
           <TouchableOpacity
@@ -339,7 +335,13 @@ export default function GraphOverlay({
                   showFullIcon && (isHighlighted || isPathNode || isSelected)
                     ? Math.max(1, Math.round(2 * iconScale))
                     : 0,
-                borderColor: isSelected ? '#4A90E2' : isHighlighted ? 'red' : 'orange',
+                borderColor: isSelected
+                  ? '#4A90E2'
+                  : isCurrentStep
+                    ? '#1ABC9C'
+                    : (isHighlighted || isPathNode)
+                      ? 'orange'
+                      : 'transparent',
                 backgroundColor: isSelected ? 'rgba(74, 144, 226, 0.2)' : 'transparent',
               }}
             >
@@ -369,12 +371,12 @@ export default function GraphOverlay({
           </TouchableOpacity>
         );
       })}
-      
+
       {selectedNode && (
         <NodePopup 
           node={selectedNode} 
           position={popupPosition} 
-          onClose={handleClosePopup}
+          onClose={() => setSelectedNode(null)}
           containerWidth={width}
           onSetStart={onSetStart}
           onSetEnd={onSetEnd}

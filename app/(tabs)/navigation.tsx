@@ -43,6 +43,8 @@ export default function NavigationScreen() {
 
   // Routing Result
   const [routePath, setRoutePath] = useState<string[]>([]);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   
   // Show Only Route mode
   const [showOnlyRoute, setShowOnlyRoute] = useState(false);
@@ -99,18 +101,18 @@ export default function NavigationScreen() {
 
   const routePreferences = useMemo(() => {
     const disallowStairs = wheelchairUser || avoidStairs;
-    const stairsPenalty = disallowStairs
-      ? 0
-      : Math.max(preferElevators ? 250 : 0, caneCrutches ? 150 : 0);
+    // Outdoor penalty only used when minimizeOutdoorPaths is true (applied on indoor<->outdoor crossings)
+    const outdoorPenalty = minimizeOutdoorPaths ? 50 : 0;
+    // Make campus boundary penalty very large to strongly avoid leaving campus
+    const campusBoundaryPenalty = 5000;
 
     return {
       disallowStairs,
-      stairsPenalty,
-      outdoorPenalty: minimizeOutdoorPaths ? 50 : 0,
-      preferElevators,
-      elevatorBias: 0.9,
+      outdoorPenalty,
+      campusBoundaryPenalty,
+      // stairs penalty and elevator bias are intentionally not used
     };
-  }, [avoidStairs, caneCrutches, minimizeOutdoorPaths, preferElevators, wheelchairUser]);
+  }, [avoidStairs, minimizeOutdoorPaths, wheelchairUser]);
 
   const displayGraphData = useMemo(() => {
     if (!routePreferences.disallowStairs) return graphData;
@@ -120,7 +122,6 @@ export default function NavigationScreen() {
 
     const allowedNodeIds = new Set(
       graphData.nodes
-        .filter(node => !isStairsNodeName(node.name))
         .map(node => node.id)
     );
 
@@ -144,15 +145,63 @@ export default function NavigationScreen() {
     return { nodes, edges };
   }, [endNode?.id, routePreferences.disallowStairs, selectedNode?.id, startNode?.id]);
 
+  const nodeById = useMemo(() => {
+    const map = new Map<string, Node>();
+    displayGraphData.nodes.forEach(n => map.set(n.id, n));
+    return map;
+  }, [displayGraphData.nodes]);
+
   // Calculate Route
+  // Indoor-first routing when minimizeOutdoorPaths is true:
+  // 1) Try indoor-only graph; if a path exists, take it.
+  // 2) Otherwise, fall back to normal graph with outdoor penalty.
   useEffect(() => {
-    if (startNode && endNode) {
-      const path = findShortestPath(graphData, startNode.id, endNode.id, routePreferences);
-      setRoutePath(path || []);
-    } else {
+    if (!(startNode && endNode)) {
       setRoutePath([]);
+      setCurrentStepIndex(0);
+      return;
     }
-  }, [endNode, routePreferences, startNode]);
+
+    const isIndoorSafe = (node: Node) =>
+      node.indoor === true && node.outside_campus !== true;
+
+    let chosenPath: string[] | null = null;
+
+    if (minimizeOutdoorPaths && isIndoorSafe(startNode) && isIndoorSafe(endNode)) {
+      const indoorNodes = displayGraphData.nodes.filter(isIndoorSafe);
+      const indoorIds = new Set(indoorNodes.map(n => n.id));
+      // Only attempt indoor routing if both endpoints exist in the indoor subgraph
+      if (indoorIds.has(startNode.id) && indoorIds.has(endNode.id)) {
+        const indoorEdges = displayGraphData.edges.filter(
+          e => indoorIds.has(e.sourceId) && indoorIds.has(e.targetId)
+        );
+        const indoorGraph: GraphData = { nodes: indoorNodes, edges: indoorEdges };
+
+        const indoorPath = findShortestPath(indoorGraph, startNode.id, endNode.id, {
+          ...routePreferences,
+          outdoorPenalty: 0,
+        });
+
+        if (indoorPath && indoorPath.length > 0) {
+          chosenPath = indoorPath;
+        }
+      }
+    }
+
+    if (!chosenPath) {
+      chosenPath = findShortestPath(displayGraphData, startNode.id, endNode.id, routePreferences);
+    }
+
+    setRoutePath(chosenPath || []);
+    setCurrentStepIndex(0);
+  }, [displayGraphData, endNode, minimizeOutdoorPaths, routePreferences, startNode]);
+
+  // Keep currentStepIndex in bounds when routePath changes
+  useEffect(() => {
+    if (currentStepIndex >= routePath.length) {
+      setCurrentStepIndex(routePath.length > 0 ? routePath.length - 1 : 0);
+    }
+  }, [currentStepIndex, routePath.length]);
 
   // Suggestions Logic
   const suggestions = useMemo(() => {
@@ -386,8 +435,11 @@ export default function NavigationScreen() {
                     highlightedNodes={[
                       ...(selectedNode && mode === 'explore' ? [selectedNode.id] : []),
                       ...(startNode ? [startNode.id] : []),
-                      ...(endNode ? [endNode.id] : [])
+                      ...(endNode ? [endNode.id] : []),
+                      ...(hoveredNodeId ? [hoveredNodeId] : []),
+                      ...(routePath[currentStepIndex] ? [routePath[currentStepIndex]] : []),
                     ]}
+                    currentStepNodeId={routePath[currentStepIndex] ?? null}
                     markerVisibility={markerVisibility}
                     iconScale={zoomLevel}
                     showOnlyRoute={showOnlyRoute}
@@ -446,21 +498,6 @@ export default function NavigationScreen() {
 
       {/* Info Card / Legend */}
       <View style={styles.bottomPanel}>
-        {routePath.length > 0 && (
-          <View style={styles.infoCard}>
-            <ThemedText style={styles.infoTitle}>Route Calculated</ThemedText>
-            <ThemedText style={styles.infoText}>Distance: {routePath.length} nodes (approx)</ThemedText>
-          </View>
-        )}
-        {startNode && endNode && routePath.length === 0 && (
-          <View style={styles.infoCard}>
-            <ThemedText style={styles.infoTitle}>No Route Found</ThemedText>
-            <ThemedText style={styles.infoText}>
-              Try adjusting your accessibility settings (stairs / outdoor / elevators).
-            </ThemedText>
-          </View>
-        )}
-
         {/* Accessibility settings (synced with Settings tab) */}
         <View style={styles.legendCard}>
           <View style={styles.legendRow}>
@@ -527,11 +564,31 @@ export default function NavigationScreen() {
         </View>
       </View>
 
+      {/* Next Step Bar */}
       <View style={styles.nextStepContainer}>
-        <IconSymbol name="figure.walk" size={24} color="#2C3E50" style={styles.nextStepIcon} />
-        <ThemedText style={styles.nextStepText}>
-          Next Step: Continue on the accessible path
-        </ThemedText>
+        {routePath.length > 1 && currentStepIndex > 0 ? (
+          <TouchableOpacity style={styles.nextPrevButton} onPress={() => setCurrentStepIndex(i => Math.max(i - 1, 0))}>
+            <IconSymbol name="chevron.left" size={18} color="#ECEDEE" />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.nextPrevButtonPlaceholder} />
+        )}
+
+        <View style={styles.nextStepTextWrapper}>
+          <ThemedText style={styles.nextStepText}>
+            {routePath.length > 0
+              ? `Next Step: Continue to ${nodeById.get(routePath[currentStepIndex])?.name ?? 'destination'}`
+              : 'Select a start and destination'}
+          </ThemedText>
+        </View>
+
+        {routePath.length > 1 && currentStepIndex < routePath.length - 1 ? (
+          <TouchableOpacity style={styles.nextPrevButton} onPress={() => setCurrentStepIndex(i => Math.min(i + 1, routePath.length - 1))}>
+            <IconSymbol name="chevron.right" size={18} color="#ECEDEE" />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.nextPrevButtonPlaceholder} />
+        )}
       </View>
     </ThemedView>
   );
@@ -847,17 +904,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1D2535',
     paddingVertical: 14,
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
     borderTopWidth: 1,
     borderTopColor: '#2A3441',
   },
-  nextStepIcon: {
-    marginRight: 12,
-  },
   nextStepText: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: '500',
+    textAlign: 'center',
     color: '#ECEDEE',
+    fontSize: 15,
+    fontWeight: '600',
+    paddingHorizontal: 8,
+    flexWrap: 'wrap',
+  },
+  nextStepTextWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  nextPrevButton: {
+    width: 44,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#2A3441',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  nextPrevButtonPlaceholder: {
+    width: 44,
+    height: 36,
   },
 });

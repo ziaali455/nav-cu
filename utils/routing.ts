@@ -7,24 +7,15 @@ export type RoutePreferences = {
    */
   disallowStairs?: boolean;
   /**
-   * Extra cost added to edges where `no_stairs === false` (only used when stairs are allowed).
-   * Use this for "prefer elevators" / "cane or crutches" style preferences.
-   */
-  stairsPenalty?: number;
-  /**
    * Extra cost added when traversing an outdoor segment (based on node fields).
    * Used for "minimize outdoor paths".
    */
   outdoorPenalty?: number;
   /**
-   * If true, slightly prefers edges adjacent to elevator nodes.
+   * Penalty applied every time a path crosses the campus boundary
+   * (inside -> outside or outside -> inside).
    */
-  preferElevators?: boolean;
-  /**
-   * Multiplier applied to edge weights when an endpoint is an elevator node.
-   * Must be > 0 and <= 1. Defaults to 0.9.
-   */
-  elevatorBias?: number;
+  campusBoundaryPenalty?: number;
 };
 
 type Neighbor = {
@@ -50,12 +41,10 @@ export function findShortestPath(
   });
 
   const disallowStairs = !!preferences.disallowStairs;
-  const stairsPenalty = Math.max(0, preferences.stairsPenalty ?? 0);
+  // Stairs penalty is intentionally disabled (graph should already be stair-free)
+  const stairsPenalty = 0;
   const outdoorPenalty = Math.max(0, preferences.outdoorPenalty ?? 0);
-  const preferElevators = !!preferences.preferElevators;
-  const elevatorBiasRaw = preferences.elevatorBias ?? 0.9;
-  const elevatorBias =
-    elevatorBiasRaw > 0 && elevatorBiasRaw <= 1 ? elevatorBiasRaw : 0.9;
+  const campusBoundaryPenalty = Math.max(0, preferences.campusBoundaryPenalty ?? 0);
 
   const isOutdoorNode = (node?: Node) =>
     node?.indoor === false || node?.outside_campus === true;
@@ -67,19 +56,22 @@ export function findShortestPath(
       cost += stairsPenalty;
     }
 
-    if (outdoorPenalty > 0) {
-      const fromNode = nodeMap.get(fromId);
-      const toNode = nodeMap.get(toId);
-      if (isOutdoorNode(fromNode) || isOutdoorNode(toNode)) {
-        cost += outdoorPenalty;
-      }
+    const fromNode = nodeMap.get(fromId);
+    const toNode = nodeMap.get(toId);
+
+    // Apply outdoor penalty only when moving between indoor and outdoor and setting is enabled
+    const crossesIndoorOutdoor =
+      (fromNode?.indoor === true && isOutdoorNode(toNode)) ||
+      (toNode?.indoor === true && isOutdoorNode(fromNode));
+    if (outdoorPenalty > 0 && crossesIndoorOutdoor) {
+      cost += outdoorPenalty;
     }
 
-    if (preferElevators) {
-      const fromNode = nodeMap.get(fromId);
-      const toNode = nodeMap.get(toId);
-      if (fromNode?.elevator || toNode?.elevator) {
-        cost *= elevatorBias;
+    if (campusBoundaryPenalty > 0) {
+      const fromOutside = !!fromNode?.outside_campus;
+      const toOutside = !!toNode?.outside_campus;
+      if (fromOutside !== toOutside) {
+        cost += campusBoundaryPenalty;
       }
     }
 
